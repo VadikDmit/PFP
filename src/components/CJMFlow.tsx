@@ -48,7 +48,7 @@ export interface CJMData {
     lifeInsuranceLimit?: number;
 }
 
-const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) => {
+const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, isNewClient }) => {
     // Start at 0 (Victoria) for new clients, at 1 (ClientData) for existing
     const [step, setStep] = useState(isNewClient ? 0 : 1);
     const [loading, setLoading] = useState(false);
@@ -248,44 +248,40 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
 
     return (
         <div style={containerStyle}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px' }}>
-                {onBack && (
-                    <div
-                        onClick={onBack}
-                        style={{
-                            position: 'absolute',
-                            left: isWideStep ? '40px' : '20px',
-                            top: '40px',
-                            cursor: 'pointer',
-                            color: 'var(--text-muted)'
-                        }}
-                    >
-                        ← Назад
-                    </div>
-                )}
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '32px', overflowX: 'auto' }}>
                 {steps.map((s, i) => (
-                    <div key={i} style={{ flex: 1, textAlign: 'center', position: 'relative' }}>
+                    <div key={i} style={{ flex: 1, textAlign: 'center', position: 'relative', minWidth: 0 }}>
                         <div style={{
-                            width: '40px',
-                            height: '40px',
+                            width: '36px',
+                            height: '36px',
                             borderRadius: '50%',
                             background: step > i + 1 ? 'var(--secondary)' : step === i + 1 ? 'var(--primary)' : 'rgba(255,255,255,0.1)',
                             color: step === i + 1 ? '#000' : '#fff',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            margin: '0 auto 8px',
-                            transition: 'all 0.3s ease'
+                            margin: '0 auto 4px',
+                            transition: 'all 0.3s ease',
+                            flexShrink: 0
                         }}>
                             {s.icon}
                         </div>
-                        <span style={{ fontSize: '12px', color: step === i + 1 ? 'var(--primary)' : 'var(--text-muted)' }}>{s.title}</span>
+                        <span style={{
+                            fontSize: '10px',
+                            color: step === i + 1 ? 'var(--primary)' : 'var(--text-muted)',
+                            display: 'block',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            maxWidth: '48px',
+                            margin: '0 auto'
+                        }}>{s.title}</span>
                         {i < steps.length - 1 && (
                             <div style={{
                                 position: 'absolute',
-                                top: '20px',
-                                left: 'calc(50% + 25px)',
-                                right: 'calc(-50% + 25px)',
+                                top: '18px',
+                                left: 'calc(50% + 20px)',
+                                right: 'calc(-50% + 20px)',
                                 height: '2px',
                                 background: step > i + 1 ? 'var(--secondary)' : 'rgba(255,255,255,0.1)'
                             }} />

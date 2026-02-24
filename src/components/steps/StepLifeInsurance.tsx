@@ -63,8 +63,8 @@ const StepLifeInsurance: React.FC<StepLifeInsuranceProps> = ({ data, setData, on
                         Страховая сумма по риску "Уход из жизни"
                     </label>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '24px' }}>
-                        <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
+                        <div>
                             <input
                                 type="range"
                                 min={MIN_LIMIT}
@@ -85,7 +85,6 @@ const StepLifeInsurance: React.FC<StepLifeInsuranceProps> = ({ data, setData, on
                             border: '1px solid var(--border-color)',
                             borderRadius: '12px',
                             padding: '12px 16px',
-                            minWidth: '180px',
                             textAlign: 'right',
                             fontSize: '20px',
                             fontWeight: '700',

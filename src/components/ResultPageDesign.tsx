@@ -427,11 +427,10 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
 
 
       {/* Основной контент */}
-      <div style={{ display: 'flex', maxWidth: '1440px', margin: '0 auto', padding: '40px', gap: '40px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', maxWidth: '1440px', margin: '0 auto', padding: '20px', gap: '24px' }}>
 
         {/* Левая боковая панель */}
-        {/* ... (existing sidebar code) ... */}
-        <aside style={{ width: '300px', flexShrink: 0 }}>
+        <aside style={{ width: '100%', maxWidth: '320px', flexShrink: 0 }}>
           <div style={{
             background: '#FFFFFF',
             borderRadius: '24px',

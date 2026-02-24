@@ -36,47 +36,26 @@ const StepFinReserve: React.FC<StepFinReserveProps> = ({ data, setData, onNext, 
 
     return (
         <div>
-            {/* Header with Avatar */}
+            {/* AI Hint — compact */}
             <div style={{
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '32px',
-                marginBottom: '40px'
+                alignItems: 'flex-start',
+                gap: '12px',
+                background: '#fff',
+                border: '1px solid #f1f5f9',
+                borderRadius: '20px',
+                padding: '16px',
+                marginBottom: '28px',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
             }}>
-                {/* Avatar Image */}
-                <div style={{
-                    width: '120px',
-                    height: '120px',
-                    minWidth: '120px',
-                    borderRadius: '24px',
-                    overflow: 'hidden',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-                    background: '#fff'
-                }}>
-                    <img
-                        src={avatarImage}
-                        alt="AI Assistant"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                </div>
-
-                {/* Speech Bubble */}
-                <div style={{
-                    background: '#fff',
-                    borderRadius: '24px',
-                    borderTopLeftRadius: '4px',
-                    padding: '32px',
-                    fontSize: '18px',
-                    lineHeight: '1.5',
-                    color: '#1F2937',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-                    maxWidth: '600px',
-                    fontWeight: '500'
-                }}>
-                    Часть капитала очень важно выделить на Финансовый резерв. Я подберу продукты. Рекомендую направить на финансовый резерев сейчас 200 тыс и пополнять его на 2 тыс.
-                </div>
+                <img
+                    src={avatarImage}
+                    alt="AI"
+                    style={{ width: '44px', height: '44px', borderRadius: '12px', objectFit: 'cover', flexShrink: 0 }}
+                />
+                <p style={{ margin: 0, fontSize: '15px', lineHeight: '1.5', color: '#334155', fontWeight: '500' }}>
+                    Часть капитала очень важно выделить на Финансовый резерв. Я подберу продукты. Рекомендую направить на финансовый резерв сейчас 200 тыс и пополнять его на 2 тыс.
+                </p>
             </div>
 
             {/* Total Capital Info */}

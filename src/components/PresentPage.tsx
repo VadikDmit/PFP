@@ -172,36 +172,30 @@ const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onSta
                     className="premium-card"
                     onClick={() => setIsChatOpen(true)}
                     style={{
-                        display: 'flex', gap: '24px', alignItems: 'center',
+                        display: 'flex', gap: '14px', alignItems: 'flex-start',
                         background: 'linear-gradient(135deg, #fff 0%, #fefcf9 100%)',
-                        padding: '24px 32px', cursor: 'pointer',
+                        padding: '16px 20px', cursor: 'pointer',
                         border: '1px solid rgba(217, 70, 239, 0.1)',
                         position: 'relative',
                         overflow: 'hidden'
                     }}
                 >
-                    <div style={{
-                        position: 'absolute', top: '-10px', right: '-10px',
-                        width: '100px', height: '100px',
-                        background: 'radial-gradient(circle, rgba(217, 70, 239, 0.05) 0%, transparent 70%)',
-                        zIndex: 0
-                    }} />
-
-                    <div style={{ width: '64px', height: '64px', borderRadius: '18px', overflow: 'hidden', flexShrink: 0, border: '2px solid #fff', boxShadow: '0 8px 16px rgba(0,0,0,0.08)', zIndex: 1 }}>
-                        <img src={avatarImage} alt="Anna" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                    <div style={{ flex: 1, zIndex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                            <div style={{ fontSize: '11px', fontWeight: '900', color: '#D946EF', textTransform: 'uppercase', letterSpacing: '1px' }}>ИИ-Сводка</div>
-                            <div style={{ padding: '2px 8px', background: '#f0fdf4', color: '#16a34a', borderRadius: '100px', fontSize: '10px', fontWeight: '800' }}>ONLINE</div>
+                    <img
+                        src={avatarImage} alt="Anna"
+                        style={{ width: '40px', height: '40px', borderRadius: '12px', objectFit: 'cover', flexShrink: 0, border: '2px solid #fff', boxShadow: '0 4px 8px rgba(0,0,0,0.08)' }}
+                    />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                            <div style={{ fontSize: '10px', fontWeight: '900', color: '#D946EF', textTransform: 'uppercase', letterSpacing: '0.8px' }}>ИИ-Сводка</div>
+                            <div style={{ padding: '1px 6px', background: '#f0fdf4', color: '#16a34a', borderRadius: '100px', fontSize: '9px', fontWeight: '800' }}>ONLINE</div>
                         </div>
                         {isSummaryLoading && !aiSummary ? (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                <div style={{ height: '14px', width: '100%', background: '#f1f5f9', borderRadius: '4px' }} className="animate-pulse" />
-                                <div style={{ height: '14px', width: '80%', background: '#f1f5f9', borderRadius: '4px' }} className="animate-pulse" />
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                <div style={{ height: '12px', width: '100%', background: '#f1f5f9', borderRadius: '4px' }} className="animate-pulse" />
+                                <div style={{ height: '12px', width: '70%', background: '#f1f5f9', borderRadius: '4px' }} className="animate-pulse" />
                             </div>
                         ) : (
-                            <div style={{ fontSize: '15px', color: '#333', lineHeight: '1.5', fontWeight: '500' }}>
+                            <div style={{ fontSize: '14px', color: '#333', lineHeight: '1.4', fontWeight: '500' }}>
                                 <MessageContent content={aiSummary} isShort />
                             </div>
                         )}
