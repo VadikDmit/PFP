@@ -149,14 +149,30 @@ const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onSta
     }, [calcGoals, goals]);
 
     const insuranceData = useMemo(() => {
+        // Ищем сначала в calcGoals (там полные details), потом в goals
+        const calcGoal = calcGoals.find((g: any) => g.goal_type_id === 5);
+        if (calcGoal?.details?.risks?.length) {
+            return {
+                risks: calcGoal.details.risks as { risk_name: string; limit_amount: number }[],
+                programName: calcGoal.details.program_name as string | undefined,
+                annualPremium: calcGoal.details.annual_premium as number | undefined,
+                taxDeduction: calcGoal.details.tax_deduction_2026 as number | undefined,
+            };
+        }
+        // Фолбэк — старый хардкод
         const goal = goals.find((g: any) => g.goal_type_id === 5);
         const limit = goal?.target_amount || goal?.insurance_limit || 3000000;
         return {
-            slp: limit,
-            ns: limit,
-            dtp: limit * 2
+            risks: [
+                { risk_name: 'СЛП', limit_amount: limit },
+                { risk_name: 'НС', limit_amount: limit },
+                { risk_name: 'ДТП', limit_amount: limit * 2 },
+            ],
+            programName: undefined,
+            annualPremium: undefined,
+            taxDeduction: undefined,
         };
-    }, [goals]);
+    }, [calcGoals, goals]);
 
     const formatMoney = (amount: number) =>
         new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(amount);
@@ -273,19 +289,36 @@ const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onSta
                         </div>
                     </div>
                     <div className="premium-card" style={{ background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)', border: '1px solid #bfdbfe', padding: '16px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                             <div style={{ width: '40px', height: '40px', flexShrink: 0, borderRadius: '12px', background: 'linear-gradient(135deg, #3b82f6, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 10px rgba(59,130,246,0.3)' }}>
                                 <Shield size={20} color="#fff" />
                             </div>
-                            <div style={{ fontWeight: '800', fontSize: '15px', lineHeight: '1.2' }}>Защита жизни</div>
+                            <div>
+                                <div style={{ fontWeight: '800', fontSize: '15px', lineHeight: '1.2' }}>Защита жизни</div>
+                                {insuranceData.programName && (
+                                    <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginTop: '2px' }}>{insuranceData.programName}</div>
+                                )}
+                            </div>
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            {([['СЛП', insuranceData.slp], ['НС', insuranceData.ns], ['ДТП', insuranceData.dtp]] as [string, number][]).map(([label, val]) => (
-                                <div key={label} style={{ background: 'rgba(255,255,255,0.65)', padding: '10px 12px', borderRadius: '10px' }}>
-                                    <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px' }}>{label}</div>
-                                    <div style={{ fontSize: '15px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(val)}</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                            {insuranceData.risks.map((risk) => (
+                                <div key={risk.risk_name} style={{ background: 'rgba(255,255,255,0.65)', padding: '10px 12px', borderRadius: '10px' }}>
+                                    <div style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px', lineHeight: '1.3' }}>{risk.risk_name}</div>
+                                    <div style={{ fontSize: '15px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(risk.limit_amount)}</div>
                                 </div>
                             ))}
+                            {insuranceData.annualPremium != null && (
+                                <div style={{ background: 'rgba(59,130,246,0.08)', padding: '10px 12px', borderRadius: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Взнос/мес</div>
+                                    <div style={{ fontSize: '14px', fontWeight: '800', color: '#2563eb' }}>{formatMoney(insuranceData.annualPremium / 12)}</div>
+                                </div>
+                            )}
+                            {insuranceData.taxDeduction != null && (
+                                <div style={{ background: 'rgba(16,185,129,0.08)', padding: '8px 12px', borderRadius: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div style={{ fontSize: '10px', color: '#10b981', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Налог. вычет 2026</div>
+                                    <div style={{ fontSize: '13px', fontWeight: '800', color: '#10b981' }}>-{formatMoney(insuranceData.taxDeduction)}</div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
