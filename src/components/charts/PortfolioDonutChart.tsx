@@ -60,8 +60,7 @@ const PortfolioDonutChart: React.FC<PortfolioDonutChartProps> = ({ items, total,
                 paddingTop: '24px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '4px',
-                marginTop: '32px'
+                gap: '4px'
             }}>
                 <span style={{ fontSize: '11px', color: '#94a3b8', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Общий капитал</span>
                 <div style={{ fontSize: '26px', fontWeight: '950', color: '#3b82f6', letterSpacing: '-1px' }}>{formatCurrency(total)}</div>

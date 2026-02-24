@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Sparkles, Maximize2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Maximize2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { aiApi } from '../api/aiApi';
 import avatarImage from '../assets/avatar_full.png';
 
@@ -15,7 +15,6 @@ const AIDashboardHeader: React.FC<AIDashboardHeaderProps> = ({ clientName, onOpe
     const [message, setMessage] = useState('');
     const [aiResponse, setAiResponse] = useState('');
     const [isTyping, setIsTyping] = useState(false);
-    const [hasGreeted, setHasGreeted] = useState(false);
     const hasFetchedRef = useRef(false);
 
     useEffect(() => {
@@ -32,7 +31,6 @@ const AIDashboardHeader: React.FC<AIDashboardHeaderProps> = ({ clientName, onOpe
 
         if (lastGreetingDate === today) {
             setAiResponse(`С возвращением, ${clientName}! Готова продолжить работу над вашим планом.`);
-            setHasGreeted(true);
             return;
         }
 
@@ -53,7 +51,6 @@ const AIDashboardHeader: React.FC<AIDashboardHeaderProps> = ({ clientName, onOpe
                 (full) => {
                     setAiResponse(full);
                     setIsTyping(false);
-                    setHasGreeted(true);
                     localStorage.setItem('last_ai_greeting_mainPFP', today);
                 }
             );

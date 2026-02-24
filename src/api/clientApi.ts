@@ -1,8 +1,8 @@
 import axios from 'axios';
-import type { Client, CalculatePayload } from '../types/client';
+import type { Client } from '../types/client';
 
-const API_BASE_URL = 'https://pfpbackend-production.up.railway.app/api';
-const PROJECT_KEY = 'pk_9cfe10dcec21667bd5c557ea';
+const API_BASE_URL = import.meta.env.NEXT_PUBLIC_API_URL || 'https://pfpbackend-production.up.railway.app/api';
+const PROJECT_KEY = import.meta.env.NEXT_PUBLIC_PROJECT_KEY || 'pk_9cfe10dcec21667bd5c557ea';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -69,6 +69,12 @@ export const clientApi = {
     // Add new goal to existing plan
     addGoal: async (payload: any): Promise<any> => {
         const response = await api.post('/my/plan/goals', payload);
+        return response.data;
+    },
+
+    // Get report data
+    getReport: async (clientId: number): Promise<any> => {
+        const response = await api.get(`/my/reports/${clientId}`);
         return response.data;
     },
 };

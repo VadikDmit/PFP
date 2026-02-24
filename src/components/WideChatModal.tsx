@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, Sparkles, User, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { X, Send } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { aiApi } from '../api/aiApi';
 import avatarImage from '../assets/avatar_full.png';
 import Markdown from 'react-markdown';
@@ -24,7 +24,6 @@ const WideChatModal: React.FC<WideChatModalProps> = ({ isOpen, onClose, clientDa
         { role: 'assistant', content: 'Здравствуйте! Я готова обсудить ваши финансовые цели. Что вас интересует?' }
     ]);
     const [input, setInput] = useState(initialMessage || '');
-    const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -48,36 +47,14 @@ const WideChatModal: React.FC<WideChatModalProps> = ({ isOpen, onClose, clientDa
         const userMsg: Message = { role: 'user', content: text };
         setMessages(prev => [...prev, userMsg]);
         setInput('');
-        setIsTyping(true);
 
         // Placeholder for AI streaming message
-        const aiMsgId = Date.now();
         setMessages(prev => [...prev, { role: 'assistant', content: '', isStreaming: true }]);
 
         try {
-            let fullResponse = '';
-
-            // Should send context if it's the first message or if context is needed
-            // For now, we assume context is maintained on server or we send it every time if API is stateless (likely stateless in this implementation)
-            // But aiApi implementation suggests simple message passing.
-            // We might need to prepend context to the message invisible to user? 
-            // Or rely on the "greeting" call in Dashboard to have set some context (unlikely if stateless).
-            // Let's prepend context in the first message if needed, or rely on system prompt.
-            // Given the user instruction, we should just send text.
-
-            // However, user said: "send corresponding request! Stage is mainPFP But also need to send you json."
-            // We'll append context to the hidden prompt if possible, or just send the message.
-
-            // NOTE: The previous prompt said "Stage is mainPFP". 
-            // We will inject context into the message if it's the start, or assume headers/server handles it.
-            // Actually, we'll try to just send the message. If backend needs JSON, maybe we send it as a separate 'system' message or within the prompt.
-
-            // Let's wrap the user message with context if this is critical, but usually chat is continuous.
-            // For this implementation, we will send the user message directly.
-
             const messagePayload = JSON.stringify({
                 message: text,
-                client_id: clientData?.id // Sending ONLY id as per user request
+                client_id: clientData?.id
             });
 
             await aiApi.sendStreamingMessage(
@@ -92,7 +69,6 @@ const WideChatModal: React.FC<WideChatModalProps> = ({ isOpen, onClose, clientDa
                     setMessages(prev => prev.map((msg, idx) =>
                         idx === prev.length - 1 ? { ...msg, content: full, isStreaming: false } : msg
                     ));
-                    setIsTyping(false);
                 }
             );
 
@@ -101,7 +77,6 @@ const WideChatModal: React.FC<WideChatModalProps> = ({ isOpen, onClose, clientDa
             setMessages(prev => prev.map((msg, idx) =>
                 idx === prev.length - 1 ? { ...msg, content: 'Извините, произошла ошибка связи.', isStreaming: false } : msg
             ));
-            setIsTyping(false);
         }
     };
 

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Wallet, ShieldAlert, ArrowRight, Banknote, TrendingUp, Landmark, Coins, Briefcase, Activity } from 'lucide-react';
+import { ShieldAlert, ArrowRight, TrendingUp, Landmark, Coins, Briefcase, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface DashboardWidgetsProps {

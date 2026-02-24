@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, LogOut, ChevronRight, X } from 'lucide-react';
+import { Send, LogOut, ChevronRight } from 'lucide-react';
 import avatarImage from '../assets/avatar_full.png';
 import { aiApi } from '../api/aiApi';
 import Markdown from 'react-markdown';
@@ -42,7 +42,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
     const [editingGoal, setEditingGoal] = useState<EditingGoal | null>(null);
 
     const formatCurrency = (val: number) => new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(val).replace('₽', 'р.');
-    const formatNumber = (val: number) => new Intl.NumberFormat('ru-RU').format(val);
+
 
 
     const scrollRef = useRef<HTMLDivElement>(null);

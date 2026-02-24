@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Heart, Umbrella, PiggyBank, TrendingUp, Send, X, MessageSquare } from 'lucide-react';
+import { Shield, PiggyBank, TrendingUp, Send, X, MessageSquare } from 'lucide-react';
 import { getGoalImage } from '../utils/GoalImages';
 import PortfolioDonutChart from './charts/PortfolioDonutChart';
 import PortfolioBarChart from './charts/PortfolioBarChart';
@@ -48,7 +48,7 @@ const MessageContent: React.FC<{ content: string; isShort?: boolean }> = ({ cont
                     return (
                         <div key={idx} style={{ display: 'flex', gap: '10px', paddingLeft: '4px', alignItems: 'flex-start' }}>
                             <div style={{ color: '#D946EF', fontWeight: '900', marginTop: '2px' }}>•</div>
-                            <div style={{ flex: 1, lineHeight: '1.6' }}>{renderedLine.map((p, i) => typeof p === 'string' ? p.replace(/^(\* |\d+\.\s)/, '') : p)}</div>
+                            <div style={{ flex: 1, lineHeight: '1.6' }}>{renderedLine.map((p, i) => <React.Fragment key={i}>{typeof p === 'string' ? p.replace(/^(\* |\d+\.\s)/, '') : p}</React.Fragment>)}</div>
                         </div>
                     );
                 }
@@ -59,7 +59,7 @@ const MessageContent: React.FC<{ content: string; isShort?: boolean }> = ({ cont
     );
 };
 
-const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onStartCJM, onAddGoalClick }) => {
+const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onStartCJM }) => {
     const goals = clientData?.goals || [];
     const goalsSummary = clientData?.goals_summary;
     const calcGoals = goalsSummary?.goals || [];

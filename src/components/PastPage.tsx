@@ -1,14 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+    XAxis, YAxis, Tooltip, ResponsiveContainer,
     AreaChart, Area
 } from 'recharts';
 import {
     TrendingUp,
     MessageSquare,
-    ArrowRight,
-    Info,
     BarChart3,
     PieChart,
     Globe,
