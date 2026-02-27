@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { CJMData } from '../CJMFlow';
 import type { Asset } from '../../types/client';
 import avatarImage from '../../assets/avatar_full.png';
+import { aiApi } from '../../api/aiApi';
 
 interface StepAssetsProps {
     data: CJMData;
@@ -13,12 +14,49 @@ interface StepAssetsProps {
 const StepAssets: React.FC<StepAssetsProps> = ({ data, setData, onNext, onPrev }) => {
     // Initialize with existing cash value or 0
     const [value, setValue] = useState<number>(0);
+    const [aiText, setAiText] = useState<string>('');
+    const [aiLoading, setAiLoading] = useState<boolean>(false);
 
     // Sync local state with data on mount
     useEffect(() => {
         const existingCash = data.assets?.find(a => a.type === 'CASH')?.current_value || 0;
         setValue(existingCash);
     }, []); // Run once on mount to get initial value from data
+
+    // Ask AI about initial capital (initialCapital stage)
+    useEffect(() => {
+        let cancelled = false;
+
+        const fetchAiIntro = async () => {
+            setAiLoading(true);
+            try {
+                await aiApi.sendStreamingMessage(
+                    'initialCapital',
+                    'start',
+                    (chunk) => {
+                        if (!cancelled) setAiText(chunk);
+                    },
+                    (fullText) => {
+                        if (!cancelled) {
+                            setAiText(fullText);
+                            setAiLoading(false);
+                        }
+                    }
+                );
+            } catch (error) {
+                console.error('Failed to load initialCapital intro from AI', error);
+                if (!cancelled) {
+                    setAiText('Отлично, с целями понятно. А какой у вас сейчас текущий капитал уже есть?');
+                    setAiLoading(false);
+                }
+            }
+        };
+
+        fetchAiIntro();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     const formatNumber = (val: number) => new Intl.NumberFormat('ru-RU').format(val);
 
@@ -41,6 +79,17 @@ const StepAssets: React.FC<StepAssetsProps> = ({ data, setData, onNext, onPrev }
             ...prev,
             assets: [newAsset]
         }));
+    };
+
+    const handleNextClick = async () => {
+        try {
+            if (value > 0) {
+                await aiApi.sendMessage('initialCapital', `Мой текущий капитал: ${formatNumber(value)} рублей`);
+            }
+        } catch (err) {
+            console.error('Failed to send initialCapital value to AI', err);
+        }
+        onNext();
     };
 
     return (
@@ -71,7 +120,7 @@ const StepAssets: React.FC<StepAssetsProps> = ({ data, setData, onNext, onPrev }
                     />
                 </div>
 
-                {/* Speech Bubble */}
+                {/* Speech Bubble from AI */}
                 <div style={{
                     background: '#fff',
                     borderRadius: '24px',
@@ -84,7 +133,7 @@ const StepAssets: React.FC<StepAssetsProps> = ({ data, setData, onNext, onPrev }
                     maxWidth: '600px',
                     fontWeight: '500'
                 }}>
-                    Отлично. с целями понятно. А какой у вас сейчас текущий капитал уже есть?
+                    {aiText || 'Отлично, с целями понятно. А какой у вас сейчас текущий капитал уже есть?'}
                 </div>
             </div>
 
@@ -125,11 +174,20 @@ const StepAssets: React.FC<StepAssetsProps> = ({ data, setData, onNext, onPrev }
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '16px' }}>
-                <button className="btn-secondary" onClick={onPrev} style={{ flex: 1 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px' }}>
+                <button
+                    className="btn-secondary"
+                    onClick={onPrev}
+                    style={{ padding: '10px 20px', borderRadius: '999px', fontSize: '14px' }}
+                >
                     Назад
                 </button>
-                <button className="btn-primary" onClick={onNext} style={{ flex: 1 }}>
+                <button
+                    className="btn-primary"
+                    onClick={handleNextClick}
+                    style={{ padding: '10px 26px', borderRadius: '999px', fontSize: '15px' }}
+                    disabled={aiLoading}
+                >
                     Далее
                 </button>
             </div>

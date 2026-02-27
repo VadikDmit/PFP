@@ -48,7 +48,7 @@ export interface CJMData {
     lifeInsuranceLimit?: number;
 }
 
-const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, isNewClient }) => {
+const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) => {
     // Start at 0 (Victoria) for new clients, at 1 (ClientData) for existing
     const [step, setStep] = useState(isNewClient ? 0 : 1);
     const [loading, setLoading] = useState(false);
@@ -240,7 +240,15 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, isNewClient }) => {
                 <VictoriaOnboarding
                     data={data}
                     setData={setData}
-                    onComplete={() => setStep(3)}
+                    onExit={() => {
+                        if (onBack) {
+                            onBack();
+                        } else {
+                            setStep(1);
+                        }
+                    }}
+                    // После полного диалога (включая риск-профиль) — сразу расчёт, без старого интерфейса
+                    onFinish={() => handleCalculate()}
                 />
             </div>
         );

@@ -288,4 +288,21 @@ input[type="range"]::-webkit-slider-thumb:hover {
     /* Слой под текстом */
 }
 
+/* --- Present (Настоящее): адаптив — на узком экране блоки в колонку --- */
+@media (max-width: 767px) {
+    .presentPage {
+        padding: 16px 12px !important;
+        gap: 20px !important;
+    }
+    .presentPortfolioGrid {
+        grid-template-columns: 1fr !important;
+    }
+    .presentGoalsGrid {
+        grid-template-columns: 1fr !important;
+    }
+    .presentProtectionGrid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 /* --- STRICT USER PROVIDED CSS END --- */

@@ -53,6 +53,7 @@ export interface ClientGoal {
     risk_profile?: string;
     initial_capital?: number; // Initial capital for the goal
     monthly_replenishment?: number; // Monthly replenishment amount
+    accumulation_yield_percent?: number; // Прогноз доходности (из расчёта/API)
     inflation_rate?: number;
     // Life Insurance specific
     insurance_limit?: number; // Map to target_amount in UI?
@@ -88,6 +89,7 @@ export interface CalculationGoal {
     term_months: number;
     risk_profile: string;
     initial_capital?: number;
+    accumulation_yield_percent?: number;
     avg_monthly_income?: number;
     monthly_replenishment?: number;
     // Add other fields from CalculationGoal schema if needed

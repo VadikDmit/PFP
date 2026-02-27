@@ -2,8 +2,6 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, PiggyBank, TrendingUp, Send, X, MessageSquare } from 'lucide-react';
 import { getGoalImage } from '../utils/GoalImages';
-import PortfolioDonutChart from './charts/PortfolioDonutChart';
-import PortfolioBarChart from './charts/PortfolioBarChart';
 import type { Client } from '../types/client';
 import avatarImage from '../assets/avatar_full.png';
 import { aiApi } from '../api/aiApi';
@@ -14,6 +12,9 @@ interface PresentPageProps {
     onStartCJM: () => void;
     onAddGoalClick: () => void;
 }
+
+// На экране «Настоящее» показываем только превью; полный текст — в модалке чата
+const MAX_SUMMARY_PREVIEW_LENGTH = 200;
 
 // --- MARKDOWN RENDERER HELPER ---
 const MessageContent: React.FC<{ content: string; isShort?: boolean }> = ({ content, isShort }) => {
@@ -141,11 +142,16 @@ const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onSta
             return {
                 initial: fallback?.initial_capital || 0,
                 monthly: fallback?.monthly_replenishment || 0,
+                target_amount_future: undefined as number | undefined,
+                yieldPercent: undefined as number | undefined,
             };
         }
         const initialSum = (reserveGoal.details?.initial_instruments || []).reduce((s: number, i: any) => s + (i.amount || 0), 0);
         const monthlySum = (reserveGoal.details?.monthly_instruments || []).reduce((s: number, i: any) => s + (i.amount || 0), 0);
-        return { initial: initialSum, monthly: monthlySum };
+        const summary = reserveGoal.summary || {};
+        const target_amount_future = summary.target_amount_future ?? reserveGoal.details?.target_amount_future;
+        const yieldPercent = reserveGoal.accumulation_yield_percent ?? reserveGoal.details?.accumulation_yield_percent ?? summary.yield_percent;
+        return { initial: initialSum, monthly: monthlySum, target_amount_future, yieldPercent };
     }, [calcGoals, goals]);
 
     const insuranceData = useMemo(() => {
@@ -178,7 +184,7 @@ const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onSta
         new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(amount);
 
     return (
-        <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="presentPage" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
             {/* AI Summary and Stub */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -211,9 +217,16 @@ const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onSta
                                 <div style={{ height: '12px', width: '70%', background: '#f1f5f9', borderRadius: '4px' }} className="animate-pulse" />
                             </div>
                         ) : (
-                            <div style={{ fontSize: '14px', color: '#333', lineHeight: '1.4', fontWeight: '500' }}>
-                                <MessageContent content={aiSummary} isShort />
-                            </div>
+                            <>
+                                <div style={{ fontSize: '14px', color: '#333', lineHeight: '1.4', fontWeight: '500' }}>
+                                    <MessageContent content={aiSummary.length > MAX_SUMMARY_PREVIEW_LENGTH ? (aiSummary.slice(0, MAX_SUMMARY_PREVIEW_LENGTH).trim().replace(/\s+\S*$/, '') || aiSummary.slice(0, MAX_SUMMARY_PREVIEW_LENGTH)) + '…' : aiSummary} isShort />
+                                </div>
+                                {aiSummary.length > MAX_SUMMARY_PREVIEW_LENGTH && (
+                                    <div style={{ marginTop: '10px', fontSize: '12px', color: '#D946EF', fontWeight: '700' }}>
+                                        Открыть чат — весь текст и общение с Анной →
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </motion.div>
@@ -238,155 +251,377 @@ const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onSta
                 </motion.div>
             </div>
 
-            {/* Portfolio Charts */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '16px' }}>
-                <PortfolioDonutChart items={initialInstruments} total={totalInitial} title="Мои активы" />
-                <PortfolioBarChart items={monthlyInstruments} total={totalMonthly} title="Портфель пополнения" />
-            </div>
+            {/* Портфель — два блока: Первоначальный капитал + Пополнение, с диаграммами */}
+            {(() => {
+                const PORTFOLIO_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+                const nonZero = (items: { name: string; amount: number }[]) => items.filter((i) => (i.amount || 0) > 0);
+                const initialNonZero = nonZero(initialInstruments);
+                const monthlyNonZero = nonZero(monthlyInstruments);
+                const buildDonutGradient = (items: { name: string; amount: number }[], total: number) => {
+                    const sum = items.reduce((s, i) => s + i.amount, 0);
+                    if (items.length === 0 || sum <= 0) return '#e2e8f0';
+                    let endAngleDeg = 0; // в градусах 0–360
+                    return `conic-gradient(${items.map((item, i) => {
+                        const segmentDeg = (item.amount / sum) * 360;
+                        endAngleDeg += segmentDeg;
+                        return `${PORTFOLIO_COLORS[i % PORTFOLIO_COLORS.length]} ${endAngleDeg}deg`;
+                    }).join(', ')})`;
+                };
+                return (
+                    <>
+                        <div className="presentPortfolioGrid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+                            {/* Блок: Первоначальный капитал */}
+                            <div className="premium-card" style={{
+                                padding: '18px 20px',
+                                background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+                                border: '1px solid rgba(226,232,240,0.8)',
+                                borderRadius: '16px',
+                                boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                            }}>
+                                <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#1e293b', marginBottom: '14px' }}>Первоначальный капитал</h3>
+                                <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                                    <div style={{
+                                        width: '100px',
+                                        height: '100px',
+                                        borderRadius: '50%',
+                                        background: buildDonutGradient(initialNonZero, totalInitial),
+                                        position: 'relative',
+                                        flexShrink: 0,
+                                    }}>
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: '60px',
+                                            height: '60px',
+                                            borderRadius: '50%',
+                                            background: '#fff',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            flexDirection: 'column',
+                                        }}>
+                                            <span style={{ fontSize: '10px', color: '#64748b', fontWeight: '700' }}>Итого</span>
+                                            <span style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b' }}>
+                                                {totalInitial >= 1e6 ? `${(totalInitial / 1e6).toFixed(1)} млн` : new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(totalInitial)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        {initialNonZero.length > 0 ? (
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                                {initialNonZero.map((item: any, idx: number) => (
+                                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px' }}>
+                                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: PORTFOLIO_COLORS[idx % PORTFOLIO_COLORS.length], flexShrink: 0 }} />
+                                                        <span style={{ color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</span>
+                                                        <span style={{ color: '#1e293b', fontWeight: '700', whiteSpace: 'nowrap', marginLeft: 'auto' }}>{new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(item.amount)} ₽</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : <div style={{ fontSize: '13px', color: '#94a3b8' }}>Нет активов</div>}
+                                    </div>
+                                </div>
+                                <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid rgba(241,245,249,0.9)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
+                                    <TrendingUp size={16} color="#10b981" />
+                                    <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase' }}>Доходность за 12м</span>
+                                    <span style={{ fontSize: '15px', fontWeight: '800', color: '#10b981' }}>+17%</span>
+                                </div>
+                            </div>
 
-            {/* Yield Summary */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 160px), 1fr))', gap: '12px' }}>
-                <div className="premium-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px', background: 'linear-gradient(to bottom right, #fff, #f0fdf4)' }}>
-                    <div>
-                        <div style={{ fontSize: '11px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '4px', letterSpacing: '0.5px' }}>Историческая доходность (12м)</div>
-                        <div style={{ fontSize: '28px', fontWeight: '900', color: '#10b981' }}>+17.0%</div>
-                    </div>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <TrendingUp size={24} color="#10b981" />
-                    </div>
-                </div>
-                <div className="premium-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px', background: 'linear-gradient(to bottom right, #fff, #f0fdf4)' }}>
-                    <div>
-                        <div style={{ fontSize: '11px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '4px', letterSpacing: '0.5px' }}>Прогноз доходности</div>
-                        <div style={{ fontSize: '28px', fontWeight: '900', color: '#10b981' }}>+12.4%</div>
-                    </div>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <TrendingUp size={24} color="#10b981" />
-                    </div>
-                </div>
-            </div>
+                            {/* Блок: Пополнение */}
+                            <div className="premium-card" style={{
+                                padding: '18px 20px',
+                                background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+                                border: '1px solid rgba(226,232,240,0.8)',
+                                borderRadius: '16px',
+                                boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                            }}>
+                                <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#1e293b', marginBottom: '14px' }}>Пополнение</h3>
+                                <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                                    <div style={{
+                                        width: '100px',
+                                        height: '100px',
+                                        borderRadius: '50%',
+                                        background: buildDonutGradient(monthlyNonZero, totalMonthly || 1),
+                                        position: 'relative',
+                                        flexShrink: 0,
+                                    }}>
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: '60px',
+                                            height: '60px',
+                                            borderRadius: '50%',
+                                            background: '#fff',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            flexDirection: 'column',
+                                        }}>
+                                            <span style={{ fontSize: '10px', color: '#64748b', fontWeight: '700' }}>В месяц</span>
+                                            <span style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b' }}>
+                                                {totalMonthly >= 1e6 ? `${(totalMonthly / 1e6).toFixed(1)} млн` : new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(totalMonthly)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        {monthlyNonZero.length > 0 ? (
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                                {monthlyNonZero.map((item: any, idx: number) => (
+                                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px' }}>
+                                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: PORTFOLIO_COLORS[idx % PORTFOLIO_COLORS.length], flexShrink: 0 }} />
+                                                        <span style={{ color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</span>
+                                                        <span style={{ color: '#1e293b', fontWeight: '700', whiteSpace: 'nowrap', marginLeft: 'auto' }}>{new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(item.amount)} ₽</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : <div style={{ fontSize: '13px', color: '#94a3b8' }}>Нет данных</div>}
+                                    </div>
+                                </div>
+                                <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid rgba(241,245,249,0.9)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
+                                    <TrendingUp size={16} color="#10b981" />
+                                    <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase' }}>Прогноз</span>
+                                    <span style={{ fontSize: '15px', fontWeight: '800', color: '#10b981' }}>+12.4%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                );
+            })()}
 
-            {/* Protection Block */}
+            {/* Protection Block — карточки в одном стиле с фоновой картинкой */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#1e293b' }}>Защита</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 160px), 1fr))', gap: '16px' }}>
-                    <div className="premium-card" style={{ background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)', border: '1px solid #bbf7d0', padding: '16px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-                            <div style={{ width: '40px', height: '40px', flexShrink: 0, borderRadius: '12px', background: 'linear-gradient(135deg, #22c55e, #16a34a)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 10px rgba(34,197,94,0.3)' }}>
-                                <PiggyBank size={20} color="#fff" />
+                <div className="presentProtectionGrid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '16px' }}>
+                    <div
+                        className="premium-card"
+                        style={{
+                            position: 'relative',
+                            border: '1px solid #bbf7d0',
+                            padding: '16px',
+                            overflow: 'hidden',
+                            minHeight: '140px',
+                        }}
+                    >
+                        <img
+                            src={getGoalImage('Финансовый резерв', 7)}
+                            alt=""
+                            style={{
+                                position: 'absolute',
+                                inset: 0,
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                opacity: 0.2,
+                            }}
+                        />
+                        <div style={{ position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, rgba(240,253,244,0.92) 0%, rgba(220,252,231,0.92) 100%)', borderRadius: '12px', padding: '14px', height: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <div style={{ width: '40px', height: '40px', flexShrink: 0, borderRadius: '12px', background: 'linear-gradient(135deg, #22c55e, #16a34a)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 10px rgba(34,197,94,0.3)' }}>
+                                    <PiggyBank size={20} color="#fff" />
+                                </div>
+                                <div style={{ fontWeight: '800', fontSize: '15px', lineHeight: '1.2' }}>Финансовый резерв</div>
                             </div>
-                            <div style={{ fontWeight: '800', fontSize: '15px', lineHeight: '1.2' }}>Финансовый резерв</div>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <div style={{ background: 'rgba(255,255,255,0.65)', padding: '10px 12px', borderRadius: '10px' }}>
-                                <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px' }}>Капитал</div>
-                                <div style={{ fontSize: '15px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(reserveData.initial)}</div>
-                            </div>
-                            <div style={{ background: 'rgba(255,255,255,0.65)', padding: '10px 12px', borderRadius: '10px' }}>
-                                <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px' }}>Пополнение</div>
-                                <div style={{ fontSize: '15px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(reserveData.monthly)}<span style={{ fontSize: '11px', color: '#888', marginLeft: '2px' }}>/мес</span></div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                <div style={{ background: 'rgba(255,255,255,0.8)', padding: '8px 10px', borderRadius: '8px' }}>
+                                    <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Капитал</div>
+                                    <div style={{ fontSize: '14px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(reserveData.initial)}</div>
+                                </div>
+                                <div style={{ background: 'rgba(255,255,255,0.8)', padding: '8px 10px', borderRadius: '8px' }}>
+                                    <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Пополнение</div>
+                                    <div style={{ fontSize: '14px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(reserveData.monthly)}<span style={{ fontSize: '10px', color: '#64748b', marginLeft: '2px' }}>/мес</span></div>
+                                </div>
+                                {reserveData.target_amount_future != null && reserveData.target_amount_future > 0 && (
+                                    <div style={{ background: 'rgba(34,197,94,0.12)', padding: '8px 10px', borderRadius: '8px' }}>
+                                        <div style={{ fontSize: '10px', color: '#16a34a', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Прогноз через год</div>
+                                        <div style={{ fontSize: '14px', fontWeight: '800', color: '#15803d', whiteSpace: 'nowrap' }}>{formatMoney(reserveData.target_amount_future)}</div>
+                                    </div>
+                                )}
+                                <div style={{ background: 'rgba(255,255,255,0.8)', padding: '8px 10px', borderRadius: '8px' }}>
+                                    <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Доходность портфеля</div>
+                                    <div style={{ fontSize: '14px', fontWeight: '800', color: '#1e293b' }}>
+                                        {reserveData.yieldPercent != null && reserveData.yieldPercent > 0 ? `≈ ${reserveData.yieldPercent}% год.` : '—'}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="premium-card" style={{ background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)', border: '1px solid #bfdbfe', padding: '16px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                            <div style={{ width: '40px', height: '40px', flexShrink: 0, borderRadius: '12px', background: 'linear-gradient(135deg, #3b82f6, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 10px rgba(59,130,246,0.3)' }}>
-                                <Shield size={20} color="#fff" />
+                    <div
+                        className="premium-card"
+                        style={{
+                            position: 'relative',
+                            border: '1px solid #bfdbfe',
+                            padding: '16px',
+                            overflow: 'hidden',
+                            minHeight: '140px',
+                        }}
+                    >
+                        <img
+                            src={getGoalImage('Защита жизни', 5)}
+                            alt=""
+                            style={{
+                                position: 'absolute',
+                                inset: 0,
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                opacity: 0.2,
+                            }}
+                        />
+                        <div style={{ position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, rgba(239,246,255,0.92) 0%, rgba(219,234,254,0.92) 100%)', borderRadius: '12px', padding: '14px', height: '100%', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <div style={{ width: '40px', height: '40px', flexShrink: 0, borderRadius: '12px', background: 'linear-gradient(135deg, #3b82f6, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 10px rgba(59,130,246,0.3)' }}>
+                                    <Shield size={20} color="#fff" />
+                                </div>
+                                <div>
+                                    <div style={{ fontWeight: '800', fontSize: '15px', lineHeight: '1.2' }}>Защита жизни</div>
+                                    {insuranceData.programName && (
+                                        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginTop: '2px' }}>{insuranceData.programName}</div>
+                                    )}
+                                </div>
                             </div>
-                            <div>
-                                <div style={{ fontWeight: '800', fontSize: '15px', lineHeight: '1.2' }}>Защита жизни</div>
-                                {insuranceData.programName && (
-                                    <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginTop: '2px' }}>{insuranceData.programName}</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                {insuranceData.risks.map((risk) => (
+                                    <div key={risk.risk_name} style={{ background: 'rgba(255,255,255,0.8)', padding: '8px 10px', borderRadius: '8px' }}>
+                                        <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px', lineHeight: '1.3' }}>{risk.risk_name}</div>
+                                        <div style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(risk.limit_amount)}</div>
+                                    </div>
+                                ))}
+                                {insuranceData.annualPremium != null && (
+                                    <div style={{ background: 'rgba(59,130,246,0.1)', padding: '8px 10px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div style={{ fontSize: '10px', color: '#2563eb', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px' }}>Взнос/мес</div>
+                                        <div style={{ fontSize: '13px', fontWeight: '800', color: '#2563eb' }}>{formatMoney(insuranceData.annualPremium / 12)}</div>
+                                    </div>
+                                )}
+                                {insuranceData.taxDeduction != null && (
+                                    <div style={{ background: 'rgba(16,185,129,0.1)', padding: '8px 10px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div style={{ fontSize: '10px', color: '#10b981', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px' }}>Налог. вычет 2026</div>
+                                        <div style={{ fontSize: '12px', fontWeight: '800', color: '#10b981' }}>-{formatMoney(insuranceData.taxDeduction)}</div>
+                                    </div>
                                 )}
                             </div>
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                            {insuranceData.risks.map((risk) => (
-                                <div key={risk.risk_name} style={{ background: 'rgba(255,255,255,0.65)', padding: '10px 12px', borderRadius: '10px' }}>
-                                    <div style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px', lineHeight: '1.3' }}>{risk.risk_name}</div>
-                                    <div style={{ fontSize: '15px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(risk.limit_amount)}</div>
-                                </div>
-                            ))}
-                            {insuranceData.annualPremium != null && (
-                                <div style={{ background: 'rgba(59,130,246,0.08)', padding: '10px 12px', borderRadius: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Взнос/мес</div>
-                                    <div style={{ fontSize: '14px', fontWeight: '800', color: '#2563eb' }}>{formatMoney(insuranceData.annualPremium / 12)}</div>
-                                </div>
-                            )}
-                            {insuranceData.taxDeduction != null && (
-                                <div style={{ background: 'rgba(16,185,129,0.08)', padding: '8px 12px', borderRadius: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <div style={{ fontSize: '10px', color: '#10b981', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Налог. вычет 2026</div>
-                                    <div style={{ fontSize: '13px', fontWeight: '800', color: '#10b981' }}>-{formatMoney(insuranceData.taxDeduction)}</div>
-                                </div>
-                            )}
-                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Goals Grid */}
+            {/* Инвестиционные цели — крупные карточки с фоновой картинкой и полным набором параметров */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#1e293b' }}>Текущие цели</h3>
+                    <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#1e293b' }}>Инвестиционные цели</h3>
                     <button onClick={() => onViewPlan(clientData!, goalsSummary)} style={{ background: 'none', border: 'none', color: '#D946EF', fontWeight: '800', cursor: 'pointer', fontSize: '14px' }}>Смотреть всё</button>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    {goals.filter((g: any) => g.goal_type_id !== 5 && g.goal_type_id !== 7).slice(0, 4).map((goal: any, idx: number) => (
-                        <motion.div
-                            key={goal.id || idx}
-                            whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
-                            className="premium-card"
-                            style={{ padding: 0, overflow: 'hidden', cursor: 'pointer', display: 'flex', minHeight: '100px' }}
-                            onClick={() => onViewPlan(clientData!, goalsSummary)}
-                        >
-                            {/* Image */}
-                            <div style={{ width: '100px', flexShrink: 0, position: 'relative' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <div className="presentGoalsGrid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    {goals.filter((g: any) => g.goal_type_id !== 5 && g.goal_type_id !== 7).slice(0, 4).map((goal: any, idx: number) => {
+                        const investmentCalcGoals = calcGoals.filter((c: any) => c.goal_type_id !== 5 && c.goal_type_id !== 7);
+                        const calcGoal = investmentCalcGoals[idx] || calcGoals.find((c: any) => c.goal_type_id === goal.goal_type_id && (c.name === goal.name || c.goal_name === goal.name));
+                        const summary = calcGoal?.summary || {};
+                        const targetInitial = summary.target_amount_initial ?? goal.target_amount ?? goal.initial_capital;
+                        const targetFuture = summary.target_amount_future;
+                        const termMonths = summary.target_months ?? goal.term_months;
+                        const initialCap = summary.initial_capital ?? goal.initial_capital;
+                        const monthlyRep = summary.monthly_replenishment ?? goal.monthly_replenishment;
+                        const yieldPercent = calcGoal?.accumulation_yield_percent ?? calcGoal?.details?.accumulation_yield_percent ?? goal?.accumulation_yield_percent ?? goal?.details?.accumulation_yield_percent ?? summary?.accumulation_yield_percent ?? summary?.yield_percent;
+                        const bgImg = getGoalImage(goal.name, goal.goal_type_id);
+                        return (
+                            <motion.div
+                                key={goal.id || idx}
+                                whileHover={{ y: -2, boxShadow: '0 12px 32px rgba(0,0,0,0.12)' }}
+                                className="premium-card"
+                                style={{
+                                    position: 'relative',
+                                    padding: 0,
+                                    overflow: 'hidden',
+                                    cursor: 'pointer',
+                                    minHeight: '200px',
+                                    borderRadius: '16px',
+                                    border: '1px solid rgba(226,232,240,0.8)',
+                                }}
+                                onClick={() => onViewPlan(clientData!, goalsSummary)}
+                            >
+                                {/* Картинка на весь блок */}
                                 <img
-                                    src={getGoalImage(goal.name, goal.goal_type_id)}
-                                    alt={goal.name}
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    src={bgImg}
+                                    alt=""
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover',
+                                        objectPosition: 'center',
+                                    }}
                                 />
-                                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.25), transparent)' }} />
-                            </div>
-
-                            {/* Content */}
-                            <div style={{ flex: 1, padding: '14px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minWidth: 0 }}>
-                                <div style={{ fontWeight: '800', fontSize: '15px', color: '#1e293b', marginBottom: '10px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                    {goal.name}
-                                </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
-                                    {goal.initial_capital != null && goal.initial_capital > 0 && (
+                                {/* Лёгкий оверлей, чтобы текст читался, но картинка была видна */}
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        background: 'linear-gradient(145deg, rgba(255,255,255,0.55) 0%, rgba(248,250,252,0.65) 50%, rgba(241,245,249,0.75) 100%)',
+                                        borderRadius: '16px',
+                                        pointerEvents: 'none',
+                                    }}
+                                />
+                                <div style={{
+                                    position: 'relative',
+                                    zIndex: 1,
+                                    padding: '20px 22px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '14px',
+                                    height: '100%',
+                                    minHeight: '200px',
+                                }}>
+                                    <div style={{ fontWeight: '800', fontSize: '18px', color: '#1e293b', lineHeight: '1.25', letterSpacing: '-0.02em' }}>
+                                        {goal.name}
+                                    </div>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px 16px', flex: 1, alignContent: 'start' }}>
+                                        {targetInitial != null && (
+                                            <div>
+                                                <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Стоимость цели</div>
+                                                <div style={{ fontSize: '14px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(targetInitial)}</div>
+                                            </div>
+                                        )}
+                                        {targetFuture != null && targetFuture > 0 && (
+                                            <div>
+                                                <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>С учётом инфляции</div>
+                                                <div style={{ fontSize: '14px', fontWeight: '800', color: '#475569', whiteSpace: 'nowrap' }}>{formatMoney(targetFuture)}</div>
+                                            </div>
+                                        )}
+                                        {termMonths != null && (
+                                            <div>
+                                                <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Срок</div>
+                                                <div style={{ fontSize: '14px', fontWeight: '800', color: '#475569' }}>
+                                                    {termMonths >= 12 ? `${Math.round(termMonths / 12)} ${Math.round(termMonths / 12) === 1 ? 'год' : Math.round(termMonths / 12) < 5 ? 'года' : 'лет'}` : `${termMonths} мес`}
+                                                </div>
+                                            </div>
+                                        )}
                                         <div>
-                                            <div style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '2px' }}>Сейчас</div>
-                                            <div style={{ fontSize: '13px', fontWeight: '800', color: '#475569', whiteSpace: 'nowrap' }}>{formatMoney(goal.initial_capital)}</div>
+                                            <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Первонач. капитал</div>
+                                            <div style={{ fontSize: '14px', fontWeight: '800', color: '#475569', whiteSpace: 'nowrap' }}>{formatMoney(initialCap ?? goal.initial_capital ?? 0)}</div>
                                         </div>
-                                    )}
-                                    {goal.target_amount != null && (
+                                        {monthlyRep != null && monthlyRep > 0 && (
+                                            <div>
+                                                <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Пополнение</div>
+                                                <div style={{ fontSize: '14px', fontWeight: '800', color: '#10b981', whiteSpace: 'nowrap' }}>{formatMoney(monthlyRep)}/мес</div>
+                                            </div>
+                                        )}
                                         <div>
-                                            <div style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '2px' }}>Цель</div>
-                                            <div style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', whiteSpace: 'nowrap' }}>{formatMoney(goal.target_amount)}</div>
-                                        </div>
-                                    )}
-                                    {goal.monthly_replenishment != null && goal.monthly_replenishment > 0 && (
-                                        <div>
-                                            <div style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '2px' }}>В месяц</div>
-                                            <div style={{ fontSize: '13px', fontWeight: '800', color: '#10b981', whiteSpace: 'nowrap' }}>{formatMoney(goal.monthly_replenishment)}</div>
-                                        </div>
-                                    )}
-                                    {goal.term_months != null && (
-                                        <div>
-                                            <div style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '2px' }}>Срок</div>
-                                            <div style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>
-                                                {goal.term_months >= 12
-                                                    ? `${Math.round(goal.term_months / 12)} ${Math.round(goal.term_months / 12) === 1 ? 'год' : Math.round(goal.term_months / 12) < 5 ? 'года' : 'лет'}`
-                                                    : `${goal.term_months} мес`}
+                                            <div style={{ fontSize: '10px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>Прогноз доходности</div>
+                                            <div style={{ fontSize: '14px', fontWeight: '800', color: yieldPercent != null && yieldPercent > 0 ? '#059669' : '#64748b' }}>
+                                                {yieldPercent != null ? `≈ ${yieldPercent}% год.` : '—'}
                                             </div>
                                         </div>
-                                    )}
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        );
+                    })}
+                    </div>
                     <motion.div
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.98 }}

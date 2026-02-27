@@ -66,6 +66,8 @@ export const getGoalImage = (goalName: string, typeId: number): string => {
     if (typeId === GOAL_TYPE_RENT) return rent;
     if (typeId === GOAL_TYPE_INVESTMENT) return invest;
     if (typeId === GOAL_TYPE_OTHER) return other;
+    if (typeId === GOAL_TYPE_FIN_RESERVE) return capital;
+    if (typeId === GOAL_TYPE_LIFE) return invest;
 
     // Default fallback
     return other;

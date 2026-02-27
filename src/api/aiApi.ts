@@ -35,15 +35,20 @@ export const aiApi = {
         return response.data;
     },
 
-    // Send a message (streaming version)
+    // Send a message (streaming version). history — предыдущие сообщения диалога, чтобы ИИ не здоровался заново
     sendStreamingMessage: async (
         stage: string,
         message: string,
         onChunk: (partialText: string) => void,
-        onDone: (fullText: string) => void
+        onDone: (fullText: string) => void,
+        history?: Array<{ role: 'user' | 'assistant'; content: string }>
     ) => {
         const token = localStorage.getItem('token');
-        console.log(`[AI] Sending stream request to ${API_BASE_URL}/my/ai-b2c/chat/stream`, { stage, message });
+        const body: { stage: string; message: string; history?: Array<{ role: string; content: string }> } = { stage, message };
+        if (history && history.length > 0) {
+            body.history = history;
+        }
+        console.log(`[AI] Sending stream request to ${API_BASE_URL}/my/ai-b2c/chat/stream`, { stage, message, historyLength: history?.length ?? 0 });
 
         try {
             const response = await fetch(`${API_BASE_URL}/my/ai-b2c/chat/stream`, {
@@ -53,7 +58,7 @@ export const aiApi = {
                     'Authorization': `Bearer ${token}`,
                     'X-Project-Key': PROJECT_KEY
                 },
-                body: JSON.stringify({ stage, message })
+                body: JSON.stringify(body)
             });
 
             console.log(`[AI] Response status: ${response.status} ${response.statusText}`);
