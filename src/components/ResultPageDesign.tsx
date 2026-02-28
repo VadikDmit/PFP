@@ -141,7 +141,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
   }, [onRecalculate, editingGoal, editForm, snapshotForm]);
 
   const calcRoot = calculationData || {};
-  const calculatedGoals = calcRoot.goals || [];
+  const calculatedGoals = Array.isArray(calcRoot.goals) ? calcRoot.goals : [];
   const consolidatedPortfolio = calcRoot?.summary?.consolidated_portfolio;
   const assetsAllocation = consolidatedPortfolio?.assets_allocation || [];
   const rawCashFlow = consolidatedPortfolio?.cash_flow_allocation || calcRoot?.cash_flow_allocation || [];
@@ -409,7 +409,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  boxShadow: ' shadow-premium ',
+                  boxShadow: 'var(--shadow-premium)',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   border: '1px solid rgba(255,255,255,0.1)',
                   overflow: 'hidden'

@@ -44,7 +44,7 @@ const VictoriaChatModal: React.FC<VictoriaChatModalProps> = ({
 
                 try {
                     // Tell AI about current context
-                    const contextMsg = `Я хотел бы обсудить параметр "${fieldLabel}" для моей цели "${goal.name}". Сейчас значение: ${currentValue}. Подскажи, на что это влияет и как лучше настроить?`;
+                    const contextMsg = `Я хотел бы обсудить параметр "${fieldLabel}" для моей цели "${goal?.name || 'этой цели'}". Сейчас значение: ${currentValue}. Подскажи, на что это влияет и как лучше настроить?`;
 
                     await aiApi.sendStreamingMessage(
                         'futurePFP',
@@ -68,7 +68,7 @@ const VictoriaChatModal: React.FC<VictoriaChatModalProps> = ({
         } else {
             setMessages([]);
         }
-    }, [isOpen, fieldName, goal.id]);
+    }, [isOpen, fieldName, goal?.id]);
 
     useEffect(() => {
         if (scrollRef.current) {
