@@ -157,6 +157,9 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
   });
 
 
+  const taxBenefitsSummary = calcRoot?.summary?.tax_benefits_summary;
+  const taxPlanningLegacy = calcRoot.tax_planning;
+
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value) + '₽';
   };
@@ -186,15 +189,15 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
           { label: 'Срок', value: fmtDate(summary.target_months) },
         ];
         break;
-      case 4:
+      case 9: case 10: case 11: case 4:
         displaySlots = [
           { label: 'Стоимость сегодня', value: fmt(summary.target_amount_initial) },
           { label: 'Первонач. капитал', value: fmt(summary.initial_capital) },
           { label: 'Ежем. пополнение', value: fmt(summary.monthly_replenishment) },
-          { label: 'Срок', value: fmtDate(summary.target_months) },
+          { label: 'Срок', value: fmtDate(summary.term_months || summary.target_months) },
         ];
         break;
-      case 5:
+      case 5: {
         const premium = summary.initial_capital || summary.premium || 0;
         displaySlots = [
           { label: 'Страховая сумма', value: fmt(summary.target_coverage) },
@@ -203,6 +206,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
           { label: 'Срок', value: fmtDate(summary.target_months) },
         ];
         break;
+      }
       case 7:
         displaySlots = [
           { label: 'Итоговый капитал', value: fmt(summary.projected_capital_at_end) },
@@ -290,11 +294,17 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
     return () => clearTimeout(timer);
   }, [editForm, snapshotForm, onRecalculate, isCalculating, onSubmitEdit]);
 
+  const taxDeduction2026 = taxBenefitsSummary?.totals?.deduction_2026 || 0;
+  const taxCofinancing2026 = taxBenefitsSummary?.totals?.cofinancing_2026 || 0;
+  const taxTotalDeduction = taxBenefitsSummary?.totals?.total_deductions || taxPlanningLegacy?.total_deductions || 0;
+  const taxTotalCofinancing = taxBenefitsSummary?.totals?.total_cofinancing || 0;
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#F9FAFB', fontFamily: "'Inter', sans-serif" }}>
-      <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '20px' }}>
+      {/* Общий контейнер для выравнивания всей страницы */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', width: '100%' }}>
 
-        {/* Блок ИИ - Full Width */}
+        {/* Блок ИИ - Full Width within 1200px */}
         <section style={{
           width: '100%',
           marginBottom: '40px',
@@ -392,10 +402,38 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
           </div>
         </section>
 
-        <main>
+        <main style={{ width: '100%' }}>
+          {/* Портфели */}
           <PortfolioDistribution assetsAllocation={assetsAllocation} cashFlowAllocation={cashFlowAllocation} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+          {/* Налоговое планирование */}
+          {(taxTotalDeduction > 0 || taxTotalCofinancing > 0) && (
+            <section style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '24px',
+              marginBottom: '40px',
+              boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.05)',
+              border: '1px solid rgba(0,0,0,0.05)'
+            }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px', color: '#111827' }}>Налоговое планирование</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+                <div style={{ padding: '20px', background: '#f8fafc', borderRadius: '16px' }}>
+                  <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '4px' }}>Налоговый вычет (всего)</div>
+                  <div style={{ fontSize: '20px', fontWeight: '800', color: '#0f172a' }}>{formatCurrency(taxTotalDeduction)}</div>
+                  {taxDeduction2026 > 0 && <div style={{ fontSize: '12px', color: '#10b981', marginTop: '4px' }}>+{formatCurrency(taxDeduction2026)} в 2026 г.</div>}
+                </div>
+                <div style={{ padding: '20px', background: '#f8fafc', borderRadius: '16px' }}>
+                  <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '4px' }}>Гос. софинансирование</div>
+                  <div style={{ fontSize: '20px', fontWeight: '800', color: '#0f172a' }}>{formatCurrency(taxTotalCofinancing)}</div>
+                  {taxCofinancing2026 > 0 && <div style={{ fontSize: '12px', color: '#10b981', marginTop: '4px' }}>+{formatCurrency(taxCofinancing2026)} в 2026 г.</div>}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Сетка целей */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px', marginBottom: '40px' }}>
             {goalCards.map((goal) => (
               <div
                 key={goal.id}
