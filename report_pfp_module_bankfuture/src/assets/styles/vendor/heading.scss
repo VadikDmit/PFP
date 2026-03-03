@@ -1,0 +1,23 @@
+.h2 {
+  display: inline-block;
+
+  margin-block-end: 80px;
+
+  font-size: 28px;
+  font-weight: 600;
+  white-space: break-spaces;
+
+  @include desktop-sm {
+    margin-block-end: 60px;
+  }
+
+  @include tablets-sm {
+    margin-block-end: 48px;
+  }
+
+  @include phones-lg {
+    margin-block-end: 40px;
+
+    font-size: 20px;
+  }
+}

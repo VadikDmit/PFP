@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Default styles */
+* {
+    box-sizing: border-box;
+}
+
+::selection {
+    background: $yellow;
+    color: white;
+}
+
+html,
+body {
+    background: $grey;
+}
+
+html {
+    font-size: $baseFontSize;
+
+    -webkit-overflow-scrolling: auto !important;
+
+    overflow-x: hidden !important;
+}
+
+body {
+    width: 100% !important;
+    min-height: 100dvh;
+    // min-height: -webkit-fill-available;
+
+    @include font-inter(400);
+    color: black;
+
+    -webkit-overflow-scrolling: auto !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    position: relative;
+    scrollbar-gutter: stable;
+}
+
+#__next {
+    display: flex;
+    flex-direction: column;
+
+    min-height: inherit;
+}
+
+button, input, optgroup, select, textarea {
+    @include font-inter(400);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    color: inherit;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+
+    li {
+        list-style: none;
+    }
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.container {
+    max-width: $containerWidth;
+
+    margin: 0 auto;
+
+    padding-inline-start: $paddingLeftContainer;
+    padding-inline-end: $paddingRightContainer;
+
+    @include tablets-lg {
+        padding-inline-start: 32px;
+        padding-inline-end: 32px;
+    }
+
+    @include tablets-sm {
+        padding-inline-start: 20px;
+        padding-inline-end: 20px;
+    }
+
+    @include phones-lg {
+        padding-inline-start: 16px;
+        padding-inline-end: 16px;
+    }
+}
+
+.container_landing {
+    max-width: 1520px;
+
+    margin: 0 auto;
+
+    padding-inline-start: $paddingLeftContainer;
+    padding-inline-end: $paddingRightContainer;
+
+    @include tablets-lg {
+        padding-inline-start: 32px;
+        padding-inline-end: 32px;
+    }
+
+    @include tablets-sm {
+        padding-inline-start: 20px;
+        padding-inline-end: 20px;
+    }
+
+    @include phones-lg {
+        padding-inline-start: 16px;
+        padding-inline-end: 16px;
+    }
+}
+
+.loading {
+    color: $yellow;
+}
+
+.loading_bg {
+    @include gradientText;
+    opacity: 0.4;
+}
+
+.pdfExport__print {
+    row-gap: 0 !important;
+
+    .page,
+    .page_container {
+      block-size: 840px !important;
+    }
+}

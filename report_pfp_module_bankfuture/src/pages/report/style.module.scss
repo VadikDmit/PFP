@@ -1,0 +1,253 @@
+
+
+
+@media print {
+  @page {
+    size: 595px 842px;
+    margin: 0;
+  }
+}
+
+.pdfExport {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+
+  width: 100%;
+
+  @include tablets-sm {
+    row-gap: 0;
+  }
+}
+
+.wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  max-block-size: 10000000000px;
+  background-color: darkslategrey;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.main_button {
+  position: fixed;
+  right: 10%;
+  top: 45vh;
+
+  & a,
+  & button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-block-start: 1.5dvh;
+    padding-block-end: 1.5dvh;
+    padding-inline-start: 4dvw;
+    padding-inline-end: 4dvw;
+
+    appearance: none;
+
+    outline: none;
+    border-radius: 5px;
+
+    font-size: 1.6dvh;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition: color 0.4s, background-color 0.4s, border-color 0.4s;
+
+    &:hover {
+      background: #E8B653;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      transform: scale(0.98); /* Добавляет ощущение нажатия */
+    }
+  }
+}
+
+.page_content__table {
+  display: block;
+
+  inline-size: 535px;
+
+  margin-block-end: 40px;
+  padding-inline-start: 20px;
+  padding-inline-end: 20px;
+  padding-block-start: 15px;
+  padding-block-end: 12px;
+
+  border-collapse: collapse;
+
+  position: relative;
+
+  background: #fff;
+  filter: drop-shadow(0px -2px 24px rgba(0, 0, 0, 0.07));
+}
+
+.page_content__table thead {
+  inline-size: 495px;
+
+  border-block-end: 1px solid #FFC759;
+
+  & tr {
+    block-size: 20px;
+
+    & td {
+      padding-inline-start: 10px;
+      padding-inline-end: 0;
+      padding-block-start: 0;
+      padding-block-end: 10px;
+
+      font-weight: 500;
+      color: #000;
+      text-align: center;
+      font-size: 10px;
+      line-height: 10px; /* 200% */
+      white-space: break-spaces;
+    }
+
+    & td:nth-child(1) {
+      inline-size: 33px;
+      padding-inline-start: 7px;
+    }
+
+    & td:nth-child(2) {
+      inline-size: 187px;
+      padding-inline-start: 48px;
+    }
+
+    & td:nth-child(3) {
+      inline-size: 97px;
+      padding-inline-start: 39px;
+    }
+
+    & td:nth-child(4) {
+      inline-size: 150px;
+      padding-inline-start: 58px;
+    }
+  }
+}
+
+.page_content__table tbody {
+
+  & tr {
+    block-size: 21px;
+
+    & td {
+
+      color: #000;
+      text-align: center;
+      font-size: 8px;
+      line-height: 14px; /* 200% */
+
+      position: relative;
+    }
+
+    & td:nth-child(1) {
+      height: 21px;
+
+      text-align: left;
+      padding-inline-start: 10px;
+
+      &:before {
+        content: '';
+
+        min-width: 6px;
+        min-height: 6px;
+
+        margin-inline-end: 6px;
+
+        position: relative;
+      }
+    }
+  }
+
+  & td:nth-child(1) {
+    display: flex;
+    align-items: center;
+
+    inline-size: 33px;
+    padding-inline-start: 7px;
+  }
+
+  & td:nth-child(2) {
+    inline-size: 190px;
+    padding-inline-start: 37px;
+  }
+
+  & td:nth-child(3) {
+    inline-size: 97px;
+    padding-inline-start: 39px;
+  }
+
+  & td:nth-child(4) {
+    inline-size: 150px;
+    padding-inline-start: 58px;
+  }
+
+  & tr:nth-child(1) {
+    & td:nth-child(1) {
+      &:before {
+        background: #FFC759;
+      }
+    }
+  }
+  & tr:nth-child(2) {
+    & td:nth-child(1) {
+      &:before {
+        background: #667DB5;
+      }
+    }
+  }
+  & tr:nth-child(3) {
+    & td:nth-child(1) {
+      &:before {
+        background: #FFC759;
+      }
+    }
+  }
+  & tr:nth-child(4) {
+    & td:nth-child(1) {
+      &:before {
+        background: #F37058;
+      }
+    }
+  }
+  & tr:nth-child(5) {
+    & td:nth-child(1) {
+      &:before {
+        background: #EEC960;
+      }
+    }
+  }
+  & tr:nth-child(6) {
+    & td:nth-child(1) {
+      &:before {
+        background: #CCE192;
+      }
+    }
+  }
+  & tr:nth-child(7) {
+    & td:nth-child(1) {
+      &:before {
+        background: #78B497;
+      }
+    }
+  }
+  & tr:nth-child(8) {
+    & td:nth-child(1) {
+      &:before {
+        background: #58595B;
+      }
+    }
+  }
+}

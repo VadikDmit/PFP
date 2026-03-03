@@ -1,0 +1,54 @@
+.select__control {
+  align-content: center;
+
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  font-weight: 500;
+}
+
+.select__control--is-focused {
+  border-color: #D53190 !important;
+  box-shadow: 0 6px 24px rgba(241, 77, 175, 0.4) !important;
+}
+
+.select__menu {
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+
+  &-list {
+    &::-webkit-scrollbar {
+      width: 7px;
+
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @include gradient;
+      border-radius: 20px;
+      border: 1px solid $yellow;
+    }
+  }
+}
+
+.select__option {
+  cursor: pointer !important;
+}
+
+.select__option--is-selected {
+  @include gradient;
+}
+
+.select__option--is-focused {
+  background-color: #D53190 !important;
+
+  color: white !important;
+}
+
+.select__indicator-separator {
+  display: none;
+}

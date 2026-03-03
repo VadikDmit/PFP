@@ -1,0 +1,157 @@
+.content {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+
+  block-size: 125px;
+
+  margin-block-end: 30px;
+
+  &_text {
+    color: black;
+    font-size: 12px;
+    line-height: 13px;
+  }
+}
+
+.block_blue {
+  padding-inline-start: 20px;
+  padding-inline-end: 20px;
+  padding-block-start: 20px;
+  padding-block-end: 20px;
+
+  margin-block-end: 30px;
+
+  border-radius: 8px;
+  background: #F1EBD5;
+
+  &_header {
+    margin-block-end: 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 13px;
+    text-transform: lowercase;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  &_list {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+
+    margin-inline-start: 20px;
+
+    & li {
+      list-style: outside;
+
+      font-size: 12px;
+      line-height: 11px;
+
+      &:not(:last-of-type) {
+        margin-block-end: 7px;
+      }
+    }
+  }
+}
+
+.text_top,
+.text_center {
+  margin-block-end: 10px;
+
+  font-size: 12px;
+  color: black;
+  line-height: 15px;
+  white-space: break-spaces;
+
+  &__color {
+    margin-inline-start: 7px;
+
+    font-weight: 500;
+    color: #FFC759;
+    font-size: 18px;
+  }
+
+  &__color__bold {
+    font-weight: 600;
+  }
+}
+
+.text_bot {
+  margin-block-end: 20px;
+
+  font-size: 12px;
+  color: #737373;
+}
+
+.table {
+  margin-block-start: 30px;
+  margin-block-end: 30px;
+
+  width: 100%;
+
+  border-collapse: collapse;
+  border: unset;
+
+  font-size:12px;
+}
+
+.table__body__row{
+  &:not(:last-of-type) td {
+    padding-block-end: 5px;
+  }
+
+  & td {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    padding-block-start: 0;
+    padding-block-end: 0;
+
+    & div {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    & p {
+      margin-inline-start: 5px;
+
+      font-size: 10px;
+    }
+  }
+}
+
+.finance__partners {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 10px;
+  align-items: center;
+
+  margin-block-end: 30px;
+  padding-block-start: 14px;
+  padding-block-end: 11px;
+  padding-inline-start: 20px;
+  padding-inline-end: 17px;
+
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+
+  list-style: none;
+
+  & li {
+    display: flex;
+    justify-content: center;
+  }
+
+  & li img {
+    max-width: 100%;
+  }
+}
+
+.footer_text {
+  font-size: 10px;
+  color: #737373;
+}

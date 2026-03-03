@@ -1,0 +1,38 @@
+.goal_col {
+  &:not(:last-of-type) {
+    margin-block-end: 17px;
+
+    @include tablets-md {
+      margin-block-end: 30px;
+    }
+  }
+
+  &__inside {
+    @include tablets-md {
+      flex: 1 1 100%;
+
+      width: 100%;
+      max-width: 100%;
+    }
+
+    &:not(:last-of-type) {
+      @include tablets-md {
+        margin-block-end: 15px;
+      }
+    }
+  }
+}
+
+.goal_input {
+  margin-inline-start: 60px;
+
+  @include tablets-md {
+    margin-inline-start: 0;
+  }
+}
+
+.goal_row {
+  @include tablets-md {
+    flex-direction: column;
+  }
+}

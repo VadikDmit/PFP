@@ -1,0 +1,63 @@
+.button_yellow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding-block-start: 18px;
+  padding-block-end: 19px;
+  padding-inline-start: 109px;
+  padding-inline-end: 108px;
+
+  border: none;
+  outline: none;
+  background-color: $yellow;
+  border-radius: 10px;
+
+  font-size: 16px;
+  color: $text-black;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition: .2s ease-in-out;
+
+  &:hover {
+    background-color: adjust-hue($yellow, 2);
+  }
+
+  &__black {
+
+    @extend .button_yellow;
+  }
+
+  &__transparent {
+    @extend .button_yellow;
+
+    height: auto !important;
+
+    padding-block-start: 17px;
+    padding-block-end: 18px;
+
+    background-color: transparent;
+    border: 1px solid black;
+
+    &:hover {
+      background-color: $yellow;
+      border: 1px solid $yellow;
+    }
+  }
+}
+
+.button__gray {
+  @extend .button_yellow;
+
+  background-color: #F1F0F5;
+}
+
+.button_black {
+  @extend .button_yellow;
+
+  background-color: $black;
+
+  color: white;
+}

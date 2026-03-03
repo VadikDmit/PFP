@@ -1,0 +1,34 @@
+//paddings
+$paddingLeftContainer: 40px;
+$paddingRightContainer: 40px;
+
+//width
+$containerWidth: calc(1680px - $paddingLeftContainer - $paddingRightContainer);
+$baseFontSize: 14px;
+
+//breakpoints
+$desktop-sm: 1536px;
+
+$notebook: 1368px;
+
+$tablets-lg: 1280px;
+$tablets-md: 1024px;
+$tablets-sm: 768px;
+
+$phones-lg: 560px;
+$phones-md: 480px;
+$phones-sm: 320px;
+
+//colors
+$white: #FAF9FC;
+$grey: #F1F0F5;
+$dark-grey: #797780;
+$yellow: #FFC759;
+$black: #202023;
+$text-black: #0A0A0A;
+$red: #FFC759;
+
+$background-color: white;
+
+/* z-indexes */
+$z-index-content: 10;

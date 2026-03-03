@@ -1,0 +1,584 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  color: white;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: #767679 !important;
+}
+
+.select__control {
+  font-weight: 500;
+}
+
+.select__control--is-focused {
+  border-color: #FFC759 !important;
+}
+
+.select__menu-list::-webkit-scrollbar {
+  width: 7px;
+
+  border-radius: 0;
+}
+
+.select__menu-list::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 0;
+}
+
+.select__menu-list::-webkit-scrollbar-thumb {
+  background: #FFC759;
+  border-radius: 0;
+  border: 1px solid #FFC759;
+}
+
+.select__option {
+  cursor: pointer !important;
+}
+
+.select__option--is-selected {
+  background: #FFC759;
+}
+
+.select__option--is-focused {
+  background-color: #FFC759 !important;
+
+  color: white !important;
+}
+
+.select__indicator-separator {
+  display: none;
+}
+
+#nprogress .spinner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #ffffffc7;
+
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+
+  z-index: 1031;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #FFC759 !important;
+  border-left-color: #FFC759 !important;
+}
+
+/* ### MIUI STYLES */
+.MuiDataGrid-root {
+  margin-block-start: 40px !important;
+}
+
+.MuiFormLabel-root,
+.MuiTypography-root,
+.MuiDataGrid-columnHeaderTitle {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+}
+
+.MuiTouchRipple-root,
+.MuiSwitch-thumb,
+.MuiButton-startIcon {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+}
+
+.MuiButton-startIcon {
+  color: #797780 !important;
+}
+
+.MuiSwitch-sizeSmall {
+  padding: 0 !important;
+  margin-inline-end: 16px !important;
+}
+
+.MuiSwitch-thumb {
+  color: white !important;
+}
+
+.MuiFormLabel-root.Mui-focused {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.MuiSwitch-track {
+  background-color: #F1F0F5 !important;
+  border-radius: 12px !important;
+
+  opacity: 1 !important;
+}
+
+.Mui-checked+.MuiSwitch-track {
+  background-color: #FFC759 !important;
+}
+
+.MuiButtonBase-root,
+.MuiDataGrid-toolbarContainer button {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+  color: black !important;
+}
+
+.MuiDataGrid-toolbarContainer button:hover,
+.MuiDataGrid-toolbarContainer button:hover span {
+  color: #2B4C7D !important;
+}
+
+.MuiDataGrid-row:hover,
+.MuiDataGrid-row .Mui-selected {
+  background-color: #F3F7FA !important;
+}
+
+.MuiTablePagination-actions .MuiButtonBase-root svg {
+  fill: #FFC759 !important;
+}
+
+.MuiTablePagination-actions .MuiButtonBase-root:hover svg {
+  fill: white !important;
+}
+
+.MuiTablePagination-actions .Mui-disabled svg {
+  fill: #D7D7D7 !important;
+}
+
+.MuiDataGrid-sortIcon {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.MuiButtonBase-root:hover {
+  background-color: transparent !important;
+}
+
+.MuiDataGrid-iconButtonContainer {
+  margin-inline-start: 5px !important;
+
+  visibility: visible !important;
+}
+
+.MuiIconButton-root:hover {
+  box-shadow: none !important;
+
+  color: white !important;
+}
+
+.MuiDataGrid-columnSeparator--sideRight {
+  display: none !important;
+}
+
+.MuiDataGrid-columnHeaders {
+  background-color: #FFC759 !important;
+  border-radius: 10px !important;
+
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: black !important;
+}
+
+.MuiDataGrid-toolbarContainer {
+  padding-block-start: 0 !important;
+  padding-block-end: 15px !important;
+  padding-inline-start: 0 !important;
+  padding-inline-end: 0 !important;
+
+  outline: 1px solid white !important;
+}
+
+.MuiDataGrid-columnHeader {
+  &:first-child {
+    padding-inline-start: 20px !important;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .MuiDataGrid-cell[aria-colindex="1"],
+  .MuiDataGrid-columnHeader[aria-colindex="1"] {
+    min-width: 100px !important;
+    max-width: 100px !important;
+  }
+  .MuiDataGrid-cell[aria-colindex="2"],
+  .MuiDataGrid-columnHeader[aria-colindex="2"] {
+    min-width: 150px !important;
+    max-width: 150px !important;
+  }
+  .MuiDataGrid-cell,
+  .MuiDataGrid-columnHeader {
+    width: auto !important;
+  }
+}
+
+.MuiDataGrid-columnHeader .MuiButtonBase-root svg {
+  fill: white !important;
+}
+
+.MuiDataGrid-virtualScroller .MuiButtonBase-root svg {
+  fill: #D7D7D7 !important;
+}
+
+.MuiDataGrid-row.Mui-selected .MuiButtonBase-root svg {
+  fill: #FFC759 !important;
+}
+
+.MuiDataGrid-row.Mui-selected .MuiButtonBase-root:hover svg {
+  fill: white !important;
+}
+
+.MuiDataGrid-cell,
+.MuiDataGrid-cell button {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+  font-size: 16px !important;
+}
+
+.MuiDataGrid-cell .MuiButtonBase-root {
+  text-decoration: underline !important;
+  color: black !important;
+}
+
+.MuiDataGrid-cell .MuiButtonBase-root:hover {
+  background: unset !important;
+}
+
+.MuiDataGrid-cell {
+  &:first-child {
+    padding-inline-start: 20px !important;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .MuiDataGrid-cell {
+    max-width: unset !important;
+  }
+}
+
+.MuiTablePagination-displayedRows {
+  color: #D7D7D7 !important;
+}
+
+.MuiCircularProgress-root {
+  color: #FFC759 !important;
+}
+
+.MuiDataGrid-menu .MuiMenuItem-root:hover {
+  background-color: transparent !important;
+  color: #2B4C7D !important;
+}
+
+.MuiDataGrid-panelFooter .MuiButtonBase-root:hover {
+  color: #2B4C7D !important;
+}
+
+.ant-input-affix-wrapper-focused {
+  border-color: #E8B653 !important;
+  box-shadow: 0 0 0 2px rgb(176 116 179 / 10%) !important;
+}
+
+.ant-tabs-ink-bar {
+  background: #E8B653 !important;
+}
+
+.list-selector {
+  max-height: 50px;
+  height: auto !important;
+
+  padding-block-start: 10px !important;
+  padding-block-end: 9px !important;
+  padding-inline-start: 20px !important;
+  padding-inline-end: 20px !important;
+
+  border-radius: 10px;
+  border: none !important;
+  background: #F6F7F8 !important;
+
+  font-weight: 400;
+  line-height: 1;
+}
+
+.list-selection-item {
+  color: black !important;
+}
+
+.list-single {
+  height: unset;
+}
+
+.list-disabled .list-selection-item {
+  color: #A3A3A3 !important;
+}
+
+.list-selector:hover {
+  border-color: #FFC759 !important;
+}
+
+.list-dropdown {
+  z-index: 9999999999999999999999999999999999999999999;
+}
+
+.list-focused .list-selector,
+.list-open .list-selector {
+  border-color: #FFC759 !important;
+  box-shadow: 0 0 0 2px rgb(176 116 179 / 10%) !important;
+}
+
+.radio-children-button-checked,
+.radio-button-checked {
+  background: #FFC759;
+  border-radius: 10px !important;
+}
+
+.radio-children-button-wrapper-checked,
+.radio-button-wrapper-checked {
+  border: unset !important;
+  color: black !important;
+}
+
+.radio-inner {
+  border-color: #fff !important;
+  background-color: #fff !important;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25) inset !important;
+}
+
+.radio-inner {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.radio-inner::after {
+  margin-inline-start: -8px !important;
+
+  background: #FFC759;
+
+  transform: scale(0.7) !important;
+}
+
+.radio-wrapper {
+  font-weight: 500;
+  user-select: none;
+}
+
+
+.radio-wrapper span.radio+* {
+  padding-inline-start: 10px;
+  padding-inline-end: 0;
+}
+
+/* GOAL STYLES */
+
+.input-text-input {
+  padding: 0 !important;
+}
+
+.goal_slider {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+.goal_slider-rail,
+.goal_slider-step,
+.goal_slider-track {
+  height: 6px !important;
+
+  border-radius: 3px !important;
+}
+
+.goal_slider-track {
+  background-color: #FFC759 !important;
+}
+
+.goal_slider-handle {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+  width: 40px !important;
+  height: 40px !important;
+
+  top: -10px !important;
+}
+
+.goal_slider-handle::after {
+  width: 28px !important;
+  height: 28px !important;
+
+  border-width: 10px !important;
+
+  background-color: #FFC759 !important;
+  box-shadow: 0 0 0 0 transparent !important;
+
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.goal_slider-handle::before {
+  width: 40px !important;
+  height: 40px !important;
+
+  background-color: white !important;
+  border-radius: 50% !important;
+
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.goal_input {
+  width: 100%;
+
+  border-radius: 10px !important;
+}
+
+.goal_input,
+.goal_input-input {
+  background: #F6F7F8 !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  &:hover {
+    background: #EEF1F5 !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  &:focus {
+    border: 1px solid #8F969F !important;
+    background: white !important;
+    box-shadow: none !important;
+  }
+}
+
+.goal_input-input {
+  padding: 15px 20px !important;
+
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+  color: #202023 !important;
+
+  font-size: 16px !important;
+}
+
+.goal_input-handler:hover span {
+  color: #FFC759 !important;
+}
+
+.goal_edit [role="tooltip"],
+.goal_delete [role="tooltip"] {
+  padding-block-start: 35px;
+  padding-block-end: 30px;
+  padding-inline-start: 39px;
+  padding-inline-end: 50px;
+}
+
+.goal_edit [role="img"],
+.goal_delete [role="img"] {
+  display: none;
+}
+
+.goal_edit-title,
+.goal_delete-title {
+  margin-block-end: 20px;
+
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.goal_edit-buttons,
+.goal_delete-buttons {
+  text-align: center !important;
+}
+
+.goal_edit-buttons .ant-btn-sm,
+.goal_delete-buttons .ant-btn-sm {
+  height: auto;
+
+  padding-block-start: 12px;
+  padding-block-end: 12px;
+
+  border-radius: 6px;
+}
+
+.goal_edit-buttons .ant-btn-default,
+.goal_delete-buttons .ant-btn-default {
+  padding-inline-start: 49px;
+  padding-inline-end: 50px;
+
+  color: #FFC759;
+}
+
+.goal_edit-buttons .ant-btn-primary,
+.goal_delete-buttons .ant-btn-primary {
+  padding-inline-start: 55px;
+  padding-inline-end: 56px;
+
+  background: #FFC759;
+
+  color: white;
+}
+
+.slider_show {
+  z-index: 99999999;
+}
+
+.auth-nav-list {
+  width: 100% !important;
+}
+
+.auth-nav {
+  margin-block-end: 80px !important;
+}
+
+.auth-tab {
+  display: flex !important;
+  justify-content: center !important;
+  flex: 1 !important;
+
+  padding-block-start: 20px !important;
+  padding-block-end: 20px !important;
+
+  border-top: 1px solid black !important;
+  border-bottom: 1px solid black !important;
+
+  &[data-node-key="login"] {
+    border-left: 1px solid black !important;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+
+  &[data-node-key="reg"] {
+    border-right: 1px solid black !important;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
+  &.auth-tab-active {
+    border: 1px solid #FFC759 !important;
+  }
+}
+
+.auth-ink-bar {
+  display: none !important;
+}
+
+.auth_button {
+  &,
+  &[disabled] {
+    background: #FFC759 !important;
+
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+
+    color: #332C09 !important;
+  }
+
+  &:hover {
+    background: #E8B653 !important;
+  }
+}

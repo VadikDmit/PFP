@@ -1,0 +1,45 @@
+
+
+.linearChart_container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+
+  inline-size: 535px;
+  block-size: 178px;
+
+  background-color: #FFF;
+  filter: drop-shadow(0px -2px 24px rgba(0, 0, 0, 0.07));
+
+  overflow: hidden;
+}
+
+.linearChart_container_big {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+
+  inline-size: 535px;
+  block-size: 226px;
+
+  background-color: #FFF;
+  filter: drop-shadow(0px -2px 24px rgba(0, 0, 0, 0.07));
+}
+
+.pieChart_container {
+  inline-size: 535px;
+  block-size: 370px;
+
+  @include tablets-sm {
+    inline-size: 100%;
+  }
+}
+
+.barChart_container {
+  align-self: flex-end;
+
+  inline-size: 260px;
+  block-size: 130px;
+}
