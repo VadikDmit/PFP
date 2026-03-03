@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import './App.css'
+import LandingPage from './components/LandingPage'
 import LoginPage from './components/LoginPage'
 import RegisterPage from './components/RegisterPage'
 import CJMFlow from './components/CJMFlow'
@@ -11,11 +12,11 @@ import PastPage from './components/PastPage'
 import type { Client } from './types/client'
 import { clientApi } from './api/clientApi'
 
-type Page = 'loading' | 'login' | 'register' | 'past' | 'present' | 'future' | 'cjm' | 'result'
+type Page = 'loading' | 'landing' | 'login' | 'register' | 'past' | 'present' | 'future' | 'cjm' | 'result'
 
 function App() {
     const [currentPage, setCurrentPage] = useState<Page>(() => {
-        return localStorage.getItem('token') ? 'loading' : 'login';
+        return localStorage.getItem('token') ? 'loading' : 'landing';
     });
     const [calculationResult, setCalculationResult] = useState<any>(null);
     const [selectedClient, setSelectedClient] = useState<Client | null>(null);
@@ -39,7 +40,7 @@ function App() {
             console.error('Failed to load client data:', err);
             if (err.response?.status === 401) {
                 localStorage.removeItem('token');
-                setCurrentPage('login');
+                setCurrentPage('landing');
             } else if (err.response?.status === 404) {
                 setClientData(null);
                 setCurrentPage('cjm');
@@ -87,7 +88,7 @@ function App() {
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        setCurrentPage('login');
+        setCurrentPage('landing');
         setCalculationResult(null);
         setSelectedClient(null);
         setClientData(null);
@@ -211,6 +212,17 @@ function App() {
                 <LoginPage
                     onLoginSuccess={handleLoginSuccess}
                     onSwitchToRegister={() => setCurrentPage('register')}
+                />
+            </div>
+        );
+    }
+
+    if (currentPage === 'landing') {
+        return (
+            <div className="app-container">
+                <LandingPage
+                    onStart={() => setCurrentPage('register')}
+                    onLogin={() => setCurrentPage('login')}
                 />
             </div>
         );
