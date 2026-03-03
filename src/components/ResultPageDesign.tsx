@@ -189,7 +189,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
           { label: 'Срок', value: fmtDate(summary.target_months) },
         ];
         break;
-      case 9: case 10: case 11: case 4:
+      case 9: case 10: case 11: case 4: case 14:
         displaySlots = [
           { label: 'Стоимость сегодня', value: fmt(summary.target_amount_initial) },
           { label: 'Первонач. капитал', value: fmt(summary.initial_capital) },
@@ -212,7 +212,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
           { label: 'Итоговый капитал', value: fmt(summary.projected_capital_at_end) },
           { label: 'Накоплено (Сейчас)', value: fmt(summary.initial_capital) },
           { label: 'Ежем. пополнение', value: fmt(summary.monthly_replenishment) },
-          { label: 'Размер резерва', value: (summary.target_months || 0) + ' мес' },
+          { label: 'Срок', value: (summary.target_months || 0) + ' мес' },
         ];
         break;
       case 8:
