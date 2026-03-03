@@ -460,12 +460,18 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
                 </div>
 
                 <div style={{
-                  display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', background: 'rgba(255,255,255,0.1)',
-                  backdropFilter: 'blur(10px)', padding: '20px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.2)'
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '16px',
+                  background: 'rgba(255,255,255,0.06)',
+                  backdropFilter: 'blur(10px)',
+                  padding: '20px',
+                  borderRadius: '24px',
+                  border: '1px solid rgba(255,255,255,0.18)'
                 }}>
                   {goal.displaySlots.map((slot, idx) => (
                     <div key={idx} onClick={() => openFieldChat(goal, slot)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '12px', transition: 'background 0.2s' }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.12)')}
                       onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
                       <div style={{ fontSize: '11px', opacity: 0.7, textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>{slot.label}</div>
                       <div style={{ fontSize: '16px', fontWeight: '800' }}>{slot.value}</div>
