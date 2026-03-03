@@ -452,6 +452,12 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     max-width: 100%;
                 }
 
+                /* Пузырь с параметрами (возраст, деньги и т.п.) — тянем почти на всю ширину */
+                .goal-params-bubble {
+                    width: 100%;
+                    max-width: 100%;
+                }
+
                 .message-bubble .btn-primary {
                     width: auto !important;
                     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.4) 100%) !important;
