@@ -57,17 +57,6 @@ const questions: Question[] = [
         ],
     },
     {
-        id: 'q5',
-        text: 'Какой горизонт инвестирования вы рассматриваете?',
-        options: [
-            { text: 'До 1 года', points: 1 },
-            { text: '1–3 года', points: 2 },
-            { text: '3–5 лет', points: 3 },
-            { text: '5–10 лет', points: 4 },
-            { text: 'Более 10 лет', points: 5 },
-        ],
-    },
-    {
         id: 'q6',
         text: 'Какую долю дохода вы готовы инвестировать?',
         options: [

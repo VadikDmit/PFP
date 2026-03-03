@@ -156,7 +156,11 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
         }
     }, [messages, currentStep, isTyping]);
 
-    const handleSendMessage = async (textOverride?: string, stageOverride?: string) => {
+    const handleSendMessage = async (
+        textOverride?: string,
+        stageOverride?: string,
+        options?: { nextStep?: OnboardingStep; nextAiStage?: string; delayMsBeforeStep?: number }
+    ) => {
         const text = textOverride || inputValue;
         if (!text.trim() || isTyping) return;
 
@@ -184,9 +188,18 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 (chunk) => {
                     setMessages(prev => prev.map(m => m.id === aiMsgId ? { ...m, text: chunk } : m));
                 },
-                (fullText) => {
+                async (fullText) => {
                     setMessages(prev => prev.map(m => m.id === aiMsgId ? { ...m, text: fullText, isStreaming: false } : m));
                     setIsTyping(false);
+                    if (options?.nextStep) {
+                        if (options.delayMsBeforeStep) {
+                            await new Promise(r => setTimeout(r, options.delayMsBeforeStep));
+                        }
+                        if (options.nextAiStage) {
+                            setAiStage(options.nextAiStage);
+                        }
+                        setCurrentStep(options.nextStep);
+                    }
                 },
                 history
             );
@@ -200,21 +213,22 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
     const handleGenderSelect = async (gender: 'male' | 'female') => {
         setData(prev => ({ ...prev, gender }));
 
-        // Show AI typing and switch step to age immediately to feel responsive
-        setIsTyping(true);
-        setCurrentStep('age');
-
-        await handleSendMessage(gender === 'male' ? 'Мужской' : 'Женский');
+        // Сначала Виктория отвечает целиком, потом плавно показываем слайдер возраста
+        await handleSendMessage(
+            gender === 'male' ? 'Мужской' : 'Женский',
+            undefined,
+            { nextStep: 'age', delayMsBeforeStep: 300 }
+        );
     };
 
     const handleAgeSubmit = async () => {
-        setIsTyping(true);
-        // Transition to goal selection step
-        setCurrentStep('goal_selection');
-        // Switch AI stage to anketaTarget for the next interactions
         setAiStage('anketaTarget');
-
-        await handleSendMessage(`${data.age} лет`, 'anketaTarget');
+        // Сначала текст ИИ про цели, потом показываем выбор целей
+        await handleSendMessage(
+            `${data.age} лет`,
+            'anketaTarget',
+            { nextStep: 'goal_selection', delayMsBeforeStep: 300 }
+        );
     };
 
     const handleGoalSelect = async (goal: typeof GOAL_GALLERY_ITEMS[0]) => {
@@ -231,12 +245,12 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
             desiredMonthlyIncome: (goal.typeId === 1 || goal.typeId === 2) ? 100000 : 0
         };
         setEditingGoal(defaults);
-
-        // Switch to parameter input step
-        setCurrentStep('goal_parameters');
-
-        // Send to AI with explicit stage
-        await handleSendMessage(`Моя цель: ${goal.title}`, 'anketaTarget');
+        // Сначала Виктория проговаривает выбранную цель, потом раскрываем карточку параметров
+        await handleSendMessage(
+            `Моя цель: ${goal.title}`,
+            'anketaTarget',
+            { nextStep: 'goal_parameters', delayMsBeforeStep: 300 }
+        );
     };
 
     const handleParametersSubmit = async () => {
@@ -264,12 +278,11 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
 
         if (editingGoal.termMonths > 0) msg += `, срок ${Math.floor(editingGoal.termMonths / 12)} лет`;
 
-        await handleSendMessage(msg, 'anketaTarget');
-
-        // Даём пользователю прочитать ответ ИИ, потом показываем список целей — без резкого прыжка
-        await new Promise(r => setTimeout(r, 1500));
+        // Сразу переключаемся на список целей, но пока isTyping=true — интерфейс не показываем
         setEditingGoal(null);
         setCurrentStep('goal_selection');
+
+        await handleSendMessage(msg, 'anketaTarget');
     };
 
     const handleStartAssetsStep = async () => {
@@ -1011,27 +1024,6 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 </div>
                                 <div style={{ marginBottom: '16px', fontSize: '14px', color: '#64748b' }}>
                                     Уточним, какую часть капитала вы готовы выделить сейчас в финрезерв и сколько комфортно докладывать ежемесячно.
-                                </div>
-
-                                <div style={{ marginBottom: '18px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
-                                        <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Текущая сумма</span>
-                                        <input
-                                            type="number"
-                                            value={initialCapitalInput}
-                                            onChange={e => setInitialCapitalInput(parseInt(e.target.value) || 0)}
-                                            style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
-                                        />
-                                    </div>
-                                    <input
-                                        type="range"
-                                        min={0}
-                                        max={10000000}
-                                        step={100000}
-                                        value={initialCapitalInput}
-                                        onChange={e => setInitialCapitalInput(parseInt(e.target.value))}
-                                        style={{ width: '100%' }}
-                                    />
                                 </div>
 
                                 <div style={{ marginBottom: '18px' }}>
