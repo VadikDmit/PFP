@@ -480,19 +480,20 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 .message-bubble input[type="range"] {
                     -webkit-appearance: none;
                     width: 100%;
-                    height: 8px;
+                    min-width: 220px;
+                    height: 14px;
                     background: rgba(15, 23, 42, 0.05);
-                    border-radius: 4px;
+                    border-radius: 7px;
                     outline: none;
-                    margin: 15px 0;
+                    margin: 18px 0;
                     box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
                     border: 1px solid rgba(255,255,255,0.5);
                 }
                 
                 .message-bubble input[type="range"]::-webkit-slider-thumb {
                     -webkit-appearance: none;
-                    width: 24px;
-                    height: 24px;
+                    width: 28px;
+                    height: 28px;
                     background: #fff;
                     border: 3px solid #38bdf8;
                     border-radius: 50%;
@@ -504,6 +505,16 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 .message-bubble input[type="range"]::-webkit-slider-thumb:hover {
                     transform: scale(1.15);
                     box-shadow: 0 6px 16px rgba(56, 189, 248, 0.5);
+                }
+                
+                .message-bubble input[type="range"]::-moz-range-thumb {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    background: #fff;
+                    border: 3px solid #38bdf8;
+                    cursor: pointer;
+                    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
                 }
 
                 .message-user {
@@ -643,8 +654,9 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 input[type="range"] {
                     -webkit-appearance: none;
                     width: 100%;
-                    height: 8px;
-                    border-radius: 5px;
+                    min-width: 220px;
+                    height: 14px;
+                    border-radius: 7px;
                     background: #e2e8f0;
                     outline: none;
                     margin: 20px 0;
@@ -652,14 +664,23 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 input[type="range"]::-webkit-slider-thumb {
                     -webkit-appearance: none;
                     appearance: none;
-                    width: 24px;
-                    height: 24px;
+                    width: 28px;
+                    height: 28px;
                     border-radius: 50%;
                     background: var(--primary);
                     cursor: pointer;
                     border: 4px solid #fff;
                     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
                     transition: transform 0.2s;
+                }
+                input[type="range"]::-moz-range-thumb {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    background: var(--primary);
+                    cursor: pointer;
+                    border: 4px solid #fff;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
                 }
                 .goal-grid {
                     display: grid;

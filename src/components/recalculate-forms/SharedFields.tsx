@@ -28,9 +28,10 @@ export const SliderField: React.FC<SliderFieldProps> = ({ label, value, min, max
                 onChange={(e) => onChange(Number(e.target.value))}
                 style={{
                     width: '100%',
-                    height: '6px',
+                    minWidth: '220px',
+                    height: '14px',
                     background: `linear-gradient(to right, var(--primary) 0%, var(--primary) ${(value - min) / (max - min) * 100}%, #eee ${(value - min) / (max - min) * 100}%, #eee 100%)`,
-                    borderRadius: '3px',
+                    borderRadius: '7px',
                     appearance: 'none',
                     outline: 'none',
                     cursor: 'pointer'
@@ -44,8 +45,8 @@ export const SliderField: React.FC<SliderFieldProps> = ({ label, value, min, max
             <style>{`
         .custom-slider::-webkit-slider-thumb {
           appearance: none;
-          width: 20px;
-          height: 20px;
+          width: 28px;
+          height: 28px;
           background: #fff;
           border: 3px solid var(--primary);
           border-radius: 50%;
@@ -55,6 +56,15 @@ export const SliderField: React.FC<SliderFieldProps> = ({ label, value, min, max
         }
         .custom-slider::-webkit-slider-thumb:hover {
           transform: scale(1.1);
+        }
+        .custom-slider::-moz-range-thumb {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: #fff;
+          border: 3px solid var(--primary);
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
       `}</style>
         </div>
