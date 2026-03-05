@@ -37,8 +37,6 @@ const CHART_MAX_RUB = 20_000_000;
 const CHART_TICKS = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]; // млн для подписей оси
 
 export const GoalsReport: React.FC<GoalsReportProps> = ({
-  clientName,
-  client,
   goalsSummary,
   goalCards = [],
   reportDate = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }),
