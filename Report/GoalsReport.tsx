@@ -36,8 +36,6 @@ const formatCurrency = (value: number) =>
 const CHART_MAX_RUB = 20_000_000;
 const CHART_TICKS = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]; // млн для подписей оси
 
-const defaultCoverImage = '/Report/assets/cover-goals.png';
-
 export const GoalsReport: React.FC<GoalsReportProps> = ({
   clientName,
   client,
@@ -45,8 +43,6 @@ export const GoalsReport: React.FC<GoalsReportProps> = ({
   goalCards = [],
   reportDate = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }),
 }) => {
-  const name = clientName || [client?.first_name, client?.last_name].filter(Boolean).join(' ') || 'Клиент';
-  const clientId = client?.id != null ? `# ${client.id}` : '';
   const goals = goalCards.length > 0
     ? goalCards
     : (goalsSummary?.goals as GoalReportItem[]) || [];
