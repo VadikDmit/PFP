@@ -505,6 +505,15 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 .goal-selection-bubble {
                     max-width: 100%;
                 }
+                .goal-selection-next-btn.btn-primary {
+                    background: #C60C7F !important;
+                    color: #fff !important;
+                    border: none !important;
+                }
+                .goal-selection-next-btn.btn-primary:hover {
+                    background: #a00a68 !important;
+                    color: #fff !important;
+                }
 
                 /* Пузырь с параметрами (возраст, деньги и т.п.) — тянем почти на всю ширину */
                 .goal-params-bubble {
@@ -1017,19 +1026,10 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                             style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}
                         >
                             <div className="message-bubble message-victoria goal-selection-bubble" style={{ background: 'rgba(255, 255, 255, 0.4)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.8)', boxShadow: '0 8px 32px rgba(31, 38, 135, 0.05)' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                <div style={{ marginBottom: '16px' }}>
                                     <div style={{ fontWeight: '800', color: '#64748b', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
                                         Система: Ввод координат цели {data.goals?.length ? `[${data.goals.length}]` : ''}
                                     </div>
-                                    {data.goals && data.goals.length > 0 && (
-                                        <button
-                                            onClick={handleStartAssetsStep}
-                                            className="btn-secondary"
-                                            style={{ fontSize: '14px' }}
-                                        >
-                                            Далее <ChevronRight size={16} />
-                                        </button>
-                                    )}
                                 </div>
                                 <div className="goal-grid">
                                     {GOAL_GALLERY_ITEMS.map(goal => (
@@ -1041,6 +1041,17 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         </div>
                                     ))}
                                 </div>
+                                {data.goals && data.goals.length > 0 && (
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '24px' }}>
+                                        <button
+                                            onClick={handleStartAssetsStep}
+                                            className="btn-primary goal-selection-next-btn"
+                                            style={{ fontSize: '14px', background: '#C60C7F', color: '#fff', border: 'none', width: 240, height: 52, borderRadius: 999, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 4px 16px rgba(198, 12, 127, 0.35)' }}
+                                        >
+                                            Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     )}
