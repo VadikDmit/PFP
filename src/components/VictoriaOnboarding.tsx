@@ -457,7 +457,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     background: rgba(255, 255, 255, 0.7);
                     color: #334155;
                     border: 1px solid rgba(255, 255, 255, 0.9);
-                    border-left: 3px solid #38bdf8;
+                    border-left: 3px solid #C60C7F;
                     border-bottom-left-radius: 4px;
                 }
 
@@ -485,15 +485,15 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 }
                 
                 .message-bubble .btn-primary:hover {
-                    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3), inset 0 2px 5px rgba(255,255,255,1) !important;
-                    border-color: rgba(56, 189, 248, 0.8) !important;
+                    box-shadow: 0 8px 25px rgba(198, 12, 127, 0.30), inset 0 2px 5px rgba(255,255,255,1) !important;
+                    border-color: rgba(198, 12, 127, 0.60) !important;
                     transform: translateY(-2px) !important;
-                    color: #0284c7 !important;
+                    color: #C60C7F !important;
                 }
                 
                 .message-bubble .btn-primary:active {
                     transform: translateY(1px) !important;
-                    box-shadow: 0 2px 10px rgba(56, 189, 248, 0.2) !important;
+                    box-shadow: 0 2px 10px rgba(198, 12, 127, 0.20) !important;
                 }
 
                 .message-bubble input[type="range"] {
@@ -514,16 +514,16 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     width: 28px;
                     height: 28px;
                     background: #fff;
-                    border: 3px solid #38bdf8;
+                    border: 3px solid #C60C7F;
                     border-radius: 50%;
                     cursor: pointer;
-                    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+                    box-shadow: 0 4px 12px rgba(198, 12, 127, 0.35);
                     transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s ease;
                 }
                 
                 .message-bubble input[type="range"]::-webkit-slider-thumb:hover {
                     transform: scale(1.15);
-                    box-shadow: 0 6px 16px rgba(56, 189, 248, 0.5);
+                    box-shadow: 0 6px 16px rgba(198, 12, 127, 0.45);
                 }
                 
                 .message-bubble input[type="range"]::-moz-range-thumb {
@@ -531,9 +531,9 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     height: 28px;
                     border-radius: 50%;
                     background: #fff;
-                    border: 3px solid #38bdf8;
+                    border: 3px solid #C60C7F;
                     cursor: pointer;
-                    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+                    box-shadow: 0 4px 12px rgba(198, 12, 127, 0.35);
                 }
 
                 .message-user {
