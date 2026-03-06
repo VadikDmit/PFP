@@ -679,7 +679,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 }
 
                 input[type="number"] {
-                    padding-right: 12px;
+                    padding-right: 24px;
                 }
 
                 input[type="range"] {
