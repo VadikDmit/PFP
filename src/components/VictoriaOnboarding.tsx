@@ -489,6 +489,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.8);
                     backdrop-filter: blur(16px);
                     -webkit-backdrop-filter: blur(16px);
+                    overflow: visible; /* контент и цифры не обрезаются */
                 }
 
                 .message-victoria {
@@ -498,6 +499,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     border: 1px solid rgba(255, 255, 255, 0.9);
                     border-left: 3px solid #C60C7F;
                     border-bottom-left-radius: 4px;
+                    padding-left: 28px; /* контент и цифры не перекрываются фиолетовой линией */
                 }
 
                 .goal-selection-bubble {
@@ -508,6 +510,11 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 .goal-params-bubble {
                     width: 100%;
                     max-width: 100%;
+                }
+
+                /* Блок с цифрами и стрелками не сжимать — контент полностью виден */
+                .message-bubble .number-input-with-stepper {
+                    flex-shrink: 0;
                 }
 
                 .message-bubble .btn-primary {
@@ -583,6 +590,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     border: 1px solid rgba(226, 232, 240, 0.9);
                     border-right: 3px solid #A6A8AA;
                     border-bottom-right-radius: 4px;
+                    padding-right: 28px; /* контент не перекрывается серой полосой */
                 }
 
                 .chat-input-area {
