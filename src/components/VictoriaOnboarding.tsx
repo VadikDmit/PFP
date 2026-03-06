@@ -538,11 +538,11 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
 
                 .message-user {
                     align-self: flex-end;
-                    background: linear-gradient(135deg, rgba(255, 217, 61, 0.3) 0%, rgba(255, 199, 80, 0.1) 100%);
+                    background: #F0F5F9;
                     color: #0f172a;
                     font-weight: 600;
-                    border: 1px solid rgba(255, 199, 80, 0.5);
-                    border-right: 3px solid #f59e0b;
+                    border: 1px solid rgba(226, 232, 240, 0.9);
+                    border-right: 3px solid #A6A8AA;
                     border-bottom-right-radius: 4px;
                 }
 
