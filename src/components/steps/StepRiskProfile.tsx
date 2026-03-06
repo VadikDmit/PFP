@@ -179,7 +179,7 @@ const StepRiskProfile: React.FC<StepRiskProfileProps> = ({ data, setData, onComp
                             flex: 1,
                             height: '4px',
                             borderRadius: '2px',
-                            background: answers[q.id] !== undefined ? 'var(--primary)' : 'rgba(255,255,255,0.1)',
+                            background: answers[q.id] !== undefined ? '#C60C7F' : 'rgba(255,255,255,0.1)',
                             cursor: 'pointer',
                             transition: 'background 0.3s',
                         }}
@@ -215,8 +215,8 @@ const StepRiskProfile: React.FC<StepRiskProfileProps> = ({ data, setData, onComp
                                         style={{
                                             padding: '14px 16px',
                                             borderRadius: '12px',
-                                            border: `2px solid ${isSelected ? 'var(--primary)' : 'var(--border-color)'}`,
-                                            background: isSelected ? 'rgba(255, 199, 80, 0.12)' : 'var(--card-bg)',
+                                            border: `2px solid ${isSelected ? '#C60C7F' : 'var(--border-color)'}`,
+                                            background: isSelected ? 'rgba(198, 12, 127, 0.12)' : 'var(--card-bg)',
                                             color: 'var(--text-main)',
                                             textAlign: 'left',
                                             cursor: 'pointer',
@@ -231,14 +231,14 @@ const StepRiskProfile: React.FC<StepRiskProfileProps> = ({ data, setData, onComp
                                             width: '24px',
                                             height: '24px',
                                             borderRadius: '50%',
-                                            border: `2px solid ${isSelected ? 'var(--primary)' : 'var(--border-color)'}`,
+                                            border: `2px solid ${isSelected ? '#C60C7F' : 'var(--border-color)'}`,
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             flexShrink: 0,
-                                            background: isSelected ? 'var(--primary)' : 'transparent',
+                                            background: isSelected ? '#C60C7F' : 'transparent',
                                         }}>
-                                            {isSelected && <CheckCircle size={14} color="#000" />}
+                                            {isSelected && <CheckCircle size={14} color="#fff" />}
                                         </span>
                                         {opt.text}
                                     </button>
@@ -271,7 +271,7 @@ const StepRiskProfile: React.FC<StepRiskProfileProps> = ({ data, setData, onComp
                                     style={{
                                         background: 'none',
                                         border: 'none',
-                                        color: 'var(--primary)',
+                                        color: '#C60C7F',
                                         cursor: 'pointer',
                                         display: 'flex',
                                         alignItems: 'center',
