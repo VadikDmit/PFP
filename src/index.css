@@ -208,8 +208,14 @@ input[type="number"] {
     backdrop-filter: blur(10px);
 }
 
+/* Спиннеры снаружи инпута: скрываем встроенные стрелки */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 input[type="number"] {
-    padding-right: 24px;
+    -moz-appearance: textfield;
 }
 
 input:focus {

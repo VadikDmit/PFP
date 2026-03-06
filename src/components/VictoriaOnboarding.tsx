@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, LogOut, ChevronRight } from 'lucide-react';
+import { Send, LogOut, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
 import avatarImage from '../assets/avatar_full.png';
 import { aiApi } from '../api/aiApi';
 import Markdown from 'react-markdown';
@@ -44,6 +44,45 @@ interface VictoriaOnboardingProps {
     setData: React.Dispatch<React.SetStateAction<CJMData>>;
     onExit: () => void;
     onFinish: () => void;
+}
+
+/** Числовой инпут со стрелками снаружи (не внутри поля) */
+function NumberInputWithStepper(
+    { value, onChange, min = 0, max = 999999999, step = 1, inputStyle = {}, inputWidth = 120 }:
+    { value: number; onChange: (n: number) => void; min?: number; max?: number; step?: number; inputStyle?: React.CSSProperties; inputWidth?: number }
+) {
+    const [str, setStr] = useState(String(value));
+    useEffect(() => { setStr(String(value)); }, [value]);
+    const commit = (n: number) => {
+        const clamped = Math.min(max, Math.max(min, n));
+        onChange(clamped);
+        setStr(String(clamped));
+    };
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} className="number-input-with-stepper">
+            <input
+                type="text"
+                inputMode="numeric"
+                value={str}
+                onChange={e => {
+                    const v = e.target.value.replace(/\D/g, '');
+                    setStr(v);
+                    const n = parseInt(v, 10);
+                    if (!isNaN(n)) onChange(Math.min(max, Math.max(min, n)));
+                }}
+                onBlur={() => commit(parseInt(str, 10) || min)}
+                style={{ width: inputWidth, textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b', ...inputStyle }}
+            />
+            <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+                <button type="button" aria-label="Увеличить" onClick={() => commit(value + step)} className="number-stepper-btn">
+                    <ChevronUp size={16} />
+                </button>
+                <button type="button" aria-label="Уменьшить" onClick={() => commit(value - step)} className="number-stepper-btn">
+                    <ChevronDown size={16} />
+                </button>
+            </div>
+        </div>
+    );
 }
 
 const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, onExit, onFinish }) => {
@@ -678,8 +717,36 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     outline-offset: 2px;
                 }
 
+                input[type="number"]::-webkit-inner-spin-button,
+                input[type="number"]::-webkit-outer-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
                 input[type="number"] {
-                    padding-right: 24px;
+                    -moz-appearance: textfield;
+                }
+
+                .number-stepper-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 28px;
+                    height: 18px;
+                    padding: 0;
+                    border: 1px solid #D9D9D9;
+                    background: #f8fafc;
+                    color: #64748b;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    font-size: 12px;
+                }
+                .number-stepper-btn:hover {
+                    background: #e2e8f0;
+                    color: #1e293b;
+                }
+                .number-stepper-btn:focus {
+                    outline: 2px solid #D9D9D9;
+                    outline-offset: 1px;
                 }
 
                 input[type="range"] {
@@ -1041,11 +1108,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ marginBottom: '18px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                         <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Первоначальный капитал в резерве</span>
-                                        <input
-                                            type="number"
+                                        <NumberInputWithStepper
                                             value={finInitial}
-                                            onChange={e => setFinInitial(parseInt(e.target.value) || 0)}
-                                            style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                            onChange={setFinInitial}
+                                            min={0}
+                                            max={Math.max(initialCapitalInput || 1000000, finInitial || 0)}
+                                            step={10000}
+                                            inputWidth={120}
                                         />
                                     </div>
                                     <input
@@ -1062,12 +1131,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ marginBottom: '8px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                         <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Ежемесячное пополнение</span>
-                                        <input
-                                            type="number"
+                                        <NumberInputWithStepper
                                             value={finMonthly}
-                                            onChange={e => setFinMonthly(parseInt(e.target.value) || 0)}
-                                            className="manual-input"
-                                            style={{ width: '100px', textAlign: 'right', fontWeight: 800, border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                            onChange={setFinMonthly}
+                                            min={0}
+                                            max={200000}
+                                            step={5000}
+                                            inputWidth={100}
                                         />
                                     </div>
                                     <input
@@ -1160,11 +1230,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <div>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                 <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Желаемый доход</span>
-                                                <input
-                                                    type="number"
+                                                <NumberInputWithStepper
                                                     value={editingGoal.desiredMonthlyIncome}
-                                                    onChange={e => setEditingGoal({ ...editingGoal, desiredMonthlyIncome: parseInt(e.target.value) || 0 })}
-                                                    style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                    onChange={n => setEditingGoal({ ...editingGoal, desiredMonthlyIncome: n })}
+                                                    min={10000}
+                                                    max={1000000}
+                                                    step={5000}
+                                                    inputWidth={120}
                                                 />
                                             </div>
                                             <input
@@ -1178,11 +1250,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <div>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                 <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Капитал</span>
-                                                <input
-                                                    type="number"
+                                                <NumberInputWithStepper
                                                     value={editingGoal.initialCapital}
-                                                    onChange={e => setEditingGoal({ ...editingGoal, initialCapital: parseInt(e.target.value) || 0 })}
-                                                    style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                    onChange={n => setEditingGoal({ ...editingGoal, initialCapital: n })}
+                                                    min={1000000}
+                                                    max={100000000}
+                                                    step={500000}
+                                                    inputWidth={120}
                                                 />
                                             </div>
                                             <input
@@ -1197,11 +1271,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                             <div>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                     <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Начальный капитал</span>
-                                                    <input
-                                                        type="number"
+                                                    <NumberInputWithStepper
                                                         value={editingGoal.initialCapital}
-                                                        onChange={e => setEditingGoal({ ...editingGoal, initialCapital: parseInt(e.target.value) || 0 })}
-                                                        style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                        onChange={n => setEditingGoal({ ...editingGoal, initialCapital: n })}
+                                                        min={0}
+                                                        max={10000000}
+                                                        step={100000}
+                                                        inputWidth={120}
                                                     />
                                                 </div>
                                                 <input
@@ -1214,11 +1290,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                             <div>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                     <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Ежемесячное пополнение</span>
-                                                    <input
-                                                        type="number"
+                                                    <NumberInputWithStepper
                                                         value={editingGoal.monthlyReplenishment}
-                                                        onChange={e => setEditingGoal({ ...editingGoal, monthlyReplenishment: parseInt(e.target.value) || 0 })}
-                                                        style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                        onChange={n => setEditingGoal({ ...editingGoal, monthlyReplenishment: n })}
+                                                        min={0}
+                                                        max={500000}
+                                                        step={5000}
+                                                        inputWidth={120}
                                                     />
                                                 </div>
                                                 <input
@@ -1233,11 +1311,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <div>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                 <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Стоимость цели</span>
-                                                <input
-                                                    type="number"
+                                                <NumberInputWithStepper
                                                     value={editingGoal.targetAmount}
-                                                    onChange={e => setEditingGoal({ ...editingGoal, targetAmount: parseInt(e.target.value) || 0 })}
-                                                    style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                    onChange={n => setEditingGoal({ ...editingGoal, targetAmount: n })}
+                                                    min={100000}
+                                                    max={50000000}
+                                                    step={100000}
+                                                    inputWidth={120}
                                                 />
                                             </div>
                                             <input
@@ -1253,11 +1333,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <div>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                 <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Срок (лет)</span>
-                                                <input
-                                                    type="number"
+                                                <NumberInputWithStepper
                                                     value={Math.floor(editingGoal.termMonths / 12)}
-                                                    onChange={e => setEditingGoal({ ...editingGoal, termMonths: (parseInt(e.target.value) || 1) * 12 })}
-                                                    style={{ width: '60px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                    onChange={n => setEditingGoal({ ...editingGoal, termMonths: n * 12 })}
+                                                    min={1}
+                                                    max={50}
+                                                    step={1}
+                                                    inputWidth={60}
                                                 />
                                             </div>
                                             <input
@@ -1304,11 +1386,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ marginBottom: '8px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                         <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Лимит покрытия</span>
-                                        <input
-                                            type="number"
+                                        <NumberInputWithStepper
                                             value={lifeLimit}
-                                            onChange={e => setLifeLimit(parseInt(e.target.value) || 0)}
-                                            style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                            onChange={setLifeLimit}
+                                            min={0}
+                                            max={50000000}
+                                            step={500000}
+                                            inputWidth={120}
                                         />
                                     </div>
                                     <input
@@ -1408,11 +1492,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ marginBottom: '12px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                         <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Сумма дохода</span>
-                                        <input
-                                            type="number"
+                                        <NumberInputWithStepper
                                             value={data.avgMonthlyIncome}
-                                            onChange={e => setData(prev => ({ ...prev, avgMonthlyIncome: parseInt(e.target.value) || 0 }))}
-                                            style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                            onChange={n => setData(prev => ({ ...prev, avgMonthlyIncome: n }))}
+                                            min={30000}
+                                            max={1000000}
+                                            step={5000}
+                                            inputWidth={120}
                                         />
                                     </div>
                                     <input
