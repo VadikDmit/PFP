@@ -429,7 +429,10 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                                     style={{
                                                         fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                                                         border: '1px solid #E5E7EB', borderRadius: '8px',
-                                                        padding: '4px 8px', width: '80px', textAlign: 'right'
+                                                        padding: '6px 10px',
+                                                        width: '130px',
+                                                        minWidth: '130px',
+                                                        textAlign: 'right'
                                                     }}
                                                 />
                                                 <span style={{ fontWeight: '800', fontSize: '20px', color: '#C60C7F' }}>лет</span>
