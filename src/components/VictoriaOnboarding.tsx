@@ -509,10 +509,14 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     background: #C60C7F !important;
                     color: #fff !important;
                     border: none !important;
+                    width: 240px !important;
+                    height: 52px !important;
+                    box-shadow: none;
                 }
                 .goal-selection-next-btn.btn-primary:hover {
                     background: #a00a68 !important;
                     color: #fff !important;
+                    box-shadow: 0 6px 20px rgba(198, 12, 127, 0.35);
                 }
 
                 /* Пузырь с параметрами (возраст, деньги и т.п.) — тянем почти на всю ширину */
@@ -1042,11 +1046,11 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     ))}
                                 </div>
                                 {data.goals && data.goals.length > 0 && (
-                                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '24px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
                                         <button
                                             onClick={handleStartAssetsStep}
                                             className="btn-primary goal-selection-next-btn"
-                                            style={{ fontSize: '14px', background: '#C60C7F', color: '#fff', border: 'none', width: 240, height: 52, borderRadius: 999, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 4px 16px rgba(198, 12, 127, 0.35)' }}
+                                            style={{ fontSize: '14px', background: '#C60C7F', color: '#fff', border: 'none', width: 240, height: 52, borderRadius: 999, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
                                         >
                                             Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                         </button>
