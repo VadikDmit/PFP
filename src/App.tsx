@@ -198,7 +198,7 @@ function App() {
         return (
             <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: '#f8f9fa' }}>
                 <div style={{ padding: '24px', background: '#fff', borderRadius: '16px', boxShadow: '0 10px 25px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-                    <div className="animate-spin" style={{ width: '32px', height: '32px', border: '3px solid #f3f4f6', borderTopColor: 'var(--primary)', borderRadius: '50%' }} />
+                    <div className="animate-spin" style={{ width: '32px', height: '32px', border: '3px solid #f3f4f6', borderTopColor: '#C60C7F', borderRadius: '50%' }} />
                     <div style={{ fontWeight: '600', color: '#64748b' }}>Загрузка данных...</div>
                 </div>
             </div>
@@ -295,7 +295,7 @@ function App() {
                             top: '80px',
                             right: '40px',
                             padding: '12px 24px',
-                            background: 'var(--primary)',
+                            background: '#C60C7F',
                             color: '#fff',
                             borderRadius: '12px',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',

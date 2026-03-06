@@ -77,7 +77,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onSwitch
             >
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
                     <div style={{
-                        background: 'var(--primary)',
+                        background: '#C60C7F',
                         width: '64px',
                         height: '64px',
                         borderRadius: '16px',
@@ -85,7 +85,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onSwitch
                         alignItems: 'center',
                         justifyContent: 'center',
                         marginBottom: '16px',
-                        boxShadow: '0 0 20px rgba(255, 199, 80, 0.3)'
+                        boxShadow: '0 0 20px rgba(198, 12, 127, 0.3)'
                     }}>
                         <UserPlus size={32} color="#000" />
                     </div>
@@ -200,8 +200,8 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onSwitch
                                 <div className="premium-loader" style={{
                                     width: '60px',
                                     height: '60px',
-                                    border: '3px solid rgba(255, 199, 80, 0.1)',
-                                    borderTop: '3px solid var(--primary)',
+                                    border: '3px solid rgba(198, 12, 127, 0.1)',
+                                    borderTop: '3px solid #C60C7F',
                                     borderRadius: '50%',
                                     animation: 'spin 1s linear infinite'
                                 }} />
@@ -224,7 +224,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onSwitch
                         <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
                             Уже есть аккаунт?{' '}
                             <span
-                                style={{ color: 'var(--primary)', cursor: 'pointer', fontWeight: '600' }}
+                                style={{ color: '#C60C7F', cursor: 'pointer', fontWeight: '600' }}
                                 onClick={onSwitchToLogin}
                             >
                                 Войти

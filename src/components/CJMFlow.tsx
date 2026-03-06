@@ -263,8 +263,8 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
                             width: '36px',
                             height: '36px',
                             borderRadius: '50%',
-                            background: step > i + 1 ? 'var(--secondary)' : step === i + 1 ? 'var(--primary)' : 'rgba(255,255,255,0.1)',
-                            color: step === i + 1 ? '#000' : '#fff',
+                            background: step === i + 1 ? '#000' : 'rgba(255,255,255,0.1)',
+                            color: step === i + 1 ? '#fff' : '#C4C4C4',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -276,7 +276,7 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
                         </div>
                         <span style={{
                             fontSize: '10px',
-                            color: step === i + 1 ? 'var(--primary)' : 'var(--text-muted)',
+                            color: step === i + 1 ? '#000' : '#C4C4C4',
                             display: 'block',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
@@ -291,7 +291,7 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
                                 left: 'calc(50% + 20px)',
                                 right: 'calc(-50% + 20px)',
                                 height: '2px',
-                                background: step > i + 1 ? 'var(--secondary)' : 'rgba(255,255,255,0.1)'
+                                background: step > i + 1 ? '#C4C4C4' : 'rgba(255,255,255,0.1)'
                             }} />
                         )}
                     </div>

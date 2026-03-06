@@ -85,7 +85,7 @@ const AIDashboardHeader: React.FC<AIDashboardHeaderProps> = ({ clientName, onOpe
                 position: 'absolute',
                 top: -50, right: -50,
                 width: '300px', height: '300px',
-                background: 'radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(255,255,255,0) 70%)',
+                background: 'radial-gradient(circle, rgba(198,12,127,0.1) 0%, rgba(255,255,255,0) 70%)',
                 borderRadius: '50%',
                 zIndex: 0
             }} />

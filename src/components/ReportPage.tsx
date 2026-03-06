@@ -42,7 +42,7 @@ const ReportPage: React.FC<ReportPageProps> = ({ clientId, onBack, fallbackPlan 
   if (loading) {
     return (
       <div style={{ padding: '48px 24px', textAlign: 'center' }}>
-        <div className="animate-spin" style={{ width: '40px', height: '40px', margin: '0 auto 16px', border: '3px solid #f3f4f6', borderTopColor: 'var(--primary)', borderRadius: '50%' }} />
+        <div className="animate-spin" style={{ width: '40px', height: '40px', margin: '0 auto 16px', border: '3px solid #f3f4f6', borderTopColor: '#C60C7F', borderRadius: '50%' }} />
         <p style={{ color: '#64748b' }}>Загрузка отчёта...</p>
       </div>
     );
@@ -91,7 +91,7 @@ const ReportPage: React.FC<ReportPageProps> = ({ clientId, onBack, fallbackPlan 
         <button
           type="button"
           onClick={onBack}
-          style={{ padding: '10px 20px', borderRadius: '12px', border: 'none', background: 'var(--primary)', color: '#fff', cursor: 'pointer', fontWeight: 600 }}
+          style={{ padding: '10px 20px', borderRadius: '12px', border: 'none', background: '#C60C7F', color: '#fff', cursor: 'pointer', fontWeight: 600 }}
         >
           Назад к плану
         </button>

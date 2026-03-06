@@ -16,7 +16,7 @@ const PieChartComponent = ({ data, currency }: PieChartProps) => {
         <div className={styles.pieChart_container}>
             <ChartBiz
                 width={windowWidth > 1024 ? 550 : windowWidth - 100}
-                color={['#FFC759', '#667DB5', '#FFC759', '#F37058', '#EEC960', '#CCE192', '#78B497', '#58595B']}
+                color={['#C60C7F', '#667DB5', '#C60C7F', '#F37058', '#EEC960', '#CCE192', '#78B497', '#58595B']}
                 data={data || []}
                 autoFit
                 height={windowWidth > 1024 ? 350 : 0}

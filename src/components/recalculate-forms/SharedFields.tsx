@@ -15,7 +15,7 @@ export const SliderField: React.FC<SliderFieldProps> = ({ label, value, min, max
         <div style={{ marginBottom: '24px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                 <label style={{ fontSize: '14px', fontWeight: '600', color: '#666' }}>{label}</label>
-                <span style={{ fontSize: '16px', fontWeight: '700', color: 'var(--primary)' }}>
+                <span style={{ fontSize: '16px', fontWeight: '700', color: '#C60C7F' }}>
                     {format ? format(value) : value}
                 </span>
             </div>
@@ -30,7 +30,7 @@ export const SliderField: React.FC<SliderFieldProps> = ({ label, value, min, max
                     width: '100%',
                     minWidth: '220px',
                     height: '14px',
-                    background: `linear-gradient(to right, var(--primary) 0%, var(--primary) ${(value - min) / (max - min) * 100}%, #eee ${(value - min) / (max - min) * 100}%, #eee 100%)`,
+                    background: `linear-gradient(to right, #C60C7F 0%, #C60C7F ${(value - min) / (max - min) * 100}%, #eee ${(value - min) / (max - min) * 100}%, #eee 100%)`,
                     borderRadius: '7px',
                     appearance: 'none',
                     outline: 'none',
@@ -48,7 +48,7 @@ export const SliderField: React.FC<SliderFieldProps> = ({ label, value, min, max
           width: 28px;
           height: 28px;
           background: #fff;
-          border: 3px solid var(--primary);
+          border: 3px solid #C60C7F;
           border-radius: 50%;
           cursor: pointer;
           box-shadow: 0 2px 6px rgba(0,0,0,0.15);
@@ -62,7 +62,7 @@ export const SliderField: React.FC<SliderFieldProps> = ({ label, value, min, max
           height: 28px;
           border-radius: 50%;
           background: #fff;
-          border: 3px solid var(--primary);
+          border: 3px solid #C60C7F;
           cursor: pointer;
           box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
@@ -94,9 +94,9 @@ export const SelectField: React.FC<SelectFieldProps> = ({ label, value, options,
                             padding: '12px',
                             borderRadius: '12px',
                             border: '2px solid',
-                            borderColor: value === opt ? 'var(--primary)' : '#eee',
+                            borderColor: value === opt ? '#C60C7F' : '#eee',
                             background: value === opt ? 'var(--primary-light)' : '#fff',
-                            color: value === opt ? 'var(--primary)' : '#666',
+                            color: value === opt ? '#C60C7F' : '#666',
                             fontWeight: '600',
                             cursor: 'pointer',
                             transition: 'all 0.2s',

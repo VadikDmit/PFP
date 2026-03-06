@@ -15,7 +15,7 @@ input:-webkit-autofill {
 }
 
 .select__control--is-focused {
-  border-color: #FFC759 !important;
+  border-color: #C60C7F !important;
 }
 
 .select__menu-list::-webkit-scrollbar {
@@ -30,9 +30,9 @@ input:-webkit-autofill {
 }
 
 .select__menu-list::-webkit-scrollbar-thumb {
-  background: #FFC759;
+  background: #C60C7F;
   border-radius: 0;
-  border: 1px solid #FFC759;
+  border: 1px solid #C60C7F;
 }
 
 .select__option {
@@ -40,11 +40,11 @@ input:-webkit-autofill {
 }
 
 .select__option--is-selected {
-  background: #FFC759;
+  background: #C60C7F;
 }
 
 .select__option--is-focused {
-  background-color: #FFC759 !important;
+  background-color: #C60C7F !important;
 
   color: white !important;
 }
@@ -72,8 +72,8 @@ input:-webkit-autofill {
 }
 
 #nprogress .spinner-icon {
-  border-top-color: #FFC759 !important;
-  border-left-color: #FFC759 !important;
+  border-top-color: #C60C7F !important;
+  border-left-color: #C60C7F !important;
 }
 
 /* ### MIUI STYLES */
@@ -118,7 +118,7 @@ input:-webkit-autofill {
 }
 
 .Mui-checked+.MuiSwitch-track {
-  background-color: #FFC759 !important;
+  background-color: #C60C7F !important;
 }
 
 .MuiButtonBase-root,
@@ -138,7 +138,7 @@ input:-webkit-autofill {
 }
 
 .MuiTablePagination-actions .MuiButtonBase-root svg {
-  fill: #FFC759 !important;
+  fill: #C60C7F !important;
 }
 
 .MuiTablePagination-actions .MuiButtonBase-root:hover svg {
@@ -175,7 +175,7 @@ input:-webkit-autofill {
 }
 
 .MuiDataGrid-columnHeaders {
-  background-color: #FFC759 !important;
+  background-color: #C60C7F !important;
   border-radius: 10px !important;
 
   font-size: 18px !important;
@@ -224,7 +224,7 @@ input:-webkit-autofill {
 }
 
 .MuiDataGrid-row.Mui-selected .MuiButtonBase-root svg {
-  fill: #FFC759 !important;
+  fill: #C60C7F !important;
 }
 
 .MuiDataGrid-row.Mui-selected .MuiButtonBase-root:hover svg {
@@ -263,7 +263,7 @@ input:-webkit-autofill {
 }
 
 .MuiCircularProgress-root {
-  color: #FFC759 !important;
+  color: #C60C7F !important;
 }
 
 .MuiDataGrid-menu .MuiMenuItem-root:hover {
@@ -314,7 +314,7 @@ input:-webkit-autofill {
 }
 
 .list-selector:hover {
-  border-color: #FFC759 !important;
+  border-color: #C60C7F !important;
 }
 
 .list-dropdown {
@@ -323,13 +323,13 @@ input:-webkit-autofill {
 
 .list-focused .list-selector,
 .list-open .list-selector {
-  border-color: #FFC759 !important;
+  border-color: #C60C7F !important;
   box-shadow: 0 0 0 2px rgb(176 116 179 / 10%) !important;
 }
 
 .radio-children-button-checked,
 .radio-button-checked {
-  background: #FFC759;
+  background: #C60C7F;
   border-radius: 10px !important;
 }
 
@@ -353,7 +353,7 @@ input:-webkit-autofill {
 .radio-inner::after {
   margin-inline-start: -8px !important;
 
-  background: #FFC759;
+  background: #C60C7F;
 
   transform: scale(0.7) !important;
 }
@@ -389,7 +389,7 @@ input:-webkit-autofill {
 }
 
 .goal_slider-track {
-  background-color: #FFC759 !important;
+  background-color: #C60C7F !important;
 }
 
 .goal_slider-handle {
@@ -409,7 +409,7 @@ input:-webkit-autofill {
 
   border-width: 10px !important;
 
-  background-color: #FFC759 !important;
+  background-color: #C60C7F !important;
   box-shadow: 0 0 0 0 transparent !important;
 
   top: 50% !important;
@@ -465,7 +465,7 @@ input:-webkit-autofill {
 }
 
 .goal_input-handler:hover span {
-  color: #FFC759 !important;
+  color: #C60C7F !important;
 }
 
 .goal_edit [role="tooltip"],
@@ -509,7 +509,7 @@ input:-webkit-autofill {
   padding-inline-start: 49px;
   padding-inline-end: 50px;
 
-  color: #FFC759;
+  color: #C60C7F;
 }
 
 .goal_edit-buttons .ant-btn-primary,
@@ -517,7 +517,7 @@ input:-webkit-autofill {
   padding-inline-start: 55px;
   padding-inline-end: 56px;
 
-  background: #FFC759;
+  background: #C60C7F;
 
   color: white;
 }
@@ -558,7 +558,7 @@ input:-webkit-autofill {
   }
 
   &.auth-tab-active {
-    border: 1px solid #FFC759 !important;
+    border: 1px solid #C60C7F !important;
   }
 }
 
@@ -569,7 +569,7 @@ input:-webkit-autofill {
 .auth_button {
   &,
   &[disabled] {
-    background: #FFC759 !important;
+    background: #C60C7F !important;
 
     box-shadow: none !important;
     border: none !important;

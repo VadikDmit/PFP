@@ -163,7 +163,7 @@ const StepAssets: React.FC<StepAssetsProps> = ({ data, setData, onNext, onPrev }
                             background: 'rgba(255, 255, 255, 0.05)',
                             border: '1px solid var(--border-color)',
                             borderRadius: '20px',
-                            color: 'var(--primary)', // Highlight the money value
+                            color: '#C60C7F', // Highlight the money value
                             fontSize: '32px',
                             fontWeight: '700',
                             outline: 'none',

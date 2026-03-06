@@ -66,7 +66,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, onSwitchToRegiste
             >
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
                     <div style={{
-                        background: 'var(--primary)',
+                        background: '#C60C7F',
                         width: '64px',
                         height: '64px',
                         borderRadius: '16px',
@@ -74,7 +74,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, onSwitchToRegiste
                         alignItems: 'center',
                         justifyContent: 'center',
                         marginBottom: '16px',
-                        boxShadow: '0 0 20px rgba(255, 199, 80, 0.3)'
+                        boxShadow: '0 0 20px rgba(198, 12, 127, 0.3)'
                     }}>
                         <LogIn size={32} color="#000" />
                     </div>
@@ -122,7 +122,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, onSwitchToRegiste
                     <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
                         Нет аккаунта?{' '}
                         <span
-                            style={{ color: 'var(--primary)', cursor: 'pointer', fontWeight: '600' }}
+                            style={{ color: '#C60C7F', cursor: 'pointer', fontWeight: '600' }}
                             onClick={onSwitchToRegister}
                         >
                             Зарегистрироваться
