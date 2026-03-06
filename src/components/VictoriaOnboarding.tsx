@@ -651,20 +651,24 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
                 
                 .btn-secondary {
+                    width: 240px;
+                    height: 52px;
                     background: #fff;
-                    border: 2px solid #f1f5f9;
-                    color: #1e293b;
+                    border: 2px solid #C60C7F;
+                    color: #C60C7F;
                     font-weight: 700;
                     cursor: pointer;
                     transition: all 0.2s ease;
                     display: flex;
-                    flex-direction: column;
+                    flex-direction: row;
                     align-items: center;
                     gap: 8px;
+                    justify-content: center;
+                    border-radius: 999px;
                 }
                 .btn-secondary:hover:not(:disabled) {
-                    border-color: var(--primary);
-                    background: #fffef0;
+                    border-color: #C60C7F;
+                    background: rgba(198, 12, 127, 0.06);
                     transform: translateY(-2px);
                     box-shadow: 0 10px 20px rgba(0,0,0,0.03);
                 }
@@ -911,8 +915,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
                                     <button
                                         onClick={handleAgeSubmit}
-                                        className="btn-primary"
-                                        style={{ padding: '8px 18px', borderRadius: '999px', fontSize: '13px' }}
+                                        className="btn-secondary"
+                                        style={{ fontSize: '14px' }}
                                     >
                                         Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                     </button>
@@ -937,8 +941,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     {data.goals && data.goals.length > 0 && (
                                         <button
                                             onClick={handleStartAssetsStep}
-                                            className="btn-primary"
-                                            style={{ padding: '8px 16px', borderRadius: '999px', fontSize: '13px', boxShadow: '0 4px 12px rgba(255,199,80,0.3)' }}
+                                            className="btn-secondary"
+                                            style={{ fontSize: '14px' }}
                                         >
                                             Далее <ChevronRight size={16} />
                                         </button>
@@ -999,8 +1003,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
                                         <button
                                             onClick={handleInitialCapitalSubmit}
-                                            className="btn-primary"
-                                            style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                            className="btn-secondary"
+                                            style={{ fontSize: '14px' }}
                                         >
                                             Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                         </button>
@@ -1115,8 +1119,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                                 setIsTyping(false);
                                             }
                                         }}
-                                        className="btn-primary"
-                                        style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                        className="btn-secondary"
+                                        style={{ fontSize: '14px' }}
                                     >
                                         Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                     </button>
@@ -1260,8 +1264,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
                                         <button
                                             onClick={handleParametersSubmit}
-                                            className="btn-primary"
-                                            style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                            className="btn-secondary"
+                                            style={{ fontSize: '14px' }}
                                         >
                                             Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                         </button>
@@ -1370,8 +1374,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                                 setIsTyping(false);
                                             }
                                         }}
-                                        className="btn-primary"
-                                        style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                        className="btn-secondary"
+                                        style={{ fontSize: '14px' }}
                                     >
                                         Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                     </button>
@@ -1458,8 +1462,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                                 setIsTyping(false);
                                             }
                                         }}
-                                        className="btn-primary"
-                                        style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                        className="btn-secondary"
+                                        style={{ fontSize: '14px' }}
                                     >
                                         Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                     </button>
