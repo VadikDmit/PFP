@@ -505,17 +505,17 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 .goal-selection-bubble {
                     max-width: 100%;
                 }
-                .goal-selection-next-btn.btn-primary {
+                .goal-selection-bubble .goal-selection-next-btn.btn-primary {
                     background: #C60C7F !important;
-                    color: #fff !important;
+                    color: #FFFFFF !important;
                     border: none !important;
                     width: 240px !important;
                     height: 52px !important;
                     box-shadow: none;
                 }
-                .goal-selection-next-btn.btn-primary:hover {
+                .goal-selection-bubble .goal-selection-next-btn.btn-primary:hover {
                     background: #a00a68 !important;
-                    color: #fff !important;
+                    color: #FFFFFF !important;
                     box-shadow: 0 6px 20px rgba(198, 12, 127, 0.35);
                 }
 
@@ -1050,7 +1050,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <button
                                             onClick={handleStartAssetsStep}
                                             className="btn-primary goal-selection-next-btn"
-                                            style={{ fontSize: '14px', background: '#C60C7F', color: '#fff', border: 'none', width: 240, height: 52, borderRadius: 999, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+                                            style={{ fontSize: '14px', background: '#C60C7F', color: '#FFFFFF', border: 'none', width: 240, height: 52, borderRadius: 999, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
                                         >
                                             Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                         </button>
