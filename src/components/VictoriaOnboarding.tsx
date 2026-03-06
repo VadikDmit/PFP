@@ -673,6 +673,14 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     box-shadow: 0 10px 20px rgba(0,0,0,0.03);
                 }
                 .btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; }
+                .btn-secondary:focus, .btn-primary:focus {
+                    outline: 2px solid #D9D9D9;
+                    outline-offset: 2px;
+                }
+
+                input[type="number"] {
+                    padding-right: 12px;
+                }
 
                 input[type="range"] {
                     -webkit-appearance: none;
@@ -912,7 +920,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     value={data.age}
                                     onChange={e => setData(prev => ({ ...prev, age: parseInt(e.target.value) }))}
                                 />
-                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
                                     <button
                                         onClick={handleAgeSubmit}
                                         className="btn-secondary"
