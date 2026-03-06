@@ -809,7 +809,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
 
             <div className="chat-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '16px', overflow: 'hidden', border: '2px solid var(--primary)' }}>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '16px', overflow: 'hidden', border: '2px solid #F0F5F9' }}>
                         <img src={avatarImage} alt="Victoria" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                     <div>
