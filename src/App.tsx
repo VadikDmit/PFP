@@ -11,7 +11,7 @@ import PresentPage from './components/PresentPage'
 import PastPage from './components/PastPage'
 import ReportPage from './components/ReportPage'
 import type { Client } from './types/client'
-import { clientApi } from './api/clientApi'
+import { clientApi, API_BASE_URL } from './api/clientApi'
 
 type Page = 'loading' | 'landing' | 'login' | 'register' | 'past' | 'present' | 'future' | 'cjm' | 'result' | 'report'
 
