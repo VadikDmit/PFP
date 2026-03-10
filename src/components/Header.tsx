@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ activePage = 'present', onNavigate, onL
                 flexShrink: 0,
                 whiteSpace: 'nowrap',
             }}>
-                <span style={{ color: '#D946EF' }}>Anna</span>
+                <span style={{ color: '#C60C7F' }}>Anna</span>
             </div>
 
             {/* Navigation */}
@@ -67,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({ activePage = 'present', onNavigate, onL
                                 cursor: 'pointer',
                                 padding: '6px 10px',
                                 borderRadius: '20px',
-                                background: isActive ? '#D946EF' : 'transparent',
+                                background: isActive ? '#C60C7F' : 'transparent',
                                 transition: 'all 0.2s ease',
                                 whiteSpace: 'nowrap',
                             }}

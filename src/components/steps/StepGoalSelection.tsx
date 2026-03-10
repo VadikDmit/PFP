@@ -241,9 +241,19 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                 {goals.length === 0 && (
                     <div style={{ gridColumn: '1 / -1', marginBottom: '4px' }}>
                         <button
-                            className="btn-text"
+                            className="btn-secondary"
                             onClick={onPrev}
-                            style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#6B7280' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                background: '#fff',
+                                color: '#C60C7F',
+                                border: '2px solid #C60C7F',
+                                padding: '10px 20px',
+                                borderRadius: '999px',
+                                fontWeight: '600',
+                            }}
                         >
                             <ChevronLeft size={16} /> Назад
                         </button>
