@@ -256,9 +256,9 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
 
     return (
         <div style={containerStyle}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '32px', overflowX: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '32px', overflowX: 'auto', gap: '4px' }}>
                 {steps.map((s, i) => (
-                    <div key={i} style={{ flex: 1, textAlign: 'center', position: 'relative', minWidth: 0 }}>
+                    <div key={i} style={{ flex: '0 0 auto', width: '56px', textAlign: 'center', position: 'relative' }}>
                         <div style={{
                             width: '36px',
                             height: '36px',
@@ -281,15 +281,15 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
-                            maxWidth: '48px',
+                            maxWidth: '56px',
                             margin: '0 auto'
                         }}>{s.title}</span>
                         {i < steps.length - 1 && (
                             <div style={{
                                 position: 'absolute',
                                 top: '18px',
-                                left: 'calc(50% + 20px)',
-                                right: 'calc(-50% + 20px)',
+                                left: '28px',
+                                width: '32px',
                                 height: '2px',
                                 background: step > i + 1 ? '#C4C4C4' : 'rgba(255,255,255,0.1)'
                             }} />
