@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, TrendingUp, Loader2, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { clientApi } from '../api/clientApi';
+import { clientApi, API_BASE_URL } from '../api/clientApi';
 import type { Client } from '../types/client';
 import AIDashboardHeader from './AIDashboardHeader';
 import WideChatModal from './WideChatModal';
@@ -53,13 +53,27 @@ const MyPlansPage: React.FC<MyPlansPageProps> = ({ onCreatePlan, onViewPlan, aut
     };
 
     const handleAddGoal = async (goalPayload: any) => {
+        if (!API_BASE_URL) {
+            alert('Не удалось добавить цель: не настроен адрес API. Укажите NEXT_PUBLIC_API_URL в .env');
+            return;
+        }
         setLoading(true);
         try {
             await clientApi.addGoal(goalPayload);
             await loadPlan(); // Refresh data
-        } catch (err) {
+        } catch (err: any) {
             console.error('Failed to add goal:', err);
-            alert('Не удалось добавить цель. Попробуйте снова.');
+            const status = err.response?.status;
+            const msg = err.response?.data?.message ?? err.response?.data?.error ?? err.message;
+            if (status === 401) {
+                alert('Сессия истекла. Войдите снова.');
+                return;
+            }
+            if (status === 404) {
+                alert('Не удалось добавить цель: сервер не найден. Проверьте NEXT_PUBLIC_API_URL и что бэкенд запущен.');
+                return;
+            }
+            alert(msg ? `Не удалось добавить цель: ${msg}` : 'Не удалось добавить цель. Попробуйте снова.');
         } finally {
             setLoading(false);
         }

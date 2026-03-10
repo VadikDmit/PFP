@@ -154,14 +154,29 @@ function App() {
     }, [loadClientData]);
 
     const handleAddGoal = useCallback(async (goal: any) => {
+        if (!API_BASE_URL) {
+            alert('Не удалось добавить цель: не настроен адрес API. Укажите NEXT_PUBLIC_API_URL в .env');
+            return;
+        }
         setLoadingPlan(true);
         try {
             const result = await clientApi.addGoal(goal);
             setCalculationResult(result);
             loadClientData();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Failed to add goal:', err);
-            alert('Не удалось добавить цель.');
+            const status = err.response?.status;
+            const msg = err.response?.data?.message ?? err.response?.data?.error ?? err.message;
+            if (status === 401) {
+                alert('Сессия истекла. Войдите снова.');
+                loadClientData();
+                return;
+            }
+            if (status === 404) {
+                alert('Не удалось добавить цель: сервер не найден. Проверьте NEXT_PUBLIC_API_URL и что бэкенд запущен.');
+                return;
+            }
+            alert(msg ? `Не удалось добавить цель: ${msg}` : 'Не удалось добавить цель. Проверьте подключение и данные.');
         } finally {
             setLoadingPlan(false);
         }
