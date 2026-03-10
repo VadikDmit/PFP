@@ -1,0 +1,30 @@
+.partners__content {
+  display: flex;
+
+  &_text {
+    margin-inline-end: 30px;
+
+    font-size: 10px;
+
+    white-space: break-spaces;
+  }
+
+  &_img_wrapper {
+    width: 228px;
+    height: 137px;
+  }
+
+  &_img {
+    max-width: 228px;
+  }
+}
+
+.partners_name {
+  display: inline-block;
+
+  margin-block-end: 10px;
+
+  font-size: 14px;
+  font-weight: 700;
+  color: #933D92;
+}

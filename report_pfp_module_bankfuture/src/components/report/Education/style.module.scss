@@ -1,0 +1,284 @@
+
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+
+  margin-block-start: 10px;
+
+  @include tablets-sm {
+    flex-direction: column;
+    row-gap: 10px;
+
+    margin-block-start: 20px;
+  }
+}
+
+.top_container {
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  @include tablets-sm {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+
+  &:not(:last-of-type) {
+    margin-inline-end: 15px;
+
+    @include tablets-sm {
+      margin-inline-end: 0;
+    }
+  }
+
+  &_img {
+    inline-size: 260px;
+    block-size: 160px;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @include tablets-sm {
+      inline-size: 100%;
+    }
+  }
+
+  &_chart {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+
+    inline-size: 260px;
+    block-size: 160px;
+  }
+
+  &_chart_title {
+    display: inline-block;
+
+    inline-size: 175px;
+
+    margin-inline-start: 40px;
+
+    font-weight: 500;
+    color: #FFC759;
+    text-align: center;
+    font-size: 10px;
+    line-height: 10px;
+    white-space: break-spaces;
+  }
+}
+
+.top__header {
+  display: flex;
+  flex-flow: column nowrap;
+
+  margin-block-end: 20px;
+
+  &_title {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  &_price {
+    font-weight: 600;
+    font-size: 12px;
+  }
+}
+
+.offer_container {
+  max-inline-size: 260px;
+
+  padding-inline-start: 15px;
+  padding-inline-end: 15px;
+  padding-block-start: 15px;
+  padding-block-end: 15px;
+
+  background-color: #FFF;
+  box-shadow: 0px -2px 24px rgba(0, 0, 0, 0.07);
+
+  & table {
+    width: 100%;
+  }
+
+  @include tablets-sm {
+    max-inline-size: unset;
+  }
+}
+
+.offer_item {
+
+  &_title {
+    display: inline-block;
+
+    max-inline-size: 190px;
+
+    margin-block-end: 7px;
+
+    font-weight: 500;
+    color: #000;
+    font-size: 10px;
+    line-height: 13px;
+    white-space: break-spaces;
+  }
+}
+
+.offer_item__table__head {
+  &_row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    inline-size: 230px;
+
+    padding-block-end: 3px;
+
+    border-bottom: 2px solid #FFC759;
+
+    @include tablets-sm {
+      inline-size: unset;
+    }
+
+    & td {
+      color: #58595B;
+      font-size: 10px;
+    }
+
+    & td:last-child {
+      text-align: right;
+    }
+  }
+}
+
+.offer_item__table__body {
+  &_row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    inline-size: 230px;
+    font-size: 10px;
+
+    @include tablets-sm {
+      inline-size: unset;
+    }
+
+    & td {
+      margin-block-start: 5px;
+    }
+
+    & td:last-child {
+      text-align: right;
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+  margin-block-start: 20px;
+
+  @include tablets-sm {
+    align-items: flex-start;
+  }
+
+  &_title {
+    margin-block-end: 38px;
+
+    font-weight: 600;
+    text-align: center;
+    font-size: 17px;
+
+    white-space: break-spaces;
+
+    @include tablets-sm {
+      margin: 0 auto 20px;
+    }
+
+    &_wrap {
+      font-weight: 600;
+      font-size: 24px;
+    }
+  }
+
+  &_chart {
+    inline-size: 535px;
+
+    margin-block-end: 10px;
+  }
+
+  &__list {
+    inline-size: 535px;
+
+    margin-block-end: 50px;
+
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+
+    @include tablets-sm {
+      flex-direction: column;
+
+      inline-size: 100%;
+    }
+
+    &_item {
+      display: inline-block;
+
+      max-inline-size: 150px;
+
+      @include tablets-sm {
+        display: flex;
+        justify-content: space-between;
+
+        max-inline-size: unset;
+      }
+    }
+
+    &_item p {
+      font-weight: 500;
+      color: #000;
+      font-size: 10px;
+      text-align: center;
+
+      @include tablets-sm {
+        text-align: unset;
+      }
+    }
+
+    &_item span {
+      display: inline-block;
+
+      inline-size: 150px;
+
+      margin-inline-start: auto;
+      margin-inline-end: auto;
+
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+
+      @include tablets-sm {
+        margin: 0;
+
+        inline-size: unset;
+
+        text-align: unset;
+      }
+    }
+  }
+
+  &_text {
+    font-size: 10px;
+  }
+}
+
+

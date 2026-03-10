@@ -1,0 +1,263 @@
+.health_description {
+  margin-block-start: 15px;
+  margin-block-end: 30px;
+
+  color: black;
+  font-size: 11px;
+  line-height: 13px; /* 114.286% */
+
+  white-space: break-spaces;
+}
+
+.health__content {
+  display: flex;
+  flex-flow: row wrap;
+
+  &_tools {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    inline-size: 278px;
+    flex-shrink: 0;
+
+    margin-block-end: 30px;
+    padding-inline-start: 20px;
+    padding-inline-end: 34px;
+    padding-block-start: 15px;
+    padding-block-end: 15px;
+
+    background: transparent;
+    border-radius: 6px;
+    border: 1px solid #E6E6E6;
+  }
+
+  &_tools_left,
+  &_tools_right {
+    display: flex;
+    flex-flow: column;
+
+    &_text {
+      word-break: break-all;
+    }
+
+    &_text:first-child {
+      margin-block-end: 8px;
+
+      font-weight: 600;
+      font-size: 10px;
+      line-height: 10px;
+    }
+
+    &_text:nth-child(2),
+    &_text:last-child {
+      font-weight: 600;
+      font-size: 10px;
+      line-height: 10px;
+    }
+  }
+
+  &_tools_right {
+    &_text:nth-child(2),
+    &_text:last-child {
+      max-width: 90px;
+    }
+  }
+
+  &_tools_term {
+    margin-block-start: 15px;
+
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 10px;
+
+    & span {
+      margin-inline-start: 6px;
+
+      font-size: 11px;
+    }
+  }
+
+  &_risk_title {
+    margin-block-end: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &_risk_list_item {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-block-end: 10px;
+    }
+
+    & span:first-child {
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 10px;
+    }
+
+    & span:last-child {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 10px;
+      color: #428BF9;
+    }
+  }
+
+  &_footer {
+    margin-block-start: 40px;
+  }
+
+  &_footer_title {
+    margin-block-end: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: #1f205f;
+  }
+
+  &_footer_list {
+    list-style: none;
+  }
+
+  &_footer_list_item {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 12px;
+
+    &:first-child {
+      margin-block-end: 9px;
+
+      & span {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 12px;
+      }
+    }
+  }
+
+  &_img {
+    align-self: flex-end;
+
+    inline-size: 210px;
+    block-size: 220px;
+
+    margin-block-end: 20px;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 6px;
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.25) inset;
+
+    @include tablets-sm {
+      inline-size: 100%;
+    }
+  }
+}
+
+.health_paragraph {
+  margin-block-start: 40px;
+
+  color: #000;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.health__footer {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+
+  padding-block-start: 73px;
+  padding-block-end: 40px;
+
+  color: #58595B;
+  font-size: 8px;
+  line-height: 18px;
+
+  &_list {
+    margin-block-end: 10px;
+
+    border-block-start: 1px solid #DADADA;
+  }
+
+  &_list_item {
+    margin-block-start: 5px;
+
+    list-style: none;
+  }
+
+  &_text:first-child {
+    display: block;
+
+    margin-block-end: 8px;
+
+    border-block-start: 1px solid #DADADA;
+
+    line-height: 1;
+  }
+
+  &_text:last-child {
+    display: inline-block;
+  }
+}
+
+.saveCapital__features {
+  @include tablets-sm {
+    margin-block-end: 20px;
+  }
+
+  &_title {
+    display: inline-block;
+
+    margin-block-end: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &_list_item {
+    display: flex;
+
+    &:not(:last-of-type) {
+      margin-block-end: 15px;
+    }
+  }
+
+  &_list_item_icon {
+    margin-inline-end: 21px;
+
+    max-width: 30px;
+    min-width: 30px;
+    height: 30px;
+  }
+
+  &_list_item_content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_list_item_name {
+    display: inline-block;
+
+    margin-block-end: 3px;
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &_list_item_description {
+    font-size: 11px;
+    font-weight: 500;
+    white-space: break-spaces;
+
+    @include tablets-sm {
+      white-space: wrap;
+    }
+  }
+}

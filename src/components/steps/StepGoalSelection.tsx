@@ -241,9 +241,21 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                 {goals.length === 0 && (
                     <div style={{ gridColumn: '1 / -1', marginBottom: '4px' }}>
                         <button
-                            className="btn-text"
+                            className="btn-secondary"
                             onClick={onPrev}
-                            style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#6B7280' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                background: '#fff',
+                                color: '#C60C7F',
+                                border: '2px solid #C60C7F',
+                                padding: '10px 20px',
+                                width: '240px',
+                                justifyContent: 'center',
+                                borderRadius: '999px',
+                                fontWeight: '600',
+                            }}
                         >
                             <ChevronLeft size={16} /> Назад
                         </button>
@@ -341,7 +353,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                             style={{
                                                 fontWeight: '800',
                                                 fontSize: '20px',
-                                                color: '#E91E63',
+                                                color: '#C60C7F',
                                                 border: '1px solid #E5E7EB',
                                                 borderRadius: '8px',
                                                 padding: '4px 8px',
@@ -355,7 +367,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         min="100000" max="50000000" step="100000"
                                         value={targetAmount}
                                         onChange={(e) => setTargetAmount(Number(e.target.value))}
-                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                     />
                                 </div>
                                 <div style={{ marginBottom: '40px' }}>
@@ -369,7 +381,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                                 style={{
                                                     fontWeight: '800',
                                                     fontSize: '20px',
-                                                    color: '#E91E63',
+                                                    color: '#C60C7F',
                                                     border: '1px solid #E5E7EB',
                                                     borderRadius: '8px',
                                                     padding: '4px 8px',
@@ -377,7 +389,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                                     textAlign: 'right'
                                                 }}
                                             />
-                                            <span style={{ fontWeight: '800', fontSize: '20px', color: '#E91E63' }}>лет</span>
+                                            <span style={{ fontWeight: '800', fontSize: '20px', color: '#C60C7F' }}>лет</span>
                                         </div>
                                     </div>
                                     <input
@@ -385,7 +397,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         min="1" max="50" step="1"
                                         value={termMonths / 12}
                                         onChange={(e) => setTermMonths(Number(e.target.value) * 12)}
-                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                     />
                                     <div style={{ fontSize: '13px', color: '#9CA3AF', marginTop: '8px', textAlign: 'right' }}>
                                         {termMonths} месяцев
@@ -404,7 +416,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         value={formatNumber(desiredIncome)}
                                         onChange={(e) => handleNumberInput(e.target.value, setDesiredIncome)}
                                         style={{
-                                            fontWeight: '800', fontSize: '20px', color: '#E91E63',
+                                            fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                                             border: '1px solid #E5E7EB', borderRadius: '8px',
                                             padding: '4px 8px', width: '180px', textAlign: 'right'
                                         }}
@@ -415,7 +427,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                     min="10000" max="1000000" step="5000"
                                     value={desiredIncome}
                                     onChange={(e) => setDesiredIncome(Number(e.target.value))}
-                                    style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                    style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                 />
                                 {isPassive && (
                                     <div style={{ marginTop: '24px' }}>
@@ -427,12 +439,15 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                                     value={formatNumber(Math.floor(termMonths / 12))}
                                                     onChange={(e) => handleNumberInput(e.target.value, (n) => setTermMonths(n * 12))}
                                                     style={{
-                                                        fontWeight: '800', fontSize: '20px', color: '#E91E63',
+                                                        fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                                                         border: '1px solid #E5E7EB', borderRadius: '8px',
-                                                        padding: '4px 8px', width: '80px', textAlign: 'right'
+                                                        padding: '6px 10px',
+                                                        width: '130px',
+                                                        minWidth: '130px',
+                                                        textAlign: 'right'
                                                     }}
                                                 />
-                                                <span style={{ fontWeight: '800', fontSize: '20px', color: '#E91E63' }}>лет</span>
+                                                <span style={{ fontWeight: '800', fontSize: '20px', color: '#C60C7F' }}>лет</span>
                                             </div>
                                         </div>
                                         <input
@@ -440,7 +455,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                             min="1" max="30" step="1"
                                             value={termMonths / 12}
                                             onChange={(e) => setTermMonths(Number(e.target.value) * 12)}
-                                            style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                            style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                         />
                                     </div>
                                 )}
@@ -458,7 +473,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                             value={formatNumber(initialCapital)}
                                             onChange={(e) => handleNumberInput(e.target.value, setInitialCapital)}
                                             style={{
-                                                fontWeight: '800', fontSize: '20px', color: '#E91E63',
+                                                fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                                                 border: '1px solid #E5E7EB', borderRadius: '8px',
                                                 padding: '4px 8px', width: '180px', textAlign: 'right'
                                             }}
@@ -469,7 +484,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         min="0" max="10000000" step="100000"
                                         value={initialCapital}
                                         onChange={(e) => setInitialCapital(Number(e.target.value))}
-                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                     />
                                 </div>
                                 <div style={{ marginBottom: '24px' }}>
@@ -480,7 +495,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                             value={formatNumber(desiredIncome)}
                                             onChange={(e) => handleNumberInput(e.target.value, setDesiredIncome)}
                                             style={{
-                                                fontWeight: '800', fontSize: '20px', color: '#E91E63',
+                                                fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                                                 border: '1px solid #E5E7EB', borderRadius: '8px',
                                                 padding: '4px 8px', width: '180px', textAlign: 'right'
                                             }}
@@ -491,7 +506,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         min="0" max="500000" step="5000"
                                         value={desiredIncome}
                                         onChange={(e) => setDesiredIncome(Number(e.target.value))}
-                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                     />
                                 </div>
                                 <div style={{ marginBottom: '32px' }}>
@@ -503,12 +518,12 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                                 value={formatNumber(Math.floor(termMonths / 12))}
                                                 onChange={(e) => handleNumberInput(e.target.value, (n) => setTermMonths(n * 12))}
                                                 style={{
-                                                    fontWeight: '800', fontSize: '20px', color: '#E91E63',
+                                                    fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                                                     border: '1px solid #E5E7EB', borderRadius: '8px',
                                                     padding: '4px 8px', width: '80px', textAlign: 'right'
                                                 }}
                                             />
-                                            <span style={{ fontWeight: '800', fontSize: '20px', color: '#E91E63' }}>лет</span>
+                                            <span style={{ fontWeight: '800', fontSize: '20px', color: '#C60C7F' }}>лет</span>
                                         </div>
                                     </div>
                                     <input
@@ -516,7 +531,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         min="1" max="50" step="1"
                                         value={termMonths / 12}
                                         onChange={(e) => setTermMonths(Number(e.target.value) * 12)}
-                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                     />
                                 </div>
                             </>
@@ -533,7 +548,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                             value={formatNumber(initialCapital)}
                                             onChange={(e) => handleNumberInput(e.target.value, setInitialCapital)}
                                             style={{
-                                                fontWeight: '800', fontSize: '20px', color: '#E91E63',
+                                                fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                                                 border: '1px solid #E5E7EB', borderRadius: '8px',
                                                 padding: '4px 8px', width: '180px', textAlign: 'right'
                                             }}
@@ -544,7 +559,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         min="0" max={totalAssetsSum || 10000000} step={Math.max(1000, Math.floor((totalAssetsSum || 10000000) / 100))}
                                         value={initialCapital}
                                         onChange={(e) => setInitialCapital(Number(e.target.value))}
-                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                     />
                                     <div style={{ fontSize: '12px', color: '#6B7280', marginTop: '8px' }}>Доступно из активов: {formatCurrency(totalAssetsSum)}</div>
                                 </div>
@@ -556,7 +571,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                             value={formatNumber(desiredIncome)}
                                             onChange={(e) => handleNumberInput(e.target.value, setDesiredIncome)}
                                             style={{
-                                                fontWeight: '800', fontSize: '20px', color: '#E91E63',
+                                                fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                                                 border: '1px solid #E5E7EB', borderRadius: '8px',
                                                 padding: '4px 8px', width: '180px', textAlign: 'right'
                                             }}
@@ -567,7 +582,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         min="0" max="200000" step="5000"
                                         value={desiredIncome}
                                         onChange={(e) => setDesiredIncome(Number(e.target.value))}
-                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                     />
                                 </div>
                             </>
@@ -586,7 +601,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                             style={{
                                                 fontWeight: '800',
                                                 fontSize: '20px',
-                                                color: '#E91E63',
+                                                color: '#C60C7F',
                                                 border: '1px solid #E5E7EB',
                                                 borderRadius: '8px',
                                                 padding: '4px 8px',
@@ -600,7 +615,7 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                         min="1000000" max="100000000" step="500000"
                                         value={initialCapital}
                                         onChange={(e) => setInitialCapital(Number(e.target.value))}
-                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#E91E63', cursor: 'pointer' }}
+                                        style={{ width: '100%', height: '6px', background: '#E5E7EB', borderRadius: '3px', accentColor: '#C60C7F', cursor: 'pointer' }}
                                     />
                                     <div style={{ fontSize: '12px', color: '#6B7280', marginTop: '8px' }}>Сумма, с которой вы планируете получать ренту</div>
                                 </div>

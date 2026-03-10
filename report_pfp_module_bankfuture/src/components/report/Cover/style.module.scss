@@ -1,0 +1,94 @@
+.cover__author {
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+
+  color: white;
+
+  &_name {
+    display: block;
+
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &_phone,
+  &_email {
+    display: block;
+
+    font-size: 14px;
+  }
+}
+
+.content {
+  inline-size: 470.5px;
+  block-size: 184px;
+  position: absolute;
+  top: 593px;
+}
+
+.content__big_content {
+  padding-inline-start: 40px;
+  padding-inline-end: 20px;
+  padding-block-start: 20px;
+  padding-block-end: 20px;
+
+  position: absolute;
+  bottom: 114px;
+
+  &::after {
+    content: '';
+
+    width: 120%;
+
+    background: #161618;
+
+    position: absolute;
+    top: 0;
+    left: -50px;
+    right: 0;
+    bottom: 0;
+
+    transform: skew(-23deg);
+  }
+
+  &_background {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    z-index: 10;
+  }
+
+  &_top {
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #FFC759;
+
+    position: relative;
+
+    z-index: 20;
+  }
+
+  &_bot {
+    font-size: 18px;
+    text-transform: lowercase;
+    color: #FFC759;
+
+    margin:0;
+
+    position: relative;
+
+    z-index: 20;
+  }
+}
+
+.footer_logo {
+  position:absolute;
+  left: 216px;
+  top: 30px;
+  background-size: cover;
+}

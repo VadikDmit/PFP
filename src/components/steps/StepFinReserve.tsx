@@ -70,7 +70,7 @@ const StepFinReserve: React.FC<StepFinReserveProps> = ({ data, setData, onNext, 
             }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ color: 'var(--text-muted)', fontSize: '16px' }}>Доступный капитал</span>
-                    <span style={{ color: 'var(--primary)', fontWeight: '700', fontSize: '24px' }}>
+                    <span style={{ color: '#C60C7F', fontWeight: '700', fontSize: '24px' }}>
                         {formatCurrency(totalLiquidCapital)}
                     </span>
                 </div>
@@ -87,7 +87,7 @@ const StepFinReserve: React.FC<StepFinReserveProps> = ({ data, setData, onNext, 
                         value={formatNumber(initialCapital)}
                         onChange={(e) => handleNumberInput(e.target.value, setInitialCapital)}
                         style={{
-                            fontWeight: '800', fontSize: '20px', color: 'var(--primary)',
+                            fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                             border: '1px solid var(--border-color)', borderRadius: '8px',
                             padding: '4px 8px', width: '180px', textAlign: 'right',
                             background: 'transparent'
@@ -106,7 +106,7 @@ const StepFinReserve: React.FC<StepFinReserveProps> = ({ data, setData, onNext, 
                         height: '6px',
                         background: '#E5E7EB',
                         borderRadius: '3px',
-                        accentColor: 'var(--primary)',
+                        accentColor: '#C60C7F',
                         cursor: 'pointer'
                     }}
                 />
@@ -118,8 +118,8 @@ const StepFinReserve: React.FC<StepFinReserveProps> = ({ data, setData, onNext, 
                             onClick={() => setInitialCapital(totalLiquidCapital)}
                             style={{
                                 background: 'transparent',
-                                border: '1px solid var(--primary)',
-                                color: 'var(--primary)',
+                                border: '1px solid #C60C7F',
+                                color: '#C60C7F',
                                 padding: '6px 12px',
                                 borderRadius: '8px',
                                 cursor: 'pointer',
@@ -145,7 +145,7 @@ const StepFinReserve: React.FC<StepFinReserveProps> = ({ data, setData, onNext, 
                         value={formatNumber(monthlyReplenishment)}
                         onChange={(e) => handleNumberInput(e.target.value, setMonthlyReplenishment)}
                         style={{
-                            fontWeight: '800', fontSize: '20px', color: 'var(--primary)',
+                            fontWeight: '800', fontSize: '20px', color: '#C60C7F',
                             border: '1px solid var(--border-color)', borderRadius: '12px',
                             padding: '8px 16px', width: '200px', textAlign: 'right',
                             background: 'rgba(255, 200, 69, 0.05)',
@@ -165,7 +165,7 @@ const StepFinReserve: React.FC<StepFinReserveProps> = ({ data, setData, onNext, 
                         height: '10px',
                         background: '#E5E7EB',
                         borderRadius: '5px',
-                        accentColor: 'var(--primary)',
+                        accentColor: '#C60C7F',
                         cursor: 'pointer'
                     }}
                 />

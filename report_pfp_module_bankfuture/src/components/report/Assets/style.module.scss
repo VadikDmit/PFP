@@ -1,0 +1,27 @@
+.content_footer {
+  display: block;
+
+  margin-block-end: 15px;
+
+  color: #000;
+  font-size: 14px;
+  line-height: 10px; /* 71.429% */
+
+  @include tablets-sm {
+    line-height: 1.2;
+  }
+
+  & span {
+    font-weight: 500;
+    color: #E27CC4;
+    font-size: 16px;
+    line-height: 10px; /* 62.5% */
+  }
+}
+
+.pieChart {
+  inline-size: 535px;
+  block-size: 200px;
+
+  margin-block-end: 30px;
+}

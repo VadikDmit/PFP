@@ -245,7 +245,7 @@ const PresentPage: React.FC<PresentPageProps> = ({ clientData, onViewPlan, onSta
                         <MessageSquare size={16} color="#94a3b8" />
                     </div>
                     <span style={{ color: '#94a3b8', fontSize: '15px', fontWeight: '500' }}>Задать вопрос Анне о финансовом плане...</span>
-                    <div style={{ marginLeft: 'auto', width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, #FFD93D, #FFC750)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 10px rgba(255, 199, 80, 0.3)' }}>
+                    <div style={{ marginLeft: 'auto', width: '36px', height: '36px', borderRadius: '50%', background: '#C60C7F', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 10px rgba(198, 12, 127, 0.3)' }}>
                         <Send size={16} color="#000" />
                     </div>
                 </motion.div>

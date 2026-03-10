@@ -1,0 +1,75 @@
+.riskProfile_title {
+  display: inline-block;
+
+  margin-block-start: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.riskProfile_text {
+  margin-block-start: 10px;
+
+  color: black;
+  font-size: 12px;
+}
+
+.riskProfile__list {
+  margin-block-start: 10px;
+
+  @include tablets-sm {
+    margin-block-end: 20px;
+  }
+
+  &_item {
+    display: flex;
+
+    @include tablets-sm {
+      flex-direction: column;
+      row-gap: 10px;
+    }
+
+    &:not(:last-of-type) {
+      margin-block-end: 10px;
+
+      @include tablets-sm {
+        margin-block-end: 20px;
+      }
+    }
+  }
+
+  &_item_title {
+    display: inline-block;
+
+    margin-block-end: 5px;
+    padding-block-start: 4px;
+    padding-block-end: 5px;
+    padding-inline-start: 3px;
+    padding-inline-end: 3px;
+
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+  }
+
+  &_item_description {
+    font-size: 12px;
+  }
+
+  &_item_img_wrapper {
+    display: flex;
+    min-width: 115px;
+    width: 115px;
+    height: 144px;
+
+    margin-inline-end: 30px;
+  }
+
+  &_item_img_wrapper,
+  &_item_img_wrapper img {
+    @include tablets-sm {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}

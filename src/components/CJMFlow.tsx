@@ -256,15 +256,23 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
 
     return (
         <div style={containerStyle}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '32px', overflowX: 'auto' }}>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                margin: '0 auto 32px',
+                overflowX: 'auto',
+                gap: '4px',
+                maxWidth: '800px',
+                padding: '0 20px'
+            }}>
                 {steps.map((s, i) => (
-                    <div key={i} style={{ flex: 1, textAlign: 'center', position: 'relative', minWidth: 0 }}>
+                    <div key={i} style={{ flex: '0 0 auto', width: '56px', textAlign: 'center', position: 'relative' }}>
                         <div style={{
                             width: '36px',
                             height: '36px',
                             borderRadius: '50%',
-                            background: step > i + 1 ? 'var(--secondary)' : step === i + 1 ? 'var(--primary)' : 'rgba(255,255,255,0.1)',
-                            color: step === i + 1 ? '#000' : '#fff',
+                            background: step === i + 1 ? '#000' : 'rgba(255,255,255,0.1)',
+                            color: step === i + 1 ? '#fff' : '#C4C4C4',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -276,22 +284,22 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
                         </div>
                         <span style={{
                             fontSize: '10px',
-                            color: step === i + 1 ? 'var(--primary)' : 'var(--text-muted)',
+                            color: step === i + 1 ? '#000' : '#C4C4C4',
                             display: 'block',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
-                            maxWidth: '48px',
+                            maxWidth: '56px',
                             margin: '0 auto'
                         }}>{s.title}</span>
                         {i < steps.length - 1 && (
                             <div style={{
                                 position: 'absolute',
                                 top: '18px',
-                                left: 'calc(50% + 20px)',
-                                right: 'calc(-50% + 20px)',
+                                left: '28px',
+                                width: '32px',
                                 height: '2px',
-                                background: step > i + 1 ? 'var(--secondary)' : 'rgba(255,255,255,0.1)'
+                                background: step > i + 1 ? '#C4C4C4' : 'rgba(255,255,255,0.1)'
                             }} />
                         )}
                     </div>

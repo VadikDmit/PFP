@@ -36,7 +36,7 @@ const StepLifeInsurance: React.FC<StepLifeInsuranceProps> = ({ data, setData, on
                     width: '64px',
                     height: '64px',
                     borderRadius: '50%',
-                    background: 'var(--primary)',
+                    background: '#C60C7F',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -72,7 +72,7 @@ const StepLifeInsurance: React.FC<StepLifeInsuranceProps> = ({ data, setData, on
                                 step={STEP}
                                 value={limit}
                                 onChange={(e) => setLimit(Number(e.target.value))}
-                                style={{ width: '100%', cursor: 'pointer', accentColor: 'var(--primary)' }}
+                                style={{ width: '100%', cursor: 'pointer', accentColor: '#C60C7F' }}
                             />
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', color: 'var(--text-muted)', fontSize: '12px' }}>
                                 <span>0 ₽</span>
@@ -115,7 +115,7 @@ const StepLifeInsurance: React.FC<StepLifeInsuranceProps> = ({ data, setData, on
                     </div>
 
                     <div style={{ textAlign: 'center', fontSize: '14px', color: 'var(--text-muted)' }}>
-                        Текущий выбор: <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>{formatCurrency(limit)}</span>
+                        Текущий выбор: <span style={{ color: '#C60C7F', fontWeight: 'bold' }}>{formatCurrency(limit)}</span>
                     </div>
                 </div>
             </div>

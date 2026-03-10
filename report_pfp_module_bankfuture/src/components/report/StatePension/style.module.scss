@@ -1,0 +1,27 @@
+.table {
+  border-collapse: collapse;
+
+  & thead tr td {
+    padding-block-end: 11px;
+
+    border-bottom: 1px solid #FFC759;
+
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  & tbody tr:first-of-type td {
+    padding-block-start: 8px;
+  }
+
+  & tbody tr:not(:last-of-type) td {
+    padding-block-end: 8px;
+  }
+
+  & tbody tr td {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+

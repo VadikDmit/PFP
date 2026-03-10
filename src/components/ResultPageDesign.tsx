@@ -323,7 +323,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
                 overflow: 'hidden',
                 background: '#fff',
                 boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                border: '2px solid var(--primary)'
+                border: '2px solid #C60C7F'
               }}>
                 <img src={avatarImage} alt="Victoria" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
@@ -341,8 +341,8 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
                     key={i}
                     style={{
                       padding: '10px 20px',
-                      background: 'rgba(255, 199, 80, 0.1)',
-                      border: '1px solid rgba(255, 199, 80, 0.2)',
+                      background: 'rgba(198, 12, 127, 0.1)',
+                      border: '1px solid rgba(198, 12, 127, 0.2)',
                       borderRadius: '100px',
                       color: '#1e293b',
                       fontSize: '13px',
@@ -351,11 +351,11 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
                       transition: 'all 0.2s',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'var(--primary)';
+                      e.currentTarget.style.background = '#C60C7F';
                       e.currentTarget.style.transform = 'translateY(-2px)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 199, 80, 0.1)';
+                      e.currentTarget.style.background = 'rgba(198, 12, 127, 0.1)';
                       e.currentTarget.style.transform = 'translateY(0)';
                     }}
                   >
@@ -384,7 +384,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
                   right: '8px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  background: 'var(--primary)',
+                  background: '#C60C7F',
                   border: 'none',
                   borderRadius: '14px',
                   width: '44px',
@@ -393,7 +393,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 10px rgba(255,199,80,0.3)'
+                  boxShadow: '0 4px 10px rgba(198,12,127,0.3)'
                 }}>
                   <Send size={20} />
                 </button>
@@ -495,7 +495,7 @@ const ResultPageDesign: React.FC<ResultPageDesignProps> = ({
               borderRadius: '24px', border: '2px dashed #E5E7EB', background: '#F9FAFB', minHeight: '280px',
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.2s'
             }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.background = '#fff'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#C60C7F'; e.currentTarget.style.background = '#fff'; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E5E7EB'; e.currentTarget.style.background = '#F9FAFB'; }}>
               <Plus size={32} color="#C2185B" />
               <span style={{ color: '#C2185B', fontSize: '16px', fontWeight: '500' }}>+ Добавить цель</span>

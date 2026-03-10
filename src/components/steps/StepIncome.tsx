@@ -19,7 +19,7 @@ const StepIncome: React.FC<StepIncomeProps> = ({ data, setData, onNext, onPrev }
                     width: '64px', 
                     height: '64px', 
                     borderRadius: '50%', 
-                    background: 'var(--primary)', 
+                    background: '#C60C7F', 
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center',
@@ -44,7 +44,7 @@ const StepIncome: React.FC<StepIncomeProps> = ({ data, setData, onNext, onPrev }
             }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <label className="label" style={{ marginBottom: 0 }}>Ваш ежемесячный доход (2-НДФЛ)</label>
-                    <span style={{ color: 'var(--primary)', fontWeight: '600' }}>{formatCurrency(data.avgMonthlyIncome)}</span>
+                    <span style={{ color: '#C60C7F', fontWeight: '600' }}>{formatCurrency(data.avgMonthlyIncome)}</span>
                 </div>
                 <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '16px' }}>
                     Это поможет нам точнее подобрать налоговые вычеты и льготы

@@ -1,0 +1,126 @@
+.content {
+  flex-shrink: 0;
+
+  padding-inline-start: 20px;
+  padding-inline-end: 20px;
+  padding-block-start: 15px;
+  padding-block-end: 15px;
+
+  position: relative;
+
+  background: #fff;
+  border-radius: 6px;
+  filter: drop-shadow(0px -2px 24px rgba(0, 0, 0, 0.07));
+}
+
+.content__table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  &_caption {
+    display: inline-block;
+
+    margin-block-start: 20px;
+    margin-block-end: 15px;
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+.content__table__thead {
+  border-bottom: 1px solid #797780;
+
+  & tr td {
+    padding-inline-start: 9px;
+    padding-inline-end: 4px;
+    padding-block-start: 0;
+    padding-block-end: 10px;
+
+    color: #000;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 9px;
+    white-space: break-spaces;
+
+    vertical-align: top;
+
+    &:first-of-type,
+    &:last-of-type {
+      width: 5px;
+    }
+  }
+}
+
+.content__table__tbody {
+  & tr td {
+    padding-inline-start: 9px;
+    padding-inline-end: 4px;
+    padding-block-start: 8px;
+    padding-block-end: 8px;
+
+    color: #000;
+    font-size: 8px;
+    white-space: break-spaces;
+
+    &:nth-child(1) {
+      max-width: 12px;
+    }
+
+    &:nth-child(2) {
+      max-width: 65px;
+    }
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  & tr:nth-child(even) {
+    background-color: #F1EBD5;
+  }
+}
+
+.content__table__tfoot {
+  & tr {
+    & td {
+      color: #000;
+      font-size: 10px;
+      line-height: 10px;
+    }
+
+    & p {
+      width: min-content;
+
+      padding-inline-start: 9px;
+      padding-inline-end: 4px;
+      padding-block-start: 8px;
+      padding-block-end: 8px;
+
+      background-color: #FFC759;
+    }
+  }
+}
+
+.content_bot {
+  appearance: none;
+
+  inline-size: 535px;
+  block-size: 259px;
+
+  margin-block-start: 30px;
+
+  &_title {
+    display: inline-block;
+
+    block-size: 13px;
+
+    margin-block-end: 20px;
+
+    font-weight: 500;
+    color: #000;
+    font-size: 14px;
+    line-height: 13px; /* 92.857% */
+  }
+}

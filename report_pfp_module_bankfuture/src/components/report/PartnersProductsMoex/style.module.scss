@@ -1,0 +1,37 @@
+.partners__content {
+  &_text {
+    font-size: 10px;
+
+    white-space: break-spaces;
+
+    &:not(:last-of-type) {
+      margin-block-end: 10px;
+    }
+
+    & a {
+      color: black;
+      word-break: break-all;
+    }
+  }
+
+  &_img_wrapper {
+    width: 322px;
+    height: 321px;
+
+    margin-block-start: 20px;
+  }
+
+  &_img {
+    max-width: 322px;
+  }
+}
+
+.partners_name {
+  display: inline-block;
+
+  margin-block-end: 10px;
+
+  font-size: 14px;
+  font-weight: 700;
+  color: #933D92;
+}

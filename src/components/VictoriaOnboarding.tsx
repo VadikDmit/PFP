@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, LogOut, ChevronRight } from 'lucide-react';
+import { Send, LogOut, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
 import avatarImage from '../assets/avatar_full.png';
 import { aiApi } from '../api/aiApi';
 import Markdown from 'react-markdown';
@@ -44,6 +44,45 @@ interface VictoriaOnboardingProps {
     setData: React.Dispatch<React.SetStateAction<CJMData>>;
     onExit: () => void;
     onFinish: () => void;
+}
+
+/** Числовой инпут со стрелками снаружи (не внутри поля) */
+function NumberInputWithStepper(
+    { value, onChange, min = 0, max = 999999999, step = 1, inputStyle = {}, inputWidth = 120 }:
+    { value: number; onChange: (n: number) => void; min?: number; max?: number; step?: number; inputStyle?: React.CSSProperties; inputWidth?: number }
+) {
+    const [str, setStr] = useState(String(value));
+    useEffect(() => { setStr(String(value)); }, [value]);
+    const commit = (n: number) => {
+        const clamped = Math.min(max, Math.max(min, n));
+        onChange(clamped);
+        setStr(String(clamped));
+    };
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} className="number-input-with-stepper">
+            <input
+                type="text"
+                inputMode="numeric"
+                value={str}
+                onChange={e => {
+                    const v = e.target.value.replace(/\D/g, '');
+                    setStr(v);
+                    const n = parseInt(v, 10);
+                    if (!isNaN(n)) onChange(Math.min(max, Math.max(min, n)));
+                }}
+                onBlur={() => commit(parseInt(str, 10) || min)}
+                style={{ width: inputWidth, textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b', ...inputStyle }}
+            />
+            <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+                <button type="button" aria-label="Увеличить" onClick={() => commit(value + step)} className="number-stepper-btn">
+                    <ChevronUp size={16} />
+                </button>
+                <button type="button" aria-label="Уменьшить" onClick={() => commit(value - step)} className="number-stepper-btn">
+                    <ChevronDown size={16} />
+                </button>
+            </div>
+        </div>
+    );
 }
 
 const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, onExit, onFinish }) => {
@@ -450,6 +489,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.8);
                     backdrop-filter: blur(16px);
                     -webkit-backdrop-filter: blur(16px);
+                    overflow: visible; /* контент и цифры не обрезаются */
                 }
 
                 .message-victoria {
@@ -457,18 +497,47 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     background: rgba(255, 255, 255, 0.7);
                     color: #334155;
                     border: 1px solid rgba(255, 255, 255, 0.9);
-                    border-left: 3px solid #38bdf8;
+                    border-left: 3px solid #C60C7F;
                     border-bottom-left-radius: 4px;
+                    padding-left: 28px; /* контент и цифры не перекрываются фиолетовой линией */
                 }
 
                 .goal-selection-bubble {
                     max-width: 100%;
+                }
+                .goal-selection-bubble .goal-selection-next-btn.btn-primary {
+                    background: #C60C7F !important;
+                    color: #FFFFFF !important;
+                    border: none !important;
+                    width: 240px !important;
+                    height: 52px !important;
+                    box-shadow: none;
+                }
+                .goal-selection-bubble .goal-selection-next-btn.btn-primary:hover {
+                    background: #a00a68 !important;
+                    color: #FFFFFF !important;
+                    box-shadow: 0 6px 20px rgba(198, 12, 127, 0.35);
+                }
+
+                .anketa-about-self .anketa-dalee-btn.btn-primary {
+                    background: #C60C7F !important;
+                    color: #fff !important;
+                    border: none !important;
+                }
+                .anketa-about-self .anketa-dalee-btn.btn-primary:hover {
+                    background: #a00a68 !important;
+                    color: #fff !important;
                 }
 
                 /* Пузырь с параметрами (возраст, деньги и т.п.) — тянем почти на всю ширину */
                 .goal-params-bubble {
                     width: 100%;
                     max-width: 100%;
+                }
+
+                /* Блок с цифрами и стрелками не сжимать — контент полностью виден */
+                .message-bubble .number-input-with-stepper {
+                    flex-shrink: 0;
                 }
 
                 .message-bubble .btn-primary {
@@ -485,15 +554,15 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 }
                 
                 .message-bubble .btn-primary:hover {
-                    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3), inset 0 2px 5px rgba(255,255,255,1) !important;
-                    border-color: rgba(56, 189, 248, 0.8) !important;
+                    box-shadow: 0 8px 25px rgba(198, 12, 127, 0.30), inset 0 2px 5px rgba(255,255,255,1) !important;
+                    border-color: rgba(198, 12, 127, 0.60) !important;
                     transform: translateY(-2px) !important;
-                    color: #0284c7 !important;
+                    color: #C60C7F !important;
                 }
                 
                 .message-bubble .btn-primary:active {
                     transform: translateY(1px) !important;
-                    box-shadow: 0 2px 10px rgba(56, 189, 248, 0.2) !important;
+                    box-shadow: 0 2px 10px rgba(198, 12, 127, 0.20) !important;
                 }
 
                 .message-bubble input[type="range"] {
@@ -514,16 +583,16 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     width: 28px;
                     height: 28px;
                     background: #fff;
-                    border: 3px solid #38bdf8;
+                    border: 3px solid #C60C7F;
                     border-radius: 50%;
                     cursor: pointer;
-                    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+                    box-shadow: 0 4px 12px rgba(198, 12, 127, 0.35);
                     transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s ease;
                 }
                 
                 .message-bubble input[type="range"]::-webkit-slider-thumb:hover {
                     transform: scale(1.15);
-                    box-shadow: 0 6px 16px rgba(56, 189, 248, 0.5);
+                    box-shadow: 0 6px 16px rgba(198, 12, 127, 0.45);
                 }
                 
                 .message-bubble input[type="range"]::-moz-range-thumb {
@@ -531,19 +600,20 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     height: 28px;
                     border-radius: 50%;
                     background: #fff;
-                    border: 3px solid #38bdf8;
+                    border: 3px solid #C60C7F;
                     cursor: pointer;
-                    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+                    box-shadow: 0 4px 12px rgba(198, 12, 127, 0.35);
                 }
 
                 .message-user {
                     align-self: flex-end;
-                    background: linear-gradient(135deg, rgba(255, 217, 61, 0.3) 0%, rgba(255, 199, 80, 0.1) 100%);
+                    background: #F0F5F9;
                     color: #0f172a;
                     font-weight: 600;
-                    border: 1px solid rgba(255, 199, 80, 0.5);
-                    border-right: 3px solid #f59e0b;
+                    border: 1px solid rgba(226, 232, 240, 0.9);
+                    border-right: 3px solid #A6A8AA;
                     border-bottom-right-radius: 4px;
+                    padding-right: 28px; /* контент не перекрывается серой полосой */
                 }
 
                 .chat-input-area {
@@ -588,7 +658,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     width: 44px;
                     height: 44px;
                     border-radius: 50%;
-                    background: var(--primary);
+                    background: #C60C7F;
                     border: none;
                     display: flex;
                     align-items: center;
@@ -632,8 +702,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                 .exit-btn:active { transform: translateY(0); }
                 
                 .btn-primary {
-                    background: linear-gradient(135deg, #FFD93D 0%, #FFC750 100%);
-                    color: #000;
+                    background: #C60C7F;
+                    color: #fff;
                     font-weight: 800;
                     border: none;
                     cursor: pointer;
@@ -641,34 +711,74 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     align-items: center;
                     justify-content: center;
                     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    box-shadow: 0 4px 15px rgba(255, 199, 80, 0.3);
+                    box-shadow: 0 4px 15px rgba(198, 12, 127, 0.3);
                 }
                 .btn-primary:hover:not(:disabled) {
                     transform: translateY(-2px);
-                    box-shadow: 0 8px 25px rgba(255, 199, 80, 0.4);
+                    box-shadow: 0 8px 25px rgba(198, 12, 127, 0.4);
                 }
                 .btn-primary:active { transform: translateY(0); }
                 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
                 
                 .btn-secondary {
+                    width: 240px;
+                    height: 52px;
                     background: #fff;
-                    border: 2px solid #f1f5f9;
-                    color: #1e293b;
+                    border: 2px solid #C60C7F;
+                    color: #C60C7F;
                     font-weight: 700;
                     cursor: pointer;
                     transition: all 0.2s ease;
                     display: flex;
-                    flex-direction: column;
+                    flex-direction: row;
                     align-items: center;
                     gap: 8px;
+                    justify-content: center;
+                    border-radius: 999px;
                 }
                 .btn-secondary:hover:not(:disabled) {
-                    border-color: var(--primary);
-                    background: #fffef0;
+                    border-color: #C60C7F;
+                    background: rgba(198, 12, 127, 0.06);
                     transform: translateY(-2px);
                     box-shadow: 0 10px 20px rgba(0,0,0,0.03);
                 }
                 .btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; }
+                .btn-secondary:focus, .btn-primary:focus {
+                    outline: 2px solid #D9D9D9;
+                    outline-offset: 2px;
+                }
+
+                input[type="number"]::-webkit-inner-spin-button,
+                input[type="number"]::-webkit-outer-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+                input[type="number"] {
+                    -moz-appearance: textfield;
+                }
+
+                .number-stepper-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 28px;
+                    height: 18px;
+                    padding: 0;
+                    border: 1px solid #D9D9D9;
+                    background: #f8fafc;
+                    color: #64748b;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    font-size: 12px;
+                }
+                .number-stepper-btn:hover {
+                    background: #e2e8f0;
+                    color: #1e293b;
+                }
+                .number-stepper-btn:focus {
+                    outline: 2px solid #D9D9D9;
+                    outline-offset: 1px;
+                }
 
                 input[type="range"] {
                     -webkit-appearance: none;
@@ -686,7 +796,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     width: 28px;
                     height: 28px;
                     border-radius: 50%;
-                    background: var(--primary);
+                    background: #C60C7F;
                     cursor: pointer;
                     border: 4px solid #fff;
                     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -696,7 +806,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                     width: 28px;
                     height: 28px;
                     border-radius: 50%;
-                    background: var(--primary);
+                    background: #C60C7F;
                     cursor: pointer;
                     border: 4px solid #fff;
                     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -809,7 +919,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
 
             <div className="chat-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '16px', overflow: 'hidden', border: '2px solid var(--primary)' }}>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '16px', overflow: 'hidden', border: '2px solid #F0F5F9' }}>
                         <img src={avatarImage} alt="Victoria" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                     <div>
@@ -863,12 +973,17 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                             exit={{ opacity: 0, y: 20 }}
                             style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}
                         >
-                            <div className="message-bubble message-victoria goal-params-bubble">
+                            <div className="message-bubble message-victoria goal-params-bubble anketa-about-self">
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                                     <button
                                         onClick={() => handleGenderSelect('male')}
                                         className="btn-secondary"
-                                        style={{ padding: '24px', borderRadius: '24px', fontSize: '18px' }}
+                                        style={{
+                                            padding: '24px',
+                                            borderRadius: '24px',
+                                            fontSize: '18px',
+                                            ...(data.gender === 'male' ? { background: '#fff', color: '#C60C7F', border: '2px solid #C60C7F' } : {})
+                                        }}
                                     >
                                         <span style={{ fontSize: '32px' }}>👨</span>
                                         Мужской
@@ -876,7 +991,12 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     <button
                                         onClick={() => handleGenderSelect('female')}
                                         className="btn-secondary"
-                                        style={{ padding: '24px', borderRadius: '24px', fontSize: '18px' }}
+                                        style={{
+                                            padding: '24px',
+                                            borderRadius: '24px',
+                                            fontSize: '18px',
+                                            ...(data.gender === 'female' ? { background: '#fff', color: '#C60C7F', border: '2px solid #C60C7F' } : {})
+                                        }}
                                     >
                                         <span style={{ fontSize: '32px' }}>👩</span>
                                         Женский
@@ -894,10 +1014,10 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                             exit={{ opacity: 0, y: 20 }}
                             style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}
                         >
-                            <div className="message-bubble message-victoria goal-params-bubble">
+                            <div className="message-bubble message-victoria goal-params-bubble anketa-about-self">
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '8px' }}>
                                     <span style={{ fontWeight: 800, color: '#64748b', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px' }}>Ваш возраст</span>
-                                    <span style={{ fontWeight: 900, color: '#1e293b', fontSize: '32px', lineHeight: 1 }}>
+                                    <span style={{ fontWeight: 900, color: '#000', fontSize: '32px', lineHeight: 1 }}>
                                         {data.age} <span style={{ fontSize: '18px', color: '#94a3b8' }}>лет</span>
                                     </span>
                                 </div>
@@ -908,11 +1028,11 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     value={data.age}
                                     onChange={e => setData(prev => ({ ...prev, age: parseInt(e.target.value) }))}
                                 />
-                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
                                     <button
                                         onClick={handleAgeSubmit}
-                                        className="btn-primary"
-                                        style={{ padding: '8px 18px', borderRadius: '999px', fontSize: '13px' }}
+                                        className="btn-primary anketa-dalee-btn"
+                                        style={{ fontSize: '14px', background: '#C60C7F', color: '#fff', border: 'none', width: 240, height: 52, borderRadius: 999, fontWeight: 700 }}
                                     >
                                         Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                     </button>
@@ -930,19 +1050,10 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                             style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}
                         >
                             <div className="message-bubble message-victoria goal-selection-bubble" style={{ background: 'rgba(255, 255, 255, 0.4)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.8)', boxShadow: '0 8px 32px rgba(31, 38, 135, 0.05)' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                <div style={{ marginBottom: '16px' }}>
                                     <div style={{ fontWeight: '800', color: '#64748b', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
                                         Система: Ввод координат цели {data.goals?.length ? `[${data.goals.length}]` : ''}
                                     </div>
-                                    {data.goals && data.goals.length > 0 && (
-                                        <button
-                                            onClick={handleStartAssetsStep}
-                                            className="btn-primary"
-                                            style={{ padding: '8px 16px', borderRadius: '999px', fontSize: '13px', boxShadow: '0 4px 12px rgba(255,199,80,0.3)' }}
-                                        >
-                                            Далее <ChevronRight size={16} />
-                                        </button>
-                                    )}
                                 </div>
                                 <div className="goal-grid">
                                     {GOAL_GALLERY_ITEMS.map(goal => (
@@ -954,6 +1065,17 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         </div>
                                     ))}
                                 </div>
+                                {data.goals && data.goals.length > 0 && (
+                                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+                                        <button
+                                            onClick={handleStartAssetsStep}
+                                            className="btn-primary goal-selection-next-btn"
+                                            style={{ fontSize: '14px', background: '#C60C7F', color: '#FFFFFF', border: 'none', width: 240, height: 52, borderRadius: 999, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+                                        >
+                                            Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     )}
@@ -988,7 +1110,7 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                             background: 'rgba(248,250,252,0.9)',
                                             border: '1px solid #e2e8f0',
                                             borderRadius: '18px',
-                                            color: 'var(--primary)',
+                                            color: '#C60C7F',
                                             fontSize: '28px',
                                             fontWeight: 700,
                                             outline: 'none',
@@ -999,8 +1121,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
                                         <button
                                             onClick={handleInitialCapitalSubmit}
-                                            className="btn-primary"
-                                            style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                            className="btn-secondary"
+                                            style={{ fontSize: '14px' }}
                                         >
                                             Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                         </button>
@@ -1029,11 +1151,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ marginBottom: '18px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                         <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Первоначальный капитал в резерве</span>
-                                        <input
-                                            type="number"
+                                        <NumberInputWithStepper
                                             value={finInitial}
-                                            onChange={e => setFinInitial(parseInt(e.target.value) || 0)}
-                                            style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                            onChange={setFinInitial}
+                                            min={0}
+                                            max={Math.max(initialCapitalInput || 1000000, finInitial || 0)}
+                                            step={10000}
+                                            inputWidth={120}
                                         />
                                     </div>
                                     <input
@@ -1050,12 +1174,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ marginBottom: '8px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                         <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Ежемесячное пополнение</span>
-                                        <input
-                                            type="number"
+                                        <NumberInputWithStepper
                                             value={finMonthly}
-                                            onChange={e => setFinMonthly(parseInt(e.target.value) || 0)}
-                                            className="manual-input"
-                                            style={{ width: '100px', textAlign: 'right', fontWeight: 800, border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                            onChange={setFinMonthly}
+                                            min={0}
+                                            max={200000}
+                                            step={5000}
+                                            inputWidth={100}
                                         />
                                     </div>
                                     <input
@@ -1115,8 +1240,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                                 setIsTyping(false);
                                             }
                                         }}
-                                        className="btn-primary"
-                                        style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                        className="btn-secondary"
+                                        style={{ fontSize: '14px' }}
                                     >
                                         Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                     </button>
@@ -1148,11 +1273,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <div>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                 <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Желаемый доход</span>
-                                                <input
-                                                    type="number"
+                                                <NumberInputWithStepper
                                                     value={editingGoal.desiredMonthlyIncome}
-                                                    onChange={e => setEditingGoal({ ...editingGoal, desiredMonthlyIncome: parseInt(e.target.value) || 0 })}
-                                                    style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                    onChange={n => setEditingGoal({ ...editingGoal, desiredMonthlyIncome: n })}
+                                                    min={10000}
+                                                    max={1000000}
+                                                    step={5000}
+                                                    inputWidth={120}
                                                 />
                                             </div>
                                             <input
@@ -1166,11 +1293,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <div>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                 <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Капитал</span>
-                                                <input
-                                                    type="number"
+                                                <NumberInputWithStepper
                                                     value={editingGoal.initialCapital}
-                                                    onChange={e => setEditingGoal({ ...editingGoal, initialCapital: parseInt(e.target.value) || 0 })}
-                                                    style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                    onChange={n => setEditingGoal({ ...editingGoal, initialCapital: n })}
+                                                    min={1000000}
+                                                    max={100000000}
+                                                    step={500000}
+                                                    inputWidth={120}
                                                 />
                                             </div>
                                             <input
@@ -1185,11 +1314,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                             <div>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                     <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Начальный капитал</span>
-                                                    <input
-                                                        type="number"
+                                                    <NumberInputWithStepper
                                                         value={editingGoal.initialCapital}
-                                                        onChange={e => setEditingGoal({ ...editingGoal, initialCapital: parseInt(e.target.value) || 0 })}
-                                                        style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                        onChange={n => setEditingGoal({ ...editingGoal, initialCapital: n })}
+                                                        min={0}
+                                                        max={10000000}
+                                                        step={100000}
+                                                        inputWidth={120}
                                                     />
                                                 </div>
                                                 <input
@@ -1202,11 +1333,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                             <div>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                     <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Ежемесячное пополнение</span>
-                                                    <input
-                                                        type="number"
+                                                    <NumberInputWithStepper
                                                         value={editingGoal.monthlyReplenishment}
-                                                        onChange={e => setEditingGoal({ ...editingGoal, monthlyReplenishment: parseInt(e.target.value) || 0 })}
-                                                        style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                        onChange={n => setEditingGoal({ ...editingGoal, monthlyReplenishment: n })}
+                                                        min={0}
+                                                        max={500000}
+                                                        step={5000}
+                                                        inputWidth={120}
                                                     />
                                                 </div>
                                                 <input
@@ -1221,11 +1354,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <div>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                 <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Стоимость цели</span>
-                                                <input
-                                                    type="number"
+                                                <NumberInputWithStepper
                                                     value={editingGoal.targetAmount}
-                                                    onChange={e => setEditingGoal({ ...editingGoal, targetAmount: parseInt(e.target.value) || 0 })}
-                                                    style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                    onChange={n => setEditingGoal({ ...editingGoal, targetAmount: n })}
+                                                    min={100000}
+                                                    max={50000000}
+                                                    step={100000}
+                                                    inputWidth={120}
                                                 />
                                             </div>
                                             <input
@@ -1241,11 +1376,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                         <div>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                                 <span style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>Срок (лет)</span>
-                                                <input
-                                                    type="number"
+                                                <NumberInputWithStepper
                                                     value={Math.floor(editingGoal.termMonths / 12)}
-                                                    onChange={e => setEditingGoal({ ...editingGoal, termMonths: (parseInt(e.target.value) || 1) * 12 })}
-                                                    style={{ width: '60px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                                    onChange={n => setEditingGoal({ ...editingGoal, termMonths: n * 12 })}
+                                                    min={1}
+                                                    max={50}
+                                                    step={1}
+                                                    inputWidth={60}
                                                 />
                                             </div>
                                             <input
@@ -1260,8 +1397,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
                                         <button
                                             onClick={handleParametersSubmit}
-                                            className="btn-primary"
-                                            style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                            className="btn-secondary"
+                                            style={{ fontSize: '14px' }}
                                         >
                                             Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                         </button>
@@ -1292,11 +1429,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ marginBottom: '8px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                         <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Лимит покрытия</span>
-                                        <input
-                                            type="number"
+                                        <NumberInputWithStepper
                                             value={lifeLimit}
-                                            onChange={e => setLifeLimit(parseInt(e.target.value) || 0)}
-                                            style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                            onChange={setLifeLimit}
+                                            min={0}
+                                            max={50000000}
+                                            step={500000}
+                                            inputWidth={120}
                                         />
                                     </div>
                                     <input
@@ -1370,8 +1509,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                                 setIsTyping(false);
                                             }
                                         }}
-                                        className="btn-primary"
-                                        style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                        className="btn-secondary"
+                                        style={{ fontSize: '14px' }}
                                     >
                                         Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                     </button>
@@ -1396,11 +1535,13 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                 <div style={{ marginBottom: '12px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                                         <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Сумма дохода</span>
-                                        <input
-                                            type="number"
+                                        <NumberInputWithStepper
                                             value={data.avgMonthlyIncome}
-                                            onChange={e => setData(prev => ({ ...prev, avgMonthlyIncome: parseInt(e.target.value) || 0 }))}
-                                            style={{ width: '120px', textAlign: 'right', fontWeight: '800', border: 'none', background: 'transparent', outline: 'none', color: '#1e293b' }}
+                                            onChange={n => setData(prev => ({ ...prev, avgMonthlyIncome: n }))}
+                                            min={30000}
+                                            max={1000000}
+                                            step={5000}
+                                            inputWidth={120}
                                         />
                                     </div>
                                     <input
@@ -1458,8 +1599,8 @@ const VictoriaOnboarding: React.FC<VictoriaOnboardingProps> = ({ data, setData, 
                                                 setIsTyping(false);
                                             }
                                         }}
-                                        className="btn-primary"
-                                        style={{ padding: '10px 22px', borderRadius: '999px', fontSize: '14px' }}
+                                        className="btn-secondary"
+                                        style={{ fontSize: '14px' }}
                                     >
                                         Далее <ChevronRight size={18} style={{ marginLeft: '6px' }} />
                                     </button>

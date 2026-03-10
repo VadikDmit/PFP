@@ -1,0 +1,23 @@
+.analytics {
+  &:not(:last-of-type) {
+    margin-block-end: 40px;
+  }
+}
+
+.analytics_container {
+  margin-block-start: 30px;
+}
+
+.analytics_title {
+  display: inline-block;
+
+  margin-block-end: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #933D92;
+}
+
+.analytics_text {
+  font-size: 12px;
+}

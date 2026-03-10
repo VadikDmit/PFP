@@ -55,13 +55,13 @@ const StatBlock: React.FC<{
     >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                {icon && <div style={{ color: '#FFC750' }}>{icon}</div>}
+                {icon && <div style={{ color: '#C60C7F' }}>{icon}</div>}
                 <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#111', margin: 0 }}>{title}</h3>
             </div>
             <button
                 onClick={onAiClick}
                 style={{
-                    background: 'linear-gradient(135deg, #FFC750 0%, #FFB820 100%)',
+                    background: 'linear-gradient(135deg, #C60C7F 0%, #a00a68 100%)',
                     border: 'none',
                     borderRadius: '50%',
                     width: '32px',
@@ -70,7 +70,7 @@ const StatBlock: React.FC<{
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
-                    boxShadow: '0 4px 10px rgba(255, 199, 80, 0.3)',
+                    boxShadow: '0 4px 10px rgba(198, 12, 127, 0.3)',
                     color: '#000'
                 }}
                 title="Спросить ИИ"
@@ -122,7 +122,7 @@ const PastPage: React.FC = () => {
                     <img src={avatarImage} alt="Anna" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '12px', fontWeight: '800', color: '#FFC750', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '1px' }}>
+                    <div style={{ fontSize: '12px', fontWeight: '800', color: '#C60C7F', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '1px' }}>
                         Анализ рынка от Анны
                     </div>
                     <p style={{ fontSize: '17px', color: '#1e293b', lineHeight: '1.6', fontWeight: '600', margin: 0 }}>
@@ -183,8 +183,8 @@ const PastPage: React.FC = () => {
                             <AreaChart data={inflationData}>
                                 <defs>
                                     <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#FFC750" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="#FFC750" stopOpacity={0} />
+                                        <stop offset="5%" stopColor="#C60C7F" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#C60C7F" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
                                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} />
@@ -193,7 +193,7 @@ const PastPage: React.FC = () => {
                                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}
                                     labelStyle={{ fontWeight: 'bold' }}
                                 />
-                                <Area type="monotone" dataKey="rate" stroke="#FFC750" strokeWidth={3} fillOpacity={1} fill="url(#colorRate)" />
+                                <Area type="monotone" dataKey="rate" stroke="#C60C7F" strokeWidth={3} fillOpacity={1} fill="url(#colorRate)" />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
@@ -211,7 +211,7 @@ const PastPage: React.FC = () => {
                                     <div style={{
                                         width: '40px',
                                         height: `${d.rate * 6}px`,
-                                        background: i === 1 ? '#FFB820' : '#e2e8f0',
+                                        background: i === 1 ? '#C60C7F' : '#e2e8f0',
                                         borderRadius: '8px 8px 4px 4px',
                                         transition: 'all 0.3s ease'
                                     }} />
@@ -241,7 +241,7 @@ const PastPage: React.FC = () => {
                     </div>
                 </StatBlock>
 
-                <StatBlock title="Корп. облигации" icon={<Shield size={18} style={{ color: '#FFC750' }} />}>
+                <StatBlock title="Корп. облигации" icon={<Shield size={18} style={{ color: '#C60C7F' }} />}>
                     <div style={{ padding: '20px 0' }}>
                         <div style={{ fontSize: '32px', fontWeight: '900', color: '#3b82f6' }}>18.5%</div>
                         <div style={{ fontSize: '13px', color: '#64748b', fontWeight: '600' }}>Средняя доходность (рейтинг AA+)</div>

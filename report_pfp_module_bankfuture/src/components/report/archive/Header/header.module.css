@@ -1,0 +1,9 @@
+.wrapper {
+  width: 100%;
+  background-color: var(--main-white);
+  height: 75px;
+  border-bottom: 1px solid rgb(218, 212, 212);
+  padding: 10px;
+  display: flex !important;
+  justify-content: center;
+}

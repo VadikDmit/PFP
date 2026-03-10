@@ -1,0 +1,73 @@
+.finreserve_description {
+  width: 380px;
+
+  margin-block-start: 15px;
+  margin-block-end: 30px;
+
+  color: black;
+  font-size: 10px;
+  font-weight: 500;
+
+  white-space: break-spaces;
+}
+
+.finreserve_rate {
+  display: flex;
+  flex-flow: column nowrap;
+
+  margin-block-end: 20px;
+
+  & span {
+    font-weight: 600;
+    color: #FFC759;
+    text-align: center;
+    font-size: 17px;
+    line-height: 25px; /* 147.059% */
+
+    & span {
+      font-weight: 600;
+      color: #FFC759;
+      font-size: 24px;
+      line-height: 25px;
+    }
+  }
+}
+
+.finreserve_chart {
+    min-width: 100%;
+    min-height: 178px;
+
+    margin-block-end: 40px;
+
+    & canvas {
+      min-width: 100%;
+    }
+}
+
+.finreserve_list {
+  line-height: 1;
+
+  @include tablets-sm {
+    margin-block-end: 20px;
+  }
+
+  & span {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: break-spaces;
+  }
+
+  & ul {
+    margin-block-start: 20px;
+
+    & li {
+      margin-block-end: 5px;
+
+      color: #000;
+      font-size: 10px;
+      font-weight: 400;
+
+      list-style: none;
+    }
+  }
+}

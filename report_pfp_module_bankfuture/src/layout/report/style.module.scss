@@ -1,0 +1,201 @@
+.page,
+.page_container {
+  inline-size: 595px;
+
+  overflow: hidden;
+}
+
+.page {
+
+  background-color: white;
+
+  position: relative;
+
+  @include phones-lg {
+    inline-size: 90%;
+    margin: 30px auto 0;
+  }
+}
+
+.page_container {
+  display: flex;
+  flex-direction: column;
+
+  padding-inline-start: 30px;
+  padding-inline-end: 30px;
+  padding-block-start: 30px;
+  padding-block-end: 20px;
+
+  @include tablets-sm {
+    padding-inline-start: 10px;
+    padding-inline-end: 10px;
+    padding-block-start: 50px;
+    padding-block-end: 10px;
+  }
+
+  @include phones-lg {
+    width: auto;
+    height: auto;
+  }
+
+  &_title {
+    min-width:195px;
+
+    font-weight: 600;
+    font-size: 18px;
+    white-space: break-spaces;
+
+    @include tablets-sm {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    &__red {
+      background: linear-gradient(90deg, #B12087 0%, #933D92 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &_title_risk {
+    display: inline-block;
+
+    margin-inline-start: 10px;
+    padding-block-start: 4px;
+    padding-block-end: 5px;
+    padding-inline-start: 5px;
+    padding-inline-end: 5px;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    &[aria-valuetext='CONSERVATIVE'] {
+      background: #F1EBD5;
+    }
+
+    &[aria-valuetext='BALANCED'] {
+      background: #D8E3F0;
+    }
+
+    &[aria-valuetext='AGGRESSIVE'] {
+      background: #FF6B6E;
+
+      color: white;
+    }
+
+    &[aria-valuetext='SUPER_AGGRESSIVE'] {
+      background: #202023;
+
+      color: white;
+    }
+  }
+
+  &_subtitle {
+    inline-size:535px;
+
+    margin-block-start: 20px;
+    margin-block-end: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+    color: black;
+
+    white-space: break-spaces;
+  }
+}
+
+.page_footer {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-block-start: auto;
+
+  @include tablets-sm {
+    width: 100%;
+    margin-block-start: 20px;
+    position: relative;
+    left: 0;
+  }
+
+  &_number {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 15px;
+  }
+
+  & svg {
+    @include tablets-sm {
+      height: 38px;
+    }
+  }
+}
+
+.page_numberTarget {
+  display: block;
+
+  width: min-content;
+
+  padding-block-start: 5px;
+  padding-block-end: 5px;
+  padding-inline-end: 26px;
+
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  position: absolute;
+  right: 0;
+
+  z-index: 100;
+
+  @include tablets-sm {
+    top: 10px;
+    left: 10px;
+    right: unset;
+  }
+
+  &::before {
+    content: '';
+
+    width: 100%;
+    height: 100%;
+
+    margin-inline-start: -15px;
+    padding-inline-end: 70px;
+
+    background: #FFC759;
+
+    transform: skew(-23deg);
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: -1;
+  }
+}
+
+.PageTwoLayoutCustom_page {
+  width:595px;
+  height:840px;
+  background-color: #F3F7FA;
+  position:relative;
+
+  margin-block-start: 30px;
+}
+
+.PageTwoLayoutCustom_page_container {
+  margin: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 30px;
+  padding-block-start: 50px;
+  padding-block-end: 20px;
+  width:595px;
+  height:840px;
+}

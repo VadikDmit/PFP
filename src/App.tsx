@@ -9,10 +9,11 @@ import Header from './components/Header'
 import MyPlansPage from './components/MyPlansPage'
 import PresentPage from './components/PresentPage'
 import PastPage from './components/PastPage'
+import ReportPage from './components/ReportPage'
 import type { Client } from './types/client'
-import { clientApi, API_BASE_URL } from './api/clientApi'
+import { clientApi } from './api/clientApi'
 
-type Page = 'loading' | 'landing' | 'login' | 'register' | 'past' | 'present' | 'future' | 'cjm' | 'result'
+type Page = 'loading' | 'landing' | 'login' | 'register' | 'past' | 'present' | 'future' | 'cjm' | 'result' | 'report'
 
 function App() {
     const [currentPage, setCurrentPage] = useState<Page>(() => {
@@ -23,6 +24,7 @@ function App() {
     const [loadingPlan, setLoadingPlan] = useState(false);
     const [clientData, setClientData] = useState<Client | null>(null);
     const [autoOpenAddGoal, setAutoOpenAddGoal] = useState(false);
+    const [reportClientId, setReportClientId] = useState<number | null>(null);
 
     const loadClientData = useCallback(async () => {
         try {
@@ -197,13 +199,10 @@ function App() {
     }, [loadClientData]);
 
     const handleGoToReport = useCallback(() => {
-        // Find existing client ID
-        const cid = selectedClient?.id || clientData?.id;
-        if (cid) {
-            // Open report in new tab or navigate?
-            // For now, let's assume there's a report page or we just provide the link
-            const url = `${API_BASE_URL}/my/reports/${cid}`;
-            window.open(url, '_blank');
+        const cid = selectedClient?.id ?? clientData?.id;
+        if (cid != null) {
+            setReportClientId(cid);
+            setCurrentPage('report');
         } else {
             alert('Ошибка: ID клиента не найден.');
         }
@@ -214,7 +213,7 @@ function App() {
         return (
             <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: '#f8f9fa' }}>
                 <div style={{ padding: '24px', background: '#fff', borderRadius: '16px', boxShadow: '0 10px 25px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-                    <div className="animate-spin" style={{ width: '32px', height: '32px', border: '3px solid #f3f4f6', borderTopColor: 'var(--primary)', borderRadius: '50%' }} />
+                    <div className="animate-spin" style={{ width: '32px', height: '32px', border: '3px solid #f3f4f6', borderTopColor: '#C60C7F', borderRadius: '50%' }} />
                     <div style={{ fontWeight: '600', color: '#64748b' }}>Загрузка данных...</div>
                 </div>
             </div>
@@ -255,8 +254,8 @@ function App() {
     }
 
     // Main app with header
-    const activeHeaderPage = (currentPage === 'past' || currentPage === 'present' || currentPage === 'future' || currentPage === 'result')
-        ? (currentPage === 'result' ? 'future' : currentPage)
+    const activeHeaderPage = (currentPage === 'past' || currentPage === 'present' || currentPage === 'future' || currentPage === 'result' || currentPage === 'report')
+        ? (currentPage === 'result' || currentPage === 'report' ? 'future' : currentPage)
         : 'present';
 
     return (
@@ -311,7 +310,7 @@ function App() {
                             top: '80px',
                             right: '40px',
                             padding: '12px 24px',
-                            background: 'var(--primary)',
+                            background: '#C60C7F',
                             color: '#fff',
                             borderRadius: '12px',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
@@ -329,6 +328,16 @@ function App() {
                         onDeleteGoal={handleDeleteGoal}
                         onGoToReport={handleGoToReport}
                         isCalculating={loadingPlan}
+                    />
+                </div>
+            )}
+
+            {currentPage === 'report' && reportClientId != null && (
+                <div style={{ minHeight: 'calc(100vh - 64px)', background: '#f8f9fa' }}>
+                    <ReportPage
+                        clientId={reportClientId}
+                        onBack={() => { setCurrentPage('result'); setReportClientId(null); }}
+                        fallbackPlan={{ client: selectedClient, goalsSummary: calculationResult }}
                     />
                 </div>
             )}

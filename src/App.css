@@ -7,7 +7,7 @@
 .landing-page-wrap {
     min-height: 100vh;
     background:
-        radial-gradient(circle at 10% 10%, rgba(255, 199, 80, 0.2), transparent 45%),
+        radial-gradient(circle at 10% 10%, rgba(198, 12, 127, 0.12), transparent 45%),
         radial-gradient(circle at 90% 0%, rgba(59, 130, 246, 0.18), transparent 42%),
         linear-gradient(160deg, #f7f8fc 0%, #eef3f8 52%, #edf1f7 100%);
     color: #0f172a;
@@ -163,8 +163,8 @@
     align-items: center;
     padding: 7px 12px;
     border-radius: 999px;
-    background: rgba(255, 199, 80, 0.2);
-    color: #7c5700;
+    background: rgba(198, 12, 127, 0.15);
+    color: #5a0848;
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 16px;
@@ -282,8 +282,8 @@
     width: 38px;
     height: 38px;
     border-radius: 12px;
-    background: rgba(255, 199, 80, 0.25);
-    color: #7c5700;
+    background: rgba(198, 12, 127, 0.2);
+    color: #5a0848;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -594,5 +594,5 @@
 }
 
 .btn-select:hover {
-    background: rgba(255, 199, 80, 0.05) !important;
+    background: rgba(198, 12, 127, 0.05) !important;
 }

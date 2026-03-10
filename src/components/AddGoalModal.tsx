@@ -91,7 +91,7 @@ const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onAdd }) =
                                     <img src={item.image} alt={item.title} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />
                                     <div style={{ padding: '20px', fontWeight: '700', fontSize: '18px', color: '#333' }}>{item.title}</div>
                                     <style>{`
-                    .goal-type-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); border-color: #C2185B; }
+                    .goal-type-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); border-color: #C60C7F; }
                   `}</style>
                                 </div>
                             ))}
@@ -106,7 +106,7 @@ const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onAdd }) =
                         <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '32px' }}>
                             <img src={selectedType?.image} style={{ width: '100px', height: '100px', borderRadius: '24px', objectFit: 'cover', boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }} alt="" />
                             <div>
-                                <div style={{ fontSize: '12px', color: '#C2185B', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>Параметры цели</div>
+                                <div style={{ fontSize: '12px', color: '#C60C7F', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>Параметры цели</div>
                                 <h2 style={{ fontSize: '32px', fontWeight: '800', margin: 0, color: '#111' }}>{selectedType?.title}</h2>
                             </div>
                         </div>
@@ -116,47 +116,47 @@ const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onAdd }) =
                             {(selectedType?.typeId === 1 || selectedType?.typeId === 2) && (
                                 <div>
                                     <label style={{ display: 'block', fontWeight: '700', marginBottom: '10px', color: '#444' }}>Желаемый доход (₽/мес)</label>
-                                    <input type="number" value={formData.desired_monthly_income} onChange={e => setFormData({ ...formData, desired_monthly_income: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C2185B'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
+                                    <input type="number" value={formData.desired_monthly_income} onChange={e => setFormData({ ...formData, desired_monthly_income: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C60C7F'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
                                 </div>
                             )}
 
                             {(selectedType?.typeId === 2 || selectedType?.typeId === 3 || selectedType?.typeId === 4 || selectedType?.typeId === 5 || selectedType?.typeId === 7) && (
                                 <div>
                                     <label style={{ display: 'block', fontWeight: '700', marginBottom: '10px', color: '#444' }}>Срок (мес)</label>
-                                    <input type="number" value={formData.term_months} onChange={e => setFormData({ ...formData, term_months: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C2185B'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
-                                    <div style={{ marginTop: '6px', fontSize: '14px', color: '#C2185B', fontWeight: '600' }}>≈ {formatMonthsToDate(formData.term_months)}</div>
+                                    <input type="number" value={formData.term_months} onChange={e => setFormData({ ...formData, term_months: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C60C7F'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
+                                    <div style={{ marginTop: '6px', fontSize: '14px', color: '#C60C7F', fontWeight: '600' }}>≈ {formatMonthsToDate(formData.term_months)}</div>
                                 </div>
                             )}
 
                             {(selectedType?.typeId === 3 || selectedType?.typeId === 7 || selectedType?.typeId === 8) && (
                                 <div>
                                     <label style={{ display: 'block', fontWeight: '700', marginBottom: '10px', color: '#444' }}>Первоначальный капитал (₽)</label>
-                                    <input type="number" value={formData.initial_capital} onChange={e => setFormData({ ...formData, initial_capital: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C2185B'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
+                                    <input type="number" value={formData.initial_capital} onChange={e => setFormData({ ...formData, initial_capital: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C60C7F'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
                                 </div>
                             )}
 
                             {(selectedType?.typeId === 3 || selectedType?.typeId === 7) && (
                                 <div>
                                     <label style={{ display: 'block', fontWeight: '700', marginBottom: '10px', color: '#444' }}>Ежемесячное пополнение (₽)</label>
-                                    <input type="number" value={formData.monthly_replenishment} onChange={e => setFormData({ ...formData, monthly_replenishment: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C2185B'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
+                                    <input type="number" value={formData.monthly_replenishment} onChange={e => setFormData({ ...formData, monthly_replenishment: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C60C7F'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
                                 </div>
                             )}
 
                             {selectedType?.typeId === 4 && (
                                 <div>
                                     <label style={{ display: 'block', fontWeight: '700', marginBottom: '10px', color: '#444' }}>Стоимость сегодня (₽)</label>
-                                    <input type="number" value={formData.target_amount} onChange={e => setFormData({ ...formData, target_amount: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C2185B'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
+                                    <input type="number" value={formData.target_amount} onChange={e => setFormData({ ...formData, target_amount: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C60C7F'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
                                 </div>
                             )}
 
                             {selectedType?.typeId === 5 && (
                                 <div>
                                     <label style={{ display: 'block', fontWeight: '700', marginBottom: '10px', color: '#444' }}>Страховая сумма (₽)</label>
-                                    <input type="number" value={formData.target_amount} onChange={e => setFormData({ ...formData, target_amount: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C2185B'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
+                                    <input type="number" value={formData.target_amount} onChange={e => setFormData({ ...formData, target_amount: +e.target.value })} style={{ width: '100%', padding: '16px', borderRadius: '16px', border: '2px solid #eee', fontSize: '16px', outline: 'none' }} onFocus={e => e.currentTarget.style.borderColor = '#C60C7F'} onBlur={e => e.currentTarget.style.borderColor = '#eee'} />
                                 </div>
                             )}
 
-                            <button onClick={handleSubmit} style={{ marginTop: '16px', background: 'linear-gradient(135deg, #C2185B 0%, #E91E63 100%)', color: '#fff', border: 'none', padding: '20px', borderRadius: '100px', fontWeight: '800', fontSize: '18px', cursor: 'pointer', boxShadow: '0 8px 16px rgba(194, 24, 91, 0.3)', transition: 'all 0.2s' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+                            <button onClick={handleSubmit} style={{ marginTop: '16px', background: 'linear-gradient(135deg, #C60C7F 0%, #C60C7F 100%)', color: '#fff', border: 'none', padding: '20px', borderRadius: '100px', fontWeight: '800', fontSize: '18px', cursor: 'pointer', boxShadow: '0 8px 16px rgba(198, 12, 127, 0.30)', transition: 'all 0.2s' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
                                 Создать цель
                             </button>
                         </div>

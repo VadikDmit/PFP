@@ -26,7 +26,24 @@ const StepClientData: React.FC<StepClientDataProps> = ({ data, setData, onNext }
     };
 
     return (
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }} className="step-client-data">
+            <style>{`
+                .step-client-data .step-client-data-range::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    width: 24px; height: 24px;
+                    border-radius: 50%;
+                    background: #fff;
+                    border: 2px solid #C60C7F;
+                    cursor: pointer;
+                }
+                .step-client-data .step-client-data-range::-moz-range-thumb {
+                    width: 24px; height: 24px;
+                    border-radius: 50%;
+                    background: #fff;
+                    border: 2px solid #C60C7F;
+                    cursor: pointer;
+                }
+            `}</style>
             <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '32px', textAlign: 'center' }}>
                 Расскажите о себе
             </h2>
@@ -74,14 +91,14 @@ const StepClientData: React.FC<StepClientDataProps> = ({ data, setData, onNext }
                         style={{
                             padding: '16px',
                             borderRadius: '16px',
-                            border: `2px solid ${data.gender === 'male' ? 'var(--primary)' : '#9CA3AF'}`,
-                            background: data.gender === 'male' ? 'rgba(255,199,80,0.15)' : '#E5E7EB',
-                            color: '#000',
+                            border: `2px solid ${data.gender === 'male' ? '#C60C7F' : '#9CA3AF'}`,
+                            background: data.gender === 'male' ? '#fff' : '#E5E7EB',
+                            color: data.gender === 'male' ? '#C60C7F' : '#000',
                             cursor: 'pointer',
                             fontWeight: '700',
                             fontSize: '16px',
                             transition: 'all 0.2s ease',
-                            boxShadow: data.gender === 'male' ? '0 4px 12px rgba(255,199,80,0.2)' : 'none'
+                            boxShadow: data.gender === 'male' ? '0 4px 12px rgba(198,12,127,0.2)' : 'none'
                         }}
                     >
                         Мужской
@@ -92,14 +109,14 @@ const StepClientData: React.FC<StepClientDataProps> = ({ data, setData, onNext }
                         style={{
                             padding: '16px',
                             borderRadius: '16px',
-                            border: `2px solid ${data.gender === 'female' ? 'var(--primary)' : '#9CA3AF'}`,
-                            background: data.gender === 'female' ? 'rgba(255,199,80,0.15)' : '#E5E7EB',
-                            color: '#000',
+                            border: `2px solid ${data.gender === 'female' ? '#C60C7F' : '#9CA3AF'}`,
+                            background: data.gender === 'female' ? '#fff' : '#E5E7EB',
+                            color: data.gender === 'female' ? '#C60C7F' : '#000',
                             cursor: 'pointer',
                             fontWeight: '700',
                             fontSize: '16px',
                             transition: 'all 0.2s ease',
-                            boxShadow: data.gender === 'female' ? '0 4px 12px rgba(255,199,80,0.2)' : 'none'
+                            boxShadow: data.gender === 'female' ? '0 4px 12px rgba(198,12,127,0.2)' : 'none'
                         }}
                     >
                         Женский
@@ -107,10 +124,10 @@ const StepClientData: React.FC<StepClientDataProps> = ({ data, setData, onNext }
                 </div>
             </div>
 
-            <div style={{ marginBottom: '40px' }}>
+                <div style={{ marginBottom: '40px' }} className="step-client-data-age">
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                     <label className="label">Ваш возраст</label>
-                    <span style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '20px' }}>{data.age} лет</span>
+                    <span style={{ color: '#000', fontWeight: 'bold', fontSize: '20px' }}>{data.age} лет</span>
                 </div>
                 <input
                     type="range"
@@ -118,7 +135,8 @@ const StepClientData: React.FC<StepClientDataProps> = ({ data, setData, onNext }
                     max="80"
                     value={data.age}
                     onChange={(e) => handleChange('age', parseInt(e.target.value))}
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', accentColor: '#C60C7F' }}
+                    className="step-client-data-range"
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', color: 'var(--text-muted)', fontSize: '12px' }}>
                     <span>18 лет</span>
@@ -130,7 +148,14 @@ const StepClientData: React.FC<StepClientDataProps> = ({ data, setData, onNext }
                 className="btn-primary"
                 onClick={onNext}
                 disabled={!isFormValid()}
-                style={{ width: '100%', opacity: isFormValid() ? 1 : 0.5, cursor: isFormValid() ? 'pointer' : 'not-allowed' }}
+                style={{
+                    width: '100%',
+                    opacity: isFormValid() ? 1 : 0.5,
+                    cursor: isFormValid() ? 'pointer' : 'not-allowed',
+                    background: '#C60C7F',
+                    color: '#fff',
+                    border: 'none'
+                }}
             >
                 Далее
             </button>
