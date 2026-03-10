@@ -251,6 +251,8 @@ const StepGoalSelection: React.FC<StepGoalSelectionProps> = ({ data, setData, on
                                 color: '#C60C7F',
                                 border: '2px solid #C60C7F',
                                 padding: '10px 20px',
+                                width: '240px',
+                                justifyContent: 'center',
                                 borderRadius: '999px',
                                 fontWeight: '600',
                             }}
