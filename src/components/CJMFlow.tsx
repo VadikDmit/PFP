@@ -256,7 +256,15 @@ const CJMFlow: React.FC<CJMFlowProps> = ({ onComplete, onBack, isNewClient }) =>
 
     return (
         <div style={containerStyle}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '32px', overflowX: 'auto', gap: '4px' }}>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                margin: '0 auto 32px',
+                overflowX: 'auto',
+                gap: '4px',
+                maxWidth: '800px',
+                padding: '0 20px'
+            }}>
                 {steps.map((s, i) => (
                     <div key={i} style={{ flex: '0 0 auto', width: '56px', textAlign: 'center', position: 'relative' }}>
                         <div style={{
