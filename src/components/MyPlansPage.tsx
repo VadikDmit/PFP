@@ -64,13 +64,27 @@ const MyPlansPage: React.FC<MyPlansPageProps> = ({ onCreatePlan, onViewPlan, aut
         } catch (err: any) {
             console.error('Failed to add goal:', err);
             const status = err.response?.status;
-            const msg = err.response?.data?.message ?? err.response?.data?.error ?? err.message;
+            const data = err.response?.data;
+            const msg =
+                (typeof data?.message === 'string' && data.message) ||
+                (typeof data?.detail === 'string' && data.detail) ||
+                (Array.isArray(data?.detail) && data.detail.map((x: any) => x?.msg ?? x).join('. ')) ||
+                (typeof data?.error === 'string' && data.error) ||
+                (err.message && String(err.message));
             if (status === 401) {
                 alert('Сессия истекла. Войдите снова.');
                 return;
             }
             if (status === 404) {
                 alert('Не удалось добавить цель: сервер не найден. Проверьте NEXT_PUBLIC_API_URL и что бэкенд запущен.');
+                return;
+            }
+            if (status === 400 || status === 422) {
+                alert(msg ? `Не удалось добавить цель: ${msg}` : 'Проверьте введённые данные и попробуйте снова.');
+                return;
+            }
+            if (!err.response) {
+                alert('Не удалось добавить цель: нет связи с сервером. Проверьте интернет и настройки API.');
                 return;
             }
             alert(msg ? `Не удалось добавить цель: ${msg}` : 'Не удалось добавить цель. Попробуйте снова.');
